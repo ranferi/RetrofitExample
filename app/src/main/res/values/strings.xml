@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Retrofit Example</string>
+    <string name="simplified_coding">Simplified Coding</string>
+    <string name="title_activity_home">HomeActivity</string>
+</resources>
