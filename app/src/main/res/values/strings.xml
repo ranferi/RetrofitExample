@@ -2,4 +2,9 @@
     <string name="app_name">Retrofit Example</string>
     <string name="simplified_coding">Simplified Coding</string>
     <string name="title_activity_home">HomeActivity</string>
-</resources>
+
+        <string name="navigation_drawer_open">Open navigation drawer</string>
+        <string name="navigation_drawer_close">Close navigation drawer</string>
+
+        <string name="action_settings">Settings</string>
+    </resources>
