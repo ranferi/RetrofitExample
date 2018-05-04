@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ranferi.retrofitexample.R;
+import com.ranferi.retrofitexample.fragments.HomeFragment;
 import com.ranferi.retrofitexample.helper.SharedPrefManager;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,9 +46,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finish();
             startActivity(new Intent(this, SignInActivity.class));
         }
+
         View headerView = navigationView.getHeaderView(0);
-        mTextViewName = (TextView) headerView.findViewById(R.id.text);
-        mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
+        mTextViewName = (TextView) headerView.findViewById(R.id.textViewNameHeader);
+        // mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
 
         //loading home fragment by default
         displaySelectedScreen(R.id.nav_home);
@@ -71,17 +75,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void displaySelectedScreeen(int itemId) {
+    private void displaySelectedScreen(int itemId) {
         Fragment fragment = null;
         switch (itemId) {
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_profile:
-                fragment = new ProfileFragment();
+                // fragment = new ProfileFragment();
                 break;
             case R.id.nav_messages:
-                fragment = new MessageFragment();
+                // fragment = new MessageFragment();
                 break;
             case R.id.nav_logout:
                 logout();
@@ -105,8 +109,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         startActivity(new Intent(this, SignInActivity.class));
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+    public boolean onNavigationItemSelected(MenuItem item) {
+        displaySelectedScreen(item.getItemId());
+        return true;
     }
 }

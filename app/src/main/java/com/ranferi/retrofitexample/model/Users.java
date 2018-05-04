@@ -1,5 +1,7 @@
 package com.ranferi.retrofitexample.model;
 
+import java.util.ArrayList;
+
 public class Users {
 
     private ArrayList<User> users;

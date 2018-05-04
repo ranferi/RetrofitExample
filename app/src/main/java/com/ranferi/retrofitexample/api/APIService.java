@@ -1,10 +1,12 @@
 package com.ranferi.retrofitexample.api;
 
 import com.ranferi.retrofitexample.model.Result;
+import com.ranferi.retrofitexample.model.Users;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface APIService {
@@ -25,4 +27,7 @@ public interface APIService {
             @Field("email") String email,
             @Field("password") String password
     );
+
+    @GET("users")
+    Call<Users> getUsers();
 }
