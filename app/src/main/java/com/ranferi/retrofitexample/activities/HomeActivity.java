@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View headerView = navigationView.getHeaderView(0);
         mTextViewName = (TextView) headerView.findViewById(R.id.textViewNameHeader);
-        // mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
+        mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
 
         //loading home fragment by default
         displaySelectedScreen(R.id.nav_home);

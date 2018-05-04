@@ -1,5 +1,6 @@
 package com.ranferi.retrofitexample.api;
 
+import com.ranferi.retrofitexample.model.MessageResponse;
 import com.ranferi.retrofitexample.model.Result;
 import com.ranferi.retrofitexample.model.Users;
 
@@ -30,4 +31,14 @@ public interface APIService {
 
     @GET("users")
     Call<Users> getUsers();
+
+    // sending message
+    @FormUrlEncoded
+    @POST("sendmessage")
+    Call<MessageResponse> sendMessage(
+            @Field("from") int from,
+            @Field("to") int to,
+            @Field("title") String title,
+            @Field("message") String message
+    );
 }
