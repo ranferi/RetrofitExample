@@ -1,11 +1,27 @@
 <resources>
-    <string name="app_name">Retrofit Example</string>
-    <string name="simplified_coding">Simplified Coding</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="app_name">SUSIED</string>
+    <string name="trabajo_terminal">Trabajo Terminal</string>
+    <string name="title_activity_home">Inicio</string>
 
-        <string name="navigation_drawer_open">Open navigation drawer</string>
-        <string name="navigation_drawer_close">Close navigation drawer</string>
+        <string name="navigation_drawer_open">Abrir panel de navegación</string>
+        <string name="navigation_drawer_close">Cerrar panel de navegación</string>
 
-        <string name="action_settings">Settings</string>
+        <string name="action_settings">Ajustes</string>
     <string name="image_message_description">Mensaje</string>
+    <string name="sign_in">Inicia Sesión</string>
+    <string name="sign_up">Registrate</string>
+    <string name="descriptionImgLogin">Imagen de la pantalla de login</string>
+    <string name="email_input">Ingresa tu email</string>
+    <string name="password_input">Ingresa un password</string>
+    <string name="name_input">Ingresa tu nombre</string>
+    <string name="update">Actualizar</string>
+    <string name="male">Hombre</string>
+    <string name="female">Mujer</string>
+
+    <string name="hint_email_text">Email</string>
+    <string name="logo_susied_description">Logo SUSIED</string>
+    <string name="hint_email_edit_text">Email</string>
+    <string name="hint_password_edit_text">Password</string>
+    <string name="login_button">Iniciar Sesión</string>
+    <string name="link_register_text_view">¿No tienes cuenta? Registrate</string>
 </resources>

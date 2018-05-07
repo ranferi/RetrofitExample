@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mButtonSignUp = (Button) findViewById(R.id.buttonSignUp);
+        mButtonSignUp = (Button) findViewById(R.id.buttonSignUpNow);
 
         mEditTextName = (EditText) findViewById(R.id.editTextName);
         mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         // defining a progress dialog to show while signing up
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing Up...");
+        progressDialog.setMessage("Registrandote...");
         progressDialog.show();
 
         // getting the user values

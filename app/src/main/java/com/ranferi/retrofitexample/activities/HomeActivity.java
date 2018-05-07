@@ -13,12 +13,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.ranferi.retrofitexample.R;
 import com.ranferi.retrofitexample.fragments.HomeFragment;
+import com.ranferi.retrofitexample.fragments.MessageFragment;
+import com.ranferi.retrofitexample.fragments.ProfileFragment;
 import com.ranferi.retrofitexample.helper.SharedPrefManager;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -82,17 +86,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_profile:
-                // fragment = new ProfileFragment();
+                fragment = new ProfileFragment();
                 break;
             case R.id.nav_messages:
-                // fragment = new MessageFragment();
+                fragment = new MessageFragment();
                 break;
             case R.id.nav_logout:
                 logout();
                 break;
         }
 
-        // replacing the fragment
+        // reemplazar los fragmentos
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);
@@ -108,6 +112,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         finish();
         startActivity(new Intent(this, SignInActivity.class));
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.activity_home_drawer, menu);
+//        return true;
+//    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

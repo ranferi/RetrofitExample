@@ -126,6 +126,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         call.enqueue(new Callback<MessageResponse>() {
             @Override
             public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+                progressDialog.dismiss();
                 Toast.makeText(sContext, response.body().getMessage(), Toast.LENGTH_LONG).show();
             }
 

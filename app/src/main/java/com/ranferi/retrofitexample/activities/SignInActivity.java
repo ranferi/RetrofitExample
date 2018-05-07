@@ -30,12 +30,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_login);
 
-        mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        mEditTextEmail = (EditText) findViewById(R.id.email_edit_text);
+        mEditTextPassword = (EditText) findViewById(R.id.password_edit_text);
 
-        mButtonSignIn = (Button) findViewById(R.id.buttonSignIn);
+        mButtonSignIn = (Button) findViewById(R.id.login_button);
 
         mButtonSignIn.setOnClickListener(this);
     }
@@ -49,7 +49,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private void userSignIn() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing Up...");
+        progressDialog.setMessage("Iniciando sesión...");
         progressDialog.show();
 
         String email = mEditTextEmail.getText().toString().trim();
@@ -74,7 +74,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
-                    Toast.makeText(getApplicationContext(), "Invalid email or password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Email o password invalidos", Toast.LENGTH_LONG).show();
                 }
             }
 
