@@ -3,6 +3,7 @@ package com.ranferi.retrofitexample.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.ranferi.retrofitexample.helper.SharedPrefManager;
 import com.ranferi.retrofitexample.model.Result;
 import com.ranferi.retrofitexample.model.User;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private Button mButtonSignUp;
     private EditText mEditTextName, mEditTextEmail, mEditTextPassword;
-    private RadioGroup mRadioGender;
+    // private RadioGroup mRadioGender;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
 
-        mRadioGender = (RadioGroup) findViewById(R.id.radioGender);
+        // mRadioGender = (RadioGroup) findViewById(R.id.radioGender);
 
         mButtonSignUp.setOnClickListener(this);
     }
@@ -62,12 +65,12 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         progressDialog.show();
 
         // getting the user values
-        final RadioButton radioGender = (RadioButton) findViewById(mRadioGender.getCheckedRadioButtonId());
+        // final RadioButton radioGender = (RadioButton) findViewById(mRadioGender.getCheckedRadioButtonId());
 
         String name = mEditTextName.getText().toString().trim();
         String email = mEditTextEmail.getText().toString().trim();
-        String password = mEditTextPassword.getText().toString().trim();
-        String gender = radioGender.getText().toString();
+        final String password = mEditTextPassword.getText().toString().trim();
+        // String gender = radioGender.getText().toString();
 
         // building retrofit object
         // problema cuando la url no es correcta
@@ -80,9 +83,18 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         APIService service = retrofit.create(APIService.class);
 
         // defining the user object as we need to pass it with the call
-        User user = new User(name, email, password, gender);
+        // -----> User user = new User(name, email, password, gender);
 
         // defining the call
+        /*Call<Result> call = service.createUser(
+                user.getName(),
+                user.getLastName(),
+                user.getMothersMaidenName(),
+                user.getUser(),
+                user.getEmail(),
+                user.getPassword()
+        );*/
+
         Call<Result> call = service.createUser(
                 user.getName(),
                 user.getEmail(),
@@ -93,7 +105,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         // calling the api
         call.enqueue(new Callback<Result>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
                 // hiding progress dialog
                 progressDialog.dismiss();
 
@@ -105,6 +117,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     // starting profile activity
                     finish();
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
+                    SharedPrefManager.getInstance(getApplicationContext()).Setpassword(password);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
             }

@@ -1,5 +1,7 @@
 package com.ranferi.retrofitexample.model;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 public class Result {
@@ -13,9 +15,11 @@ public class Result {
     private User user;
 
     public Result(Boolean error, String message, User user) {
+
         this.error = error;
         this.message = message;
         this.user = user;
+        Log.d("TT", "En constructor Result, user: " + this.user);
     }
 
     public Boolean getError() {

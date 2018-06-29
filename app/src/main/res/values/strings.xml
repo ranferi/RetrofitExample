@@ -24,4 +24,6 @@
     <string name="hint_password_edit_text">Password</string>
     <string name="login_button">Iniciar Sesión</string>
     <string name="link_register_text_view">¿No tienes cuenta? Registrate</string>
+    <string name="hint_name">Ingresa tu nombre</string>
+    <string name="hint_last">Ingresa tus apellidos</string>
 </resources>

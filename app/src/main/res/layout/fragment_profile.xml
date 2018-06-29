@@ -13,8 +13,29 @@
             android:id="@+id/editTextNameProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter name "
+            android:hint="@string/hint_name"
             android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextLastNameProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_last"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextMaidenNameProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_last"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextUserProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:inputType="none" />
 
         <EditText
             android:id="@+id/editTextEmailProfile"
@@ -28,10 +49,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_input"
-            android:inputType="textPassword" />
+            android:inputType="text" />
 
-        <RadioGroup
-            android:id="@+id/radioGender"
+<!--        <RadioGroup
+            android:id="@+id/radioGenderProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -48,7 +69,7 @@
                 android:text="@string/female" />
 
 
-        </RadioGroup>
+        </RadioGroup>-->
 
         <Button
             android:id="@+id/buttonUpdate"

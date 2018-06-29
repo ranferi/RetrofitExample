@@ -22,6 +22,19 @@ public interface APIService {
             @Field("email") String email,
             @Field("password") String password,
             @Field("gender") String gender);
+    /*Call<Result> createUser(
+            @Field("nombre") String name,
+            @Field("apellido_paterno") String last,
+            @Field("apellido_materno") String maiden,
+            @Field("usuario") String user,
+            @Field("email") String email,
+            @Field("password") String password);*/
+
+    /* Call<Result> createUser(
+            @Field("name") String name,
+            @Field("email") String email,
+            @Field("password") String password,
+            @Field("gender") String gender);*/
 
     // the signing call
     @FormUrlEncoded
@@ -49,11 +62,22 @@ public interface APIService {
     @POST("update/{id}")
     Call<Result> updateUser(
             @Path("id") int id,
+            @Field("nombre") String name,
+            @Field("apellido_paterno") String last,
+            @Field("apellido_materno") String maiden,
+            @Field("usuario") String user,
+            @Field("email") String email,
+            @Field("password") String password
+    );
+
+
+    /*Call<Result> updateUser(
+            @Path("id") int id,
             @Field("name") String name,
             @Field("email") String email,
             @Field("password") String password,
             @Field("gender") String gender
-    );
+    );*/
 
     // getting messages
     @GET("messages/{id}")

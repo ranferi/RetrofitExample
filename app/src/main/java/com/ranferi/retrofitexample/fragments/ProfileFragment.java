@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private Button buttonUpdate;
-    private EditText mEditTextName, mEditTextEmail, mEditTextPassword;
-    private RadioGroup radioGender;
+    private EditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword;
+    // private RadioGroup radioGender;
 
     @Nullable
     @Override
@@ -51,24 +52,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         buttonUpdate = (Button) view.findViewById(R.id.buttonUpdate);
 
         mEditTextName = (EditText) view.findViewById(R.id.editTextNameProfile);
+        mEditTextLastName = (EditText) view.findViewById(R.id.editTextLastNameProfile);
+        mEditTextMaidenName = (EditText) view.findViewById(R.id.editTextMaidenNameProfile);
+        mEditTextUser = (EditText) view.findViewById(R.id.editTextUserProfile);
         mEditTextEmail = (EditText) view.findViewById(R.id.editTextEmailProfile);
         mEditTextPassword = (EditText) view.findViewById(R.id.editTextPasswordProfile);
 
-        radioGender = (RadioGroup) view.findViewById(R.id.radioGender);
+        // radioGender = (RadioGroup) view.findViewById(R.id.radioGenderProfile);
 
         buttonUpdate.setOnClickListener(this);
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
 
-        mEditTextName.setText(user.getName());
-        mEditTextEmail.setText(user.getEmail());
-        mEditTextPassword.setText("0000");
+        Log.d("TT", "Estás en onViewCreated " + " id: " + user.getId());
 
-        if (user.getGender().equalsIgnoreCase("male")) {
+
+        mEditTextName.setText(user.getName());
+        mEditTextLastName.setText(user.getLastName());
+        mEditTextMaidenName.setText(user.getMothersMaidenName());
+        mEditTextUser.setText(user.getUser());
+        mEditTextEmail.setText(user.getEmail());
+        mEditTextPassword.setText(SharedPrefManager.getInstance(getActivity()).getpassword());
+
+        /*if (user.getGender().equalsIgnoreCase("male")) {
             radioGender.check(R.id.radioMale);
         } else {
             radioGender.check(R.id.radioFemale);
-        }
+        }*/
     }
 
     private void updateUser() {
@@ -76,12 +86,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         progressDialog.setMessage("Actualizando...");
         progressDialog.show();
 
-        final RadioButton radioSex = (RadioButton) getActivity().findViewById(radioGender.getCheckedRadioButtonId());
+        // final RadioButton radioSex = (RadioButton) getActivity().findViewById(radioGender.getCheckedRadioButtonId());
 
         String name = mEditTextName.getText().toString().trim();
+        String last = mEditTextLastName.getText().toString().trim();
+        String maiden = mEditTextMaidenName.getText().toString().trim();
+        String userName = mEditTextUser.getText().toString().trim();
         String email = mEditTextEmail.getText().toString().trim();
-        String password = mEditTextPassword.getText().toString().trim();
-        String gender = radioSex.getText().toString();
+        final String password = mEditTextPassword.getText().toString().trim();
+        // String gender = radioSex.getText().toString();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIUrl.BASE_URL)
@@ -90,15 +103,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         APIService service = retrofit.create(APIService.class);
 
-        User user = new User(SharedPrefManager.getInstance(getActivity()).getUser().getId(), name, email, password, gender);
+        // User user = new User(SharedPrefManager.getInstance(getActivity()).getUser().getId(), name, email, password, gender);
+        User user = new User(SharedPrefManager.getInstance(getActivity()).getUser().getId(), name, last, maiden, userName, email, password);
 
         Call<Result> call = service.updateUser(
+                user.getId(),
+                user.getName(),
+                user.getLastName(),
+                user.getMothersMaidenName(),
+                user.getUser(),
+                user.getEmail(),
+                user.getPassword()
+        );
+
+        /*Call<Result> call = service.updateUser(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
                 user.getGender()
-        );
+        );*/
 
         call.enqueue(new Callback<Result>() {
             @Override
@@ -107,6 +131,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                 if (!response.body().getError()) {
                     SharedPrefManager.getInstance(getActivity()).userLogin(response.body().getUser());
+                    SharedPrefManager.getInstance(getActivity()).Setpassword(password);
                 }
             }
 
