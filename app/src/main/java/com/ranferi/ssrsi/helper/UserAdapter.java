@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.helper;
+package com.ranferi.ssrsi.helper;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -13,12 +13,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.api.APIService;
-import com.ranferi.retrofitexample.api.APIUrl;
-import com.ranferi.retrofitexample.model.Message;
-import com.ranferi.retrofitexample.model.MessageResponse;
-import com.ranferi.retrofitexample.model.User;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.api.APIService;
+import com.ranferi.ssrsi.api.APIUrl;
+import com.ranferi.ssrsi.model.MessageResponse;
+import com.ranferi.ssrsi.model.User;
 
 import java.util.List;
 

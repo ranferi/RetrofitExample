@@ -1,9 +1,9 @@
-package com.ranferi.retrofitexample.api;
+package com.ranferi.ssrsi.api;
 
-import com.ranferi.retrofitexample.model.MessageResponse;
-import com.ranferi.retrofitexample.model.Messages;
-import com.ranferi.retrofitexample.model.Result;
-import com.ranferi.retrofitexample.model.Users;
+import com.ranferi.ssrsi.model.MessageResponse;
+import com.ranferi.ssrsi.model.Messages;
+import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.Users;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -18,17 +18,12 @@ public interface APIService {
     @FormUrlEncoded
     @POST("register")
     Call<Result> createUser(
-            @Field("name") String name,
-            @Field("email") String email,
-            @Field("password") String password,
-            @Field("gender") String gender);
-    /*Call<Result> createUser(
             @Field("nombre") String name,
             @Field("apellido_paterno") String last,
             @Field("apellido_materno") String maiden,
             @Field("usuario") String user,
             @Field("email") String email,
-            @Field("password") String password);*/
+            @Field("password") String password);
 
     /* Call<Result> createUser(
             @Field("name") String name,

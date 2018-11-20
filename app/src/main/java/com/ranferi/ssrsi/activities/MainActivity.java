@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.activities;
+package com.ranferi.ssrsi.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.helper.SharedPrefManager;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.helper.SharedPrefManager;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 

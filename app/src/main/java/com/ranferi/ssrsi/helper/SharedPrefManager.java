@@ -1,10 +1,10 @@
-package com.ranferi.retrofitexample.helper;
+package com.ranferi.ssrsi.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.ranferi.retrofitexample.model.User;
+import com.ranferi.ssrsi.model.User;
 
 public class SharedPrefManager {
 
@@ -66,8 +66,7 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_USER_LAST_NAME, null),
                 sharedPreferences.getString(KEY_USER_MAIDEN_NAME, null),
                 sharedPreferences.getString(KEY_USER_USER, null),
-                sharedPreferences.getString(KEY_USER_EMAIL, null),
-                true
+                sharedPreferences.getString(KEY_USER_EMAIL, null)
         );
 
         /* sharedPreferences.getInt(KEY_USER_ID, 0),

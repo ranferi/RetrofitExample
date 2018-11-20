@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample;
+package com.ranferi.ssrsi;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

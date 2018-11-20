@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SUSIED</string>
+    <string name="app_name">SSRSI</string>
     <string name="trabajo_terminal">Trabajo Terminal</string>
     <string name="title_activity_home">Inicio</string>
 
@@ -19,11 +19,12 @@
     <string name="female">Mujer</string>
 
     <string name="hint_email_text">Email</string>
-    <string name="logo_susied_description">Logo SUSIED</string>
+    <string name="logo_ssrsi_description">Logo SSRSI</string>
     <string name="hint_email_edit_text">Email</string>
     <string name="hint_password_edit_text">Password</string>
     <string name="login_button">Iniciar Sesión</string>
     <string name="link_register_text_view">¿No tienes cuenta? Registrate</string>
     <string name="hint_name">Ingresa tu nombre</string>
     <string name="hint_last">Ingresa tus apellidos</string>
+    <string name="hint_user">Ingresa tu nombre de usuario</string>
 </resources>

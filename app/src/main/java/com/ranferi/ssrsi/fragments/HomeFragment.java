@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.fragments;
+package com.ranferi.ssrsi.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.api.APIService;
-import com.ranferi.retrofitexample.api.APIUrl;
-import com.ranferi.retrofitexample.helper.UserAdapter;
-import com.ranferi.retrofitexample.model.Users;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.api.APIService;
+import com.ranferi.ssrsi.api.APIUrl;
+import com.ranferi.ssrsi.helper.UserAdapter;
+import com.ranferi.ssrsi.model.Users;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.helper;
+package com.ranferi.ssrsi.helper;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.model.Message;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.model.Message;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.activities;
+package com.ranferi.ssrsi.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,14 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.api.APIService;
-import com.ranferi.retrofitexample.api.APIUrl;
-import com.ranferi.retrofitexample.helper.SharedPrefManager;
-import com.ranferi.retrofitexample.model.Result;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.api.APIService;
+import com.ranferi.ssrsi.api.APIUrl;
+import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.Result;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,13 +59,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         Log.d("TT", "Estás en userSignIn, antes de service.userLogin" );
 
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIUrl.BASE_URL)
-                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

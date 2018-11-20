@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.model;
+package com.ranferi.ssrsi.model;
 
 public class User {
 
@@ -34,7 +34,7 @@ public class User {
     }
 
     // NUEVA En SharedPrefManager.java, para obtener información del usuario (sin password)
-    public User(int id, String name, String lastName, String mothersMaidenName, String user, String email, boolean sinPass) {
+    public User(int id, String name, String lastName, String mothersMaidenName, String user, String email) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

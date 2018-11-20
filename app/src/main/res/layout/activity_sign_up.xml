@@ -17,10 +17,31 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/editTextUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_user"
+            android:inputType="text" />
+
+        <EditText
             android:id="@+id/editTextName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name_input"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_last"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/editTextMaidenName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_last"
             android:inputType="text" />
 
         <EditText

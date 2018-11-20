@@ -1,4 +1,4 @@
-package com.ranferi.retrofitexample.model;
+package com.ranferi.ssrsi.model;
 
 public class Message {
     private int id;

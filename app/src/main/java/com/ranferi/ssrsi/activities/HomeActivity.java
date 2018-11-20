@@ -1,11 +1,8 @@
-package com.ranferi.retrofitexample.activities;
+package com.ranferi.ssrsi.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,17 +10,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.fragments.HomeFragment;
-import com.ranferi.retrofitexample.fragments.MessageFragment;
-import com.ranferi.retrofitexample.fragments.ProfileFragment;
-import com.ranferi.retrofitexample.helper.SharedPrefManager;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.fragments.HomeFragment;
+import com.ranferi.ssrsi.fragments.MessageFragment;
+import com.ranferi.ssrsi.fragments.ProfileFragment;
+import com.ranferi.ssrsi.helper.SharedPrefManager;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

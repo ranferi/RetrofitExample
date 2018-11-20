@@ -1,30 +1,23 @@
-package com.ranferi.retrofitexample.fragments;
+package com.ranferi.ssrsi.fragments;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.ranferi.retrofitexample.R;
-import com.ranferi.retrofitexample.activities.HomeActivity;
-import com.ranferi.retrofitexample.api.APIService;
-import com.ranferi.retrofitexample.api.APIUrl;
-import com.ranferi.retrofitexample.helper.SharedPrefManager;
-import com.ranferi.retrofitexample.helper.UserAdapter;
-import com.ranferi.retrofitexample.model.Result;
-import com.ranferi.retrofitexample.model.User;
+import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.api.APIService;
+import com.ranferi.ssrsi.api.APIUrl;
+import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.User;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,7 +58,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
 
         Log.d("TT", "Estás en onViewCreated " + " id: " + user.getId());
-
 
         mEditTextName.setText(user.getName());
         mEditTextLastName.setText(user.getLastName());
