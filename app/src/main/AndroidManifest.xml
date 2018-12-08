@@ -13,20 +13,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.ranferi.ssrsi.activities.MainActivity">
+
+        </activity>
+        <activity
+            android:name="com.ranferi.ssrsi.activities.SignUpActivity"
+            android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name="com.ranferi.ssrsi.activities.SignInActivity"
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.ranferi.ssrsi.activities.SignUpActivity" />
+        <activity android:name="com.ranferi.ssrsi.activities.PlacePagerActivity" />
         <activity
             android:name="com.ranferi.ssrsi.activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="com.ranferi.ssrsi.activities.SignInActivity" />
     </application>
 
 </manifest>

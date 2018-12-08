@@ -28,7 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private Button buttonUpdate;
-    private EditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword;
+    private EditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword, mEditTextRePassword;
     // private RadioGroup radioGender;
 
     @Nullable
@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEditTextUser = (EditText) view.findViewById(R.id.editTextUserProfile);
         mEditTextEmail = (EditText) view.findViewById(R.id.editTextEmailProfile);
         mEditTextPassword = (EditText) view.findViewById(R.id.editTextPasswordProfile);
+        mEditTextRePassword = (EditText) view.findViewById(R.id.editTextRePasswordProfile);
 
         // radioGender = (RadioGroup) view.findViewById(R.id.radioGenderProfile);
 
@@ -57,7 +58,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
 
-        Log.d("TT", "Estás en onViewCreated " + " id: " + user.getId());
+        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString());
 
         mEditTextName.setText(user.getName());
         mEditTextLastName.setText(user.getLastName());
@@ -65,6 +66,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEditTextUser.setText(user.getUser());
         mEditTextEmail.setText(user.getEmail());
         mEditTextPassword.setText(SharedPrefManager.getInstance(getActivity()).getpassword());
+        mEditTextRePassword.setText(SharedPrefManager.getInstance(getActivity()).getpassword());
 
         /*if (user.getGender().equalsIgnoreCase("male")) {
             radioGender.check(R.id.radioMale);
@@ -86,6 +88,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String userName = mEditTextUser.getText().toString().trim();
         String email = mEditTextEmail.getText().toString().trim();
         final String password = mEditTextPassword.getText().toString().trim();
+
         // String gender = radioSex.getText().toString();
 
         Retrofit retrofit = new Retrofit.Builder()

@@ -28,15 +28,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mButtonSignUp;
-    private EditText mEditTextUser, mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextEmail, mEditTextPassword;
-    // private RadioGroup mRadioGender;
+    private Button mButtonLoginLink;
+    private EditText mEditTextUser, mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextEmail, mEditTextPassword, mReEnterPasswordText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-
-        mButtonSignUp = (Button) findViewById(R.id.buttonSignUpNow);
 
         mEditTextUser = (EditText) findViewById(R.id.editTextUser);
         mEditTextName = (EditText) findViewById(R.id.editTextName);
@@ -44,10 +42,21 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mEditTextMaidenName = (EditText) findViewById(R.id.editTextMaidenName);
         mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
         mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
+        mReEnterPasswordText = (EditText) findViewById(R.id.editTextRePassword);
 
-        // mRadioGender = (RadioGroup) findViewById(R.id.radioGender);
-
+        mButtonSignUp = (Button) findViewById(R.id.buttonSignUpNow);
         mButtonSignUp.setOnClickListener(this);
+
+        mButtonLoginLink = (Button) findViewById(R.id.login_button_link);
+        mButtonLoginLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+                startActivity(intent);
+                finish();
+                SignUpActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
     }
 
     @Override
@@ -59,13 +68,16 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
     private void userSignUp() {
 
-        // defining a progress dialog to show while signing up
+        if (!validate()) {
+            onSignupFailed();
+            return;
+        }
+
+        mButtonSignUp.setEnabled(false);
+
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Registrandote...");
         progressDialog.show();
-
-        // getting the user values
-        // final RadioButton radioGender = (RadioButton) findViewById(mRadioGender.getCheckedRadioButtonId());
 
         String name = mEditTextName.getText().toString().trim();
         String lastName = mEditTextLastName.getText().toString().trim();
@@ -73,16 +85,13 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String userName = mEditTextUser.getText().toString().trim();
         String email = mEditTextEmail.getText().toString().trim();
         final String password = mEditTextPassword.getText().toString().trim();
-        // String gender = radioGender.getText().toString();
-
 
         /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
 
-
-        // building retrofit object
+        // armar un objeto retrofit
         // problema cuando la url no es correcta
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIUrl.BASE_URL)
@@ -117,19 +126,20 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
-                // hiding progress dialog
+                // se esconde el dialogo de progreso
                 progressDialog.dismiss();
 
-                // displaying the message from the response as toast
+                // se envia un mensaje de respuesta en un toast
                 Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("TT","en call.enqueue, onResponse");
+                Log.d("TT", "en call.enqueue, onResponse");
 
-                // if there is no error
+                // si no hay error
                 if (!response.body().getError()) {
-                    // starting profile activity
+                    // inicia la actividad 'Home'
                     finish();
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     SharedPrefManager.getInstance(getApplicationContext()).Setpassword(password);
+                    mButtonSignUp.setEnabled(true);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 }
             }
@@ -138,10 +148,70 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(Call<Result> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("TT","en call.enqueue, onFailure");
-
+                Log.d("TT", "en call.enqueue, onFailure");
             }
         });
 
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        String name = mEditTextName.getText().toString();
+        String lastName = mEditTextLastName.getText().toString();
+        String maidenName = mEditTextMaidenName.getText().toString();
+        String email = mEditTextEmail.getText().toString();
+        String password = mEditTextPassword.getText().toString();
+        String reEnterPassword = mReEnterPasswordText.getText().toString();
+
+        if (name.length() < 3) {
+            mEditTextName.setError("Al menos 3 caracteres");
+            valid = false;
+        } else {
+            mEditTextName.setError(null);
+        }
+
+        if (lastName.length() < 3) {
+            mEditTextLastName.setError("Al menos 3 caracteres");
+            valid = false;
+        } else {
+            mEditTextLastName.setError(null);
+        }
+
+        if (maidenName.length() < 3) {
+            mEditTextMaidenName.setError("Al menos 3 caracteres");
+            valid = false;
+        } else {
+            mEditTextMaidenName.setError(null);
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEditTextEmail.setError("Ingresa un email válido");
+            valid = false;
+        } else {
+            mEditTextEmail.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            mEditTextPassword.setError("Entre 4 y 10 caracteres alfanuméricos");
+            valid = false;
+        } else {
+            mEditTextPassword.setError(null);
+        }
+
+        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
+            mReEnterPasswordText.setError("El password no coincide");
+            valid = false;
+        } else {
+            mReEnterPasswordText.setError(null);
+        }
+
+        return valid;
+    }
+
+    public void onSignupFailed() {
+        Toast.makeText(getBaseContext(), "Falló el inicio de sesión", Toast.LENGTH_LONG).show();
+
+        mButtonSignUp.setEnabled(true);
     }
 }

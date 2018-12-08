@@ -65,9 +65,9 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
-                Log.d("TT", "Estás en onResponse ");
+                Log.d("ActividadPT", "Estás en onResponse ");
                 if (!response.isSuccessful()) {
-                    Log.d("TT", "Algo fallo");
+                    Log.d("ActividadPT", "Algo fallo");
                 }
                 adapter = new MessageAdapter(response.body().getMessages(), getActivity());
                 recyclerViewMessages.setAdapter(adapter);
@@ -75,7 +75,7 @@ public class MessageFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Messages> call, Throwable t) {
-                Log.d("TT", "Estás en onFailure " + t.getMessage());
+                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
                 Toast.makeText(getActivity(), user + " er " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.HomeFragment;
 import com.ranferi.ssrsi.fragments.MessageFragment;
+import com.ranferi.ssrsi.fragments.PlaceListFragment;
 import com.ranferi.ssrsi.fragments.ProfileFragment;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 
@@ -78,7 +79,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         switch (itemId) {
             case R.id.nav_home:
-                fragment = new HomeFragment();
+                fragment = new PlaceListFragment();
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();

@@ -27,18 +27,34 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText mEditTextEmail, mEditTextPassword;
     private Button mButtonSignIn;
+    private Button mButtonRegisterLink;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, HomeActivity.class));
+        }
+
         mEditTextEmail = (EditText) findViewById(R.id.email_edit_text);
         mEditTextPassword = (EditText) findViewById(R.id.password_edit_text);
 
         mButtonSignIn = (Button) findViewById(R.id.login_button);
-
         mButtonSignIn.setOnClickListener(this);
+
+        mButtonRegisterLink = (Button) findViewById(R.id.register_button_link);
+        mButtonRegisterLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivity(intent);
+                finish();
+                SignInActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            }
+        });
     }
 
     @Override
@@ -56,7 +72,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         String email = mEditTextEmail.getText().toString().trim();
         final String password = mEditTextPassword.getText().toString().trim();
 
-        Log.d("TT", "Estás en userSignIn, antes de service.userLogin" );
+        Log.d("ActividadPT", "Estás en userSignIn, antes de service.userLogin" );
 
 
         /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -78,13 +94,13 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 progressDialog.dismiss();
                 if (!response.body().getError()) {
                     finish();
-                    Log.d("TT", "Estás onResponse, response: " + response.body().getUser() );
+                    Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
 
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     SharedPrefManager.getInstance(getApplicationContext()).Setpassword(password);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
-                    Toast.makeText(getApplicationContext(), "Email o password invalidos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Email o password inválidos", Toast.LENGTH_LONG).show();
                 }
             }
 

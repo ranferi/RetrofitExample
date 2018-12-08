@@ -1,82 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:orientation="vertical" android:layout_width="match_parent"
-                android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextNameProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_name"
-            android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editTextLastNameProfile"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/nestedConstraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_last"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="#fff"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/editTextMaidenNameProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_last"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/editTextUserProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:inputType="none" />
-
-        <EditText
-            android:id="@+id/editTextEmailProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email_input"
-            android:inputType="textEmailAddress" />
-
-        <EditText
-            android:id="@+id/editTextPasswordProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/password_input"
-            android:inputType="text" />
-
-<!--        <RadioGroup
-            android:id="@+id/radioGenderProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RadioButton
-                android:id="@+id/radioMale"
-                android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/male" />
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioButton
-                android:id="@+id/radioFemale"
-                android:layout_width="wrap_content"
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextUserProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/user"
+                    android:drawableLeft="@drawable/user"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/hint_user"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- email -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/female" />
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextEmailProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/email"
+                    android:drawableLeft="@drawable/email"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/email_input"
+                    android:inputType="textEmailAddress" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- password -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextPasswordProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/lock"
+                    android:drawableLeft="@drawable/lock"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/password_input"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- repassword -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextRePasswordProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/lock"
+                    android:drawableLeft="@drawable/lock"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/re_password_input"
+                    android:inputType="textPassword" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- nombre -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextNameProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/extra_user"
+                    android:drawableLeft="@drawable/extra_user"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/name_input"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- paterno -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextLastNameProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/extra_user"
+                    android:drawableLeft="@drawable/extra_user"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/hint_last"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!-- materno -->
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/editTextMaidenNameProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableStart="@drawable/extra_user"
+                    android:drawableLeft="@drawable/extra_user"
+                    android:drawableTint="@color/primaryDarkerColor"
+                    android:hint="@string/hint_maiden"
+                    android:inputType="text" />
+            </android.support.design.widget.TextInputLayout>
 
 
-        </RadioGroup>-->
+            <Button
+                android:id="@+id/buttonUpdate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="24dp"
+                android:text="@string/update"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+        </android.support.constraint.ConstraintLayout>
 
-        <Button
-            android:id="@+id/buttonUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/update" />
 
-    </LinearLayout>
+        <ImageButton
+            android:id="@+id/user_profile_photo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/login_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/user_profile_background"
+            android:elevation="4dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 
-</RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

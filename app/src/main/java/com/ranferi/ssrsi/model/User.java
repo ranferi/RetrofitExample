@@ -10,7 +10,7 @@ public class User {
     private String email;
     private String password;
 
-    private String gender;
+    // private String gender;
 
     // NUEVA En SignUpActivity.java, lo usamos para CREAR un usuario
     public User(String name, String lastName, String mothersMaidenName, String user, String email, String password) {
@@ -48,7 +48,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.gender = gender;
+        // this.gender = gender;
     }
 
     // En ProfileFragment.java, para ver y actualizar información
@@ -57,7 +57,7 @@ public class User {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.gender = gender;
+        // this.gender = gender;
     }
 
     // En SharedPrefManager.java, para obtener información del usuario (sin password)
@@ -65,7 +65,7 @@ public class User {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.gender = gender;
+        // this.gender = gender;
     }
 
 
@@ -98,9 +98,9 @@ public class User {
         return user;
     }
 
-    public String getGender() {
-        return gender;
-    }
+//    public String getGender() {
+//        return gender;
+//    }
 
     @Override
     public String toString() {
@@ -112,7 +112,7 @@ public class User {
                 ", user='" + user + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", gender='" + gender + '\'' +
+                // ", gender='" + gender + '\'' +
                 '}';
     }
 }
