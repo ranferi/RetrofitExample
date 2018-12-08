@@ -95,7 +95,7 @@ public class SharedPrefManager {
     public String getpassword() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         Log.d("ActividadPT", "Estás en getpassword 3, SharedPrefManager contexto: " + sContext);
-        // Log.d("ActividadPT", "Estás en getpassword, SharedPrefManager pass: " + sharedPreferences.getString(PASS_TAG,));
+        Log.d("ActividadPT", "Estás en getpassword, SharedPrefManager pass: " + sharedPreferences.getString(PASS_TAG, null));
 
         return sharedPreferences.getString(PASS_TAG, null);
     }

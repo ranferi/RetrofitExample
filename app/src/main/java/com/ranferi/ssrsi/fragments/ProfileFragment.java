@@ -3,13 +3,13 @@ package com.ranferi.ssrsi.fragments;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
@@ -28,8 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private Button buttonUpdate;
-    private EditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword, mEditTextRePassword;
-    // private RadioGroup radioGender;
+    private TextInputEditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword, mEditTextRePassword;
 
     @Nullable
     @Override
@@ -44,13 +43,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         buttonUpdate = (Button) view.findViewById(R.id.buttonUpdate);
 
-        mEditTextName = (EditText) view.findViewById(R.id.editTextNameProfile);
-        mEditTextLastName = (EditText) view.findViewById(R.id.editTextLastNameProfile);
-        mEditTextMaidenName = (EditText) view.findViewById(R.id.editTextMaidenNameProfile);
-        mEditTextUser = (EditText) view.findViewById(R.id.editTextUserProfile);
-        mEditTextEmail = (EditText) view.findViewById(R.id.editTextEmailProfile);
-        mEditTextPassword = (EditText) view.findViewById(R.id.editTextPasswordProfile);
-        mEditTextRePassword = (EditText) view.findViewById(R.id.editTextRePasswordProfile);
+        mEditTextName = (TextInputEditText) view.findViewById(R.id.editTextNameProfile);
+        mEditTextLastName = (TextInputEditText) view.findViewById(R.id.editTextLastNameProfile);
+        mEditTextMaidenName = (TextInputEditText) view.findViewById(R.id.editTextMaidenNameProfile);
+        mEditTextUser = (TextInputEditText) view.findViewById(R.id.editTextUserProfile);
+        mEditTextEmail = (TextInputEditText) view.findViewById(R.id.editTextEmailProfile);
+        mEditTextPassword = (TextInputEditText) view.findViewById(R.id.editTextPasswordProfile);
+        mEditTextRePassword = (TextInputEditText) view.findViewById(R.id.editTextRePasswordProfile);
 
         // radioGender = (RadioGroup) view.findViewById(R.id.radioGenderProfile);
 
@@ -58,7 +57,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
 
-        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString());
+        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
         mEditTextName.setText(user.getName());
         mEditTextLastName.setText(user.getLastName());
@@ -82,12 +81,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         // final RadioButton radioSex = (RadioButton) getActivity().findViewById(radioGender.getCheckedRadioButtonId());
 
-        String name = mEditTextName.getText().toString().trim();
-        String last = mEditTextLastName.getText().toString().trim();
-        String maiden = mEditTextMaidenName.getText().toString().trim();
-        String userName = mEditTextUser.getText().toString().trim();
-        String email = mEditTextEmail.getText().toString().trim();
-        final String password = mEditTextPassword.getText().toString().trim();
+        String name = toStringACharSequence(mEditTextName.getText()).trim();
+        String last = toStringACharSequence(mEditTextLastName.getText()).trim();
+        String maiden = toStringACharSequence(mEditTextMaidenName.getText()).trim();
+        String userName = toStringACharSequence(mEditTextUser.getText()).trim();
+        String email = toStringACharSequence(mEditTextEmail.getText()).trim();
+        final String password = toStringACharSequence(mEditTextPassword.getText()).trim();
 
         // String gender = radioSex.getText().toString();
 
@@ -143,5 +142,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         if (view == buttonUpdate) {
             updateUser();
         }
+    }
+
+    String toStringACharSequence(CharSequence charSequence) {
+        final StringBuilder sb = new StringBuilder(charSequence.length());
+        sb.append(charSequence);
+        return sb.toString();
     }
 }

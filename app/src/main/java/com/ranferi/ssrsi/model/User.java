@@ -44,7 +44,7 @@ public class User {
     }
 
     // En SignUpActivity.java, lo usamos para CREAR un usuario
-    public User(String name, String email, String password, String gender) {
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
@@ -52,7 +52,7 @@ public class User {
     }
 
     // En ProfileFragment.java, para ver y actualizar información
-    public User(int id, String name, String email, String password, String gender) {
+    public User(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -61,7 +61,7 @@ public class User {
     }
 
     // En SharedPrefManager.java, para obtener información del usuario (sin password)
-    public User(int id, String name, String email, String gender) {
+    public User(int id, String name, String email) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -111,8 +111,6 @@ public class User {
                 ", mothersMaidenName='" + mothersMaidenName + '\'' +
                 ", user='" + user + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                // ", gender='" + gender + '\'' +
                 '}';
     }
 }

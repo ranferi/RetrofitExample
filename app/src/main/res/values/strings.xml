@@ -38,4 +38,5 @@
 
     <string name="place_name_id">El gallo</string>
     <string name="place_address_id">Centro</string>
+    <string name="imagen_perfil_de_usuario">Imagen perfil de usuario</string>
 </resources>
