@@ -62,4 +62,13 @@
         <item name="android:textAllCaps">false</item>
     </style>
 
+    <style name="SearchCheckedTextView" parent="Base.Widget.MaterialComponents.TextInputEditText">
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+    </style>
+
+    <style name="SearchTextInputEditText" parent="Base.Widget.MaterialComponents.TextInputEditText">
+        <item name="android:textColor">@color/base</item>
+    </style>
+
 </resources>

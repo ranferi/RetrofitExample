@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:windowSoftInputMode="adjustResize"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,12 +16,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.ranferi.ssrsi.activities.MainActivity">
 
-        </activity>
         <activity
             android:name="com.ranferi.ssrsi.activities.SignUpActivity"
             android:theme="@style/AppTheme.Dark" />
+
         <activity
             android:name="com.ranferi.ssrsi.activities.SignInActivity"
             android:theme="@style/AppTheme.Dark">
@@ -30,7 +30,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.ranferi.ssrsi.activities.PlacePagerActivity" />
+
         <activity
             android:name="com.ranferi.ssrsi.activities.HomeActivity"
             android:label="@string/title_activity_home"

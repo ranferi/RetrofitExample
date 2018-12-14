@@ -1,6 +1,7 @@
 package com.ranferi.ssrsi.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -16,12 +17,15 @@ import android.widget.TextView;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.HomeFragment;
+import com.ranferi.ssrsi.fragments.ItemFragment;
 import com.ranferi.ssrsi.fragments.MessageFragment;
 import com.ranferi.ssrsi.fragments.PlaceListFragment;
 import com.ranferi.ssrsi.fragments.ProfileFragment;
+import com.ranferi.ssrsi.fragments.SearchFragment;
+import com.ranferi.ssrsi.fragments.dummy.DummyContent;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnFragmentInteractionListener {
 
     private TextView mTextViewName;
 
@@ -79,13 +83,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Fragment fragment = null;
         switch (itemId) {
             case R.id.nav_home:
-                fragment = new PlaceListFragment();
+                fragment = new SearchFragment();
                 break;
             case R.id.nav_profile:
                 fragment = new ProfileFragment();
                 break;
             case R.id.nav_messages:
-                fragment = new MessageFragment();
+                fragment = new SearchFragment();
                 break;
             case R.id.nav_logout:
                 logout();
@@ -122,5 +126,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         displaySelectedScreen(item.getItemId());
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }

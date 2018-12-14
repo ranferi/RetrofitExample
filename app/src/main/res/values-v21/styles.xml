@@ -32,4 +32,5 @@
         <item name="colorButtonNormal">@color/primaryDarkerColor</item>
         <item name="android:colorButtonNormal">@color/primaryDarkerColor</item>
     </style>
+
 </resources>

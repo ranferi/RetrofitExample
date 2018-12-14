@@ -1,33 +1,29 @@
 <resources>
     <string name="app_name">SSRSI</string>
+    <string name="logo_ssrsi_description">Logo SSRSI</string>
     <string name="trabajo_terminal">Trabajo Terminal</string>
-    <string name="title_activity_home">Inicio</string>
 
+    <string name="title_activity_home">Inicio</string>
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
     <string name="navigation_drawer_close">Cerrar panel de navegación</string>
 
     <string name="action_settings">Ajustes</string>
-    <string name="image_message_description">Mensaje</string>
-    <string name="sign_in">Inicia Sesión</string>
-    <string name="sign_up">Regístrate</string>
-    <string name="descriptionImgLogin">Imagen de la pantalla de login</string>
-    <string name="email_input">Email</string>
-    <string name="password_input">Password</string>
-    <string name="re_password_input">Re-Ingresa Tu Password</string>
-    <string name="name_input">Nombre (Opcional)</string>
+
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_re_password">Re-Ingresa Tu Password</string>
+    <string name="hint_user">Usuario</string>
+    <string name="hint_name">Nombre (Opcional)</string>
+    <string name="hint_last">Apellido Paterno (Opcional)</string>
+    <string name="hint_maiden">Apellido Materno (Opcional)</string>
+
     <string name="update">Actualizar</string>
 
-    <string name="logo_ssrsi_description">Logo SSRSI</string>
-    <string name="hint_email_text">Email</string>
-    <string name="hint_email_edit_text">Email</string>
-    <string name="hint_password_edit_text">Password</string>
+
     <string name="login_button">Iniciar Sesión</string>
     <string name="link_register_text_view">¿No tienes cuenta? Regístrate</string>
     <string name="link_login_text_view">¿Ya te registraste? Inicia Sesión</string>
-    <string name="hint_name">Nombre</string>
-    <string name="hint_last">Apellido Paterno (Opcional)</string>
-    <string name="hint_maiden">Apellido Materno (Opcional)</string>
-    <string name="hint_user">Usuario</string>
+
 
     <string name="crime_details_label">Details</string>
 
@@ -39,4 +35,19 @@
     <string name="place_name_id">El gallo</string>
     <string name="place_address_id">Centro</string>
     <string name="imagen_perfil_de_usuario">Imagen perfil de usuario</string>
+
+
+    <!-- mensajes -->
+    <string name="image_message_description">Mensaje</string>
+
+    <string name="sign_in">Inicia Sesión</string>
+    <string name="sign_up">Regístrate</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_question">¿Qué buscas?</string>
+    <string name="place_question">¿Sitio?</string>
+    <string name="price_question">¿Qué precio?</string>
+    <string name="distance_question">¿A qué distancia?</string>
+    <string name="music_check">¿Música?</string>
 </resources>

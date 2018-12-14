@@ -5,7 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
 
-    <color name="accent">#FFFFFF</color>
+    <color name="accent">#ffffff</color>
     <color name="primaryColor">#4fc3f7</color>
     <color name="primaryLightColor">#8bf6ff</color>
     <color name="primaryDarkColor">#0093c4</color>
@@ -24,7 +24,7 @@
     <color name="jumbo">#888888</color>
     <color name="aluminum">#999999</color>
     <color name="base">#AAAAAA</color>
-    <color name="iron">#CCCCCC</color>
+    <color name="iron">#cccccc</color>
     <color name="white">#FFFFFF</color>
     <color name="vivid_pink">#F74FC3</color>
     <color name="bright_red">#F7834F</color>
