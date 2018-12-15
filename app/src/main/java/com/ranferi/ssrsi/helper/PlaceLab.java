@@ -22,7 +22,7 @@ public class PlaceLab {
     }
     private PlaceLab(Context context) {
         mPlaces = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             Place crime = new Place();
             crime.setNombre("Sitio #" + i);
             crime.setMusica(i % 2 == 0); // Every other one

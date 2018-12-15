@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/constraintLayoutFragmentProfile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -43,6 +44,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/user"
                 android:drawableLeft="@drawable/user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -67,7 +69,9 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/email"
                 android:drawableLeft="@drawable/email"
-                android:inputType="textEmailAddress" />
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:inputType="textEmailAddress"
+                tools:text="@tools:sample/cities" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- password -->
@@ -91,6 +95,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/lock"
                 android:drawableLeft="@drawable/lock"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -115,6 +120,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/lock"
                 android:drawableLeft="@drawable/lock"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -139,6 +145,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
@@ -163,7 +170,9 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
-                android:inputType="text" />
+                android:drawablePadding="@dimen/activity_horizontal_margin"
+                android:inputType="text"
+                tools:text="@tools:sample/cities" />
         </android.support.design.widget.TextInputLayout>
 
         <!-- materno -->
@@ -188,6 +197,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 

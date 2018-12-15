@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 fragment = new ProfileFragment();
                 break;
             case R.id.nav_messages:
-                fragment = new SearchFragment();
+                fragment = new PlaceListFragment();
                 break;
             case R.id.nav_logout:
                 logout();
@@ -98,7 +98,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         // reemplazar los fragmentos
         if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
             ft.replace(R.id.content_frame, fragment);
             ft.commit();
         }
@@ -132,4 +133,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }

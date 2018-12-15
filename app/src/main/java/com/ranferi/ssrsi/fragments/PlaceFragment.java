@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.helper.PlaceLab;
+import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Place;
+import com.rd.PageIndicatorView;
 
 import java.util.UUID;
 
@@ -27,8 +30,9 @@ public class PlaceFragment extends Fragment {
     private TextView mAddressField;
     private CheckBox mLikedCheckBox;
     private CheckBox mMusicCheckBox;
-
     private Button mDateButton;
+    private ViewPager mViewPager;
+
 
     public static PlaceFragment newInstance(UUID placeId) {
         Bundle args = new Bundle();
@@ -82,6 +86,35 @@ public class PlaceFragment extends Fragment {
         mDateButton = (Button) v.findViewById(R.id.crime_date);
         mDateButton.setText(mPlace.getDate().toString());
         mDateButton.setEnabled(false);
+
+
+
+        mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
+        mViewPager.setAdapter(viewPagerAdapter);
+
+        final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
+        pageIndicatorView.setCount(viewPagerAdapter.getCount()); // specify total count of indicators
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                pageIndicatorView.setSelection(i);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
+
 
         return v;
     }

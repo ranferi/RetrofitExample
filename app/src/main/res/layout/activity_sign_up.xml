@@ -60,6 +60,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/user"
                 android:drawableLeft="@drawable/user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:hint="@string/hint_user"
                 android:inputType="text" />
@@ -86,6 +87,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/email"
                 android:drawableLeft="@drawable/email"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
@@ -111,6 +113,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/lock"
                 android:drawableLeft="@drawable/lock"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
@@ -136,6 +139,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/lock"
                 android:drawableLeft="@drawable/lock"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
@@ -161,6 +165,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -186,6 +191,7 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
@@ -211,11 +217,10 @@
                 android:layout_height="match_parent"
                 android:drawableStart="@drawable/extra_user"
                 android:drawableLeft="@drawable/extra_user"
+                android:drawablePadding="@dimen/activity_horizontal_margin"
                 android:drawableTint="@color/primaryDarkerColor"
                 android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
-
-
 
         <Button
             android:id="@+id/buttonSignUpNow"
