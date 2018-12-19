@@ -25,7 +25,7 @@
     <string name="link_login_text_view">¿Ya te registraste? Inicia Sesión</string>
 
 
-    <string name="crime_details_label">Details</string>
+    <string name="details_label">Detalles</string>
 
     <string name="place_name">Nombre de Sitio</string>
     <string name="place_address">Dirección</string>
