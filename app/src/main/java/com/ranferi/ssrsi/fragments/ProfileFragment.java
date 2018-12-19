@@ -2,6 +2,7 @@ package com.ranferi.ssrsi.fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
@@ -16,7 +17,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.User;
 
 import retrofit2.Call;
@@ -33,16 +34,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Perfil");
-
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
         buttonUpdate = (Button) view.findViewById(R.id.buttonUpdate);
-
         mEditTextName = (TextInputEditText) view.findViewById(R.id.editTextNameProfile);
         mEditTextLastName = (TextInputEditText) view.findViewById(R.id.editTextLastNameProfile);
         mEditTextMaidenName = (TextInputEditText) view.findViewById(R.id.editTextMaidenNameProfile);
@@ -50,14 +43,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEditTextEmail = (TextInputEditText) view.findViewById(R.id.editTextEmailProfile);
         mEditTextPassword = (TextInputEditText) view.findViewById(R.id.editTextPasswordProfile);
         mEditTextRePassword = (TextInputEditText) view.findViewById(R.id.editTextRePasswordProfile);
+        return view;
+    }
 
-        // radioGender = (RadioGroup) view.findViewById(R.id.radioGenderProfile);
-
-        buttonUpdate.setOnClickListener(this);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
 
         Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
+
+        buttonUpdate.setOnClickListener(this);
 
         mEditTextName.setText(user.getName());
         mEditTextLastName.setText(user.getLastName());
@@ -66,20 +63,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEditTextEmail.setText(user.getEmail());
         mEditTextPassword.setText(SharedPrefManager.getInstance(getActivity()).getpassword());
         mEditTextRePassword.setText(SharedPrefManager.getInstance(getActivity()).getpassword());
-
-        /*if (user.getGender().equalsIgnoreCase("male")) {
-            radioGender.check(R.id.radioMale);
-        } else {
-            radioGender.check(R.id.radioFemale);
-        }*/
     }
 
     private void updateUser() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Actualizando...");
         progressDialog.show();
-
-        // final RadioButton radioSex = (RadioButton) getActivity().findViewById(radioGender.getCheckedRadioButtonId());
 
         String name = toStringACharSequence(mEditTextName.getText()).trim();
         String last = toStringACharSequence(mEditTextLastName.getText()).trim();
@@ -88,8 +77,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String email = toStringACharSequence(mEditTextEmail.getText()).trim();
         final String password = toStringACharSequence(mEditTextPassword.getText()).trim();
 
-        // String gender = radioSex.getText().toString();
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -97,10 +84,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         APIService service = retrofit.create(APIService.class);
 
-        // User user = new User(SharedPrefManager.getInstance(getActivity()).getUser().getId(), name, email, password, gender);
         User user = new User(SharedPrefManager.getInstance(getActivity()).getUser().getId(), name, last, maiden, userName, email, password);
 
-        Call<Result> call = service.updateUser(
+        Call<UserResponse> call = service.updateUser(
                 user.getId(),
                 user.getName(),
                 user.getLastName(),
@@ -110,7 +96,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 user.getPassword()
         );
 
-        /*Call<Result> call = service.updateUser(
+        /*Call<UserResponse> call = service.updateUser(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
@@ -118,9 +104,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 user.getGender()
         );*/
 
-        call.enqueue(new Callback<Result>() {
+        call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                 if (!response.body().getError()) {
@@ -130,7 +116,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -149,4 +135,5 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         sb.append(charSequence);
         return sb.toString();
     }
+
 }

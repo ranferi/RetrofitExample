@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+public class UserResponse {
     @SerializedName("error")
     private Boolean error;
 
@@ -14,12 +14,12 @@ public class Result {
     @SerializedName("user")
     private User user;
 
-    public Result(Boolean error, String message, User user) {
+    public UserResponse(Boolean error, String message, User user) {
 
         this.error = error;
         this.message = message;
         this.user = user;
-        Log.d("TT", "En constructor Result, user: " + this.user);
+        Log.d("TT", "En constructor UserResponse, user: " + this.user);
     }
 
     public Boolean getError() {

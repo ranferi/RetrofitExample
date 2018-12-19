@@ -42,6 +42,7 @@
 
     <string name="sign_in">Inicia Sesión</string>
     <string name="sign_up">Regístrate</string>
+    <string name="action_logout">Cerrar Sesión</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -50,4 +51,13 @@
     <string name="price_question">¿Qué precio?</string>
     <string name="distance_question">¿A qué distancia?</string>
     <string name="music_check">¿Música?</string>
+
+
+    <string-array name="nav_item_activity_titles">
+        <item>Home</item>
+        <item>Perfil</item>
+        <item>Sitios</item>
+        <item>Busqueda</item>
+        <item>Configuración</item>
+    </string-array>
 </resources>

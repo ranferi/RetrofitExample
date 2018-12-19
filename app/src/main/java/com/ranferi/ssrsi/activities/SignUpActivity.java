@@ -16,7 +16,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.User;
 
 import retrofit2.Call;
@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         User user = new User(name, lastName, maidenName, userName, email, password);
 
         // defining the call
-        Call<Result> call = service.createUser(
+        Call<UserResponse> call = service.createUser(
                 user.getName(),
                 user.getLastName(),
                 user.getMothersMaidenName(),
@@ -115,7 +115,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 user.getPassword()
         );
 
-        /*Call<Result> call = service.createUser(
+        /*Call<UserResponse> call = service.createUser(
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
@@ -123,9 +123,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         );*/
 
         // calling the api
-        call.enqueue(new Callback<Result>() {
+        call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(@NonNull Call<Result> call, @NonNull Response<Result> response) {
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 // se esconde el dialogo de progreso
                 progressDialog.dismiss();
 
@@ -145,7 +145,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("TT", "en call.enqueue, onFailure");

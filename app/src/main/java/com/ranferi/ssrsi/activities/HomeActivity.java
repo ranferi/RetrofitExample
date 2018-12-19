@@ -3,6 +3,7 @@ package com.ranferi.ssrsi.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,9 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.HomeFragment;
@@ -25,26 +28,53 @@ import com.ranferi.ssrsi.fragments.SearchFragment;
 import com.ranferi.ssrsi.fragments.dummy.DummyContent;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnFragmentInteractionListener {
 
     private TextView mTextViewName;
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle toggle;
+    private Thread mUiThread;
+    private Handler mHandler;
+    private Toolbar toolbar;
+    NavigationView navigationView;
+
+    // index para identificar el item actual del menu nav.
+    public static int navItemIndex = 0;
+
+    // etiquetas usadas para fijar fragmentos
+    private static final String TAG_HOME = "home";
+    private static final String TAG_PROFILE = "perfil";
+    private static final String TAG_SEARCH = "busqueda";
+    private static final String TAG_PLACES = "sitios";
+    private static final String TAG_SETTINGS = "settings";
+    public static String CURRENT_TAG = TAG_HOME;
+
+    // títulos de cada item en el menu nav.
+    private String[] activityTitles;
+
+    public final ScheduledExecutorService worker =
+            Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        );
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        mHandler = new Handler();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //drawer.addDrawerListener(toggle);
+        // toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        // navigationView.setNavigationItemSelectedListener(this);
 
         if (!SharedPrefManager.getInstance(this).isLoggedIn()) {
             finish();
@@ -55,18 +85,20 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mTextViewName = (TextView) headerView.findViewById(R.id.textViewNameHeader);
         mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
 
-        //loading home fragment by default
-        displaySelectedScreen(R.id.nav_home);
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+        // se muestra el fragmento home
+        //displaySelectedScreen(R.id.nav_home);
+
+        setUpNavigationView();
+
+        if (savedInstanceState == null) {
+            navItemIndex = 0;
+            CURRENT_TAG = TAG_HOME;
+            loadFragment();
+        }
 
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -88,7 +120,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_profile:
                 fragment = new ProfileFragment();
                 break;
-            case R.id.nav_messages:
+            case R.id.nav_search:
                 fragment = new PlaceListFragment();
                 break;
             case R.id.nav_logout:
@@ -108,25 +140,158 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
     }
 
+    private void setUpNavigationView() {
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()) {
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.nav_home:
+                        navItemIndex = 0;
+                        CURRENT_TAG = TAG_HOME;
+                        break;
+                    case R.id.nav_profile:
+                        navItemIndex = 1;
+                        CURRENT_TAG = TAG_PROFILE;
+                        break;
+                    case R.id.nav_places:
+                        navItemIndex = 2;
+                        CURRENT_TAG = TAG_PLACES;
+                        break;
+                    case R.id.nav_search:
+                        navItemIndex = 3;
+                        CURRENT_TAG = TAG_SEARCH;
+                        break;
+                    case R.id.nav_logout:
+                        logout();
+                        break;
+                    default:
+                        navItemIndex = 0;
+                }
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) {
+                    menuItem.setChecked(false);
+                } else {
+                    menuItem.setChecked(true);
+                }
+                menuItem.setChecked(true);
+
+                loadFragment();
+
+                return true;
+            }
+        });
+
+
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        //Setting the actionbarToggle to drawer layout
+        drawer.addDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+    }
+
+    private Fragment getFragment() {
+        switch (navItemIndex) {
+            case 0:
+                return new HomeFragment();
+            case 1:
+                return new ProfileFragment();
+            case 2:
+                return new PlaceListFragment();
+            case 3:
+                return new SearchFragment();
+            default:
+                return new HomeFragment();
+        }
+    }
+
+    private void setToolbarTitle() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(activityTitles[navItemIndex]);
+        }
+    }
+
+    private void loadFragment() {
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        setToolbarTitle();
+
+
+        if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
+            drawer.closeDrawers();
+            return;
+        }
+
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // update the main content by replacing fragments
+                        Fragment fragment = getFragment();
+                        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        // fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+                        fragmentTransaction
+                                .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+                        fragmentTransaction.replace(R.id.content_frame, fragment, CURRENT_TAG);
+                        fragmentTransaction.commitAllowingStateLoss();
+                    }
+                });
+
+            }
+        };
+
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+        drawer.closeDrawers();
+
+        invalidateOptionsMenu();
+
+    }
+
     private void logout() {
         SharedPrefManager.getInstance(this).logout();
         finish();
         startActivity(new Intent(this, SignInActivity.class));
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.activity_home_drawer, menu);
-//        return true;
-//    }
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        displaySelectedScreen(item.getItemId());
-        return true;
+        // displaySelectedScreen(item.getItemId());
+        // return true;
+
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

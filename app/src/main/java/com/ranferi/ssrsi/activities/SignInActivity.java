@@ -15,7 +15,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.UserResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -86,11 +86,11 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Result> call = service.userLogin(email, password);
+        Call<UserResponse> call = service.userLogin(email, password);
 
-        call.enqueue(new Callback<Result>() {
+        call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 progressDialog.dismiss();
                 if (!response.body().getError()) {
                     finish();
@@ -105,7 +105,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onFailure(Call<Result> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }

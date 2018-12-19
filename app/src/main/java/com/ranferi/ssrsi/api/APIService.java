@@ -2,7 +2,7 @@ package com.ranferi.ssrsi.api;
 
 import com.ranferi.ssrsi.model.MessageResponse;
 import com.ranferi.ssrsi.model.Messages;
-import com.ranferi.ssrsi.model.Result;
+import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
 
 import retrofit2.Call;
@@ -17,7 +17,7 @@ public interface APIService {
     // The register call
     @FormUrlEncoded
     @POST("register")
-    Call<Result> createUser(
+    Call<UserResponse> createUser(
             @Field("nombre") String name,
             @Field("apellido_paterno") String last,
             @Field("apellido_materno") String maiden,
@@ -25,7 +25,7 @@ public interface APIService {
             @Field("email") String email,
             @Field("password") String password);
 
-    /* Call<Result> createUser(
+    /* Call<UserResponse> createUser(
             @Field("name") String name,
             @Field("email") String email,
             @Field("password") String password,
@@ -34,7 +34,7 @@ public interface APIService {
     // the signing call
     @FormUrlEncoded
     @POST("login")
-    Call<Result> userLogin(
+    Call<UserResponse> userLogin(
             @Field("email") String email,
             @Field("password") String password
     );
@@ -55,7 +55,7 @@ public interface APIService {
     // updating user
     @FormUrlEncoded
     @POST("update/{id}")
-    Call<Result> updateUser(
+    Call<UserResponse> updateUser(
             @Path("id") int id,
             @Field("nombre") String name,
             @Field("apellido_paterno") String last,
@@ -66,7 +66,7 @@ public interface APIService {
     );
 
 
-    /*Call<Result> updateUser(
+    /*Call<UserResponse> updateUser(
             @Path("id") int id,
             @Field("name") String name,
             @Field("email") String email,
