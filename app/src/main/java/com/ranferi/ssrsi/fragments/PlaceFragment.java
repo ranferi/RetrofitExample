@@ -33,6 +33,8 @@ public class PlaceFragment extends Fragment {
     private Button mDateButton;
     private ViewPager mViewPager;
 
+    public PlaceFragment() {
+    }
 
     public static PlaceFragment newInstance(UUID placeId) {
         Bundle args = new Bundle();

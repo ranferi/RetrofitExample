@@ -1,5 +1,6 @@
 package com.ranferi.ssrsi.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.activities.HomeActivity;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.UserAdapter;
@@ -39,15 +41,18 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private List<User> mUsers = new ArrayList<>();
 
+    private HomeActivity mActivity;
 
-    @Nullable
+    public HomeFragment() {
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         recyclerViewUsers = (RecyclerView) view.findViewById(R.id.recyclerViewUsers);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-
 
         return view;
     }
@@ -56,6 +61,12 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupRecyclerView(recyclerViewUsers);
         fetchUsers();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (HomeActivity) context;
     }
 
     private void fetchUsers() {
@@ -90,16 +101,16 @@ public class HomeFragment extends Fragment {
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
 
-                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new UserAdapter(mUsers, getActivity());
+        adapter = new UserAdapter(mUsers, mActivity);
         recyclerView.setAdapter(adapter);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mActivity);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
     }

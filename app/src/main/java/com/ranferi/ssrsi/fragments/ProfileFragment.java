@@ -29,12 +29,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private Button buttonUpdate;
-    private TextInputEditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser, mEditTextEmail, mEditTextPassword, mEditTextRePassword;
+    private TextInputEditText mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextUser,
+            mEditTextEmail, mEditTextPassword, mEditTextRePassword;
+
+    public ProfileFragment() {
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_profile, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        User user = SharedPrefManager.getInstance(getActivity()).getUser();
+        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
+
         buttonUpdate = (Button) view.findViewById(R.id.buttonUpdate);
         mEditTextName = (TextInputEditText) view.findViewById(R.id.editTextNameProfile);
         mEditTextLastName = (TextInputEditText) view.findViewById(R.id.editTextLastNameProfile);
@@ -43,19 +56,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         mEditTextEmail = (TextInputEditText) view.findViewById(R.id.editTextEmailProfile);
         mEditTextPassword = (TextInputEditText) view.findViewById(R.id.editTextPasswordProfile);
         mEditTextRePassword = (TextInputEditText) view.findViewById(R.id.editTextRePasswordProfile);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        User user = SharedPrefManager.getInstance(getActivity()).getUser();
-
-        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
         buttonUpdate.setOnClickListener(this);
-
         mEditTextName.setText(user.getName());
         mEditTextLastName.setText(user.getLastName());
         mEditTextMaidenName.setText(user.getMothersMaidenName());
@@ -96,14 +98,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 user.getPassword()
         );
 
-        /*Call<UserResponse> call = service.updateUser(
-                user.getId(),
-                user.getName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getGender()
-        );*/
-
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
@@ -111,7 +105,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
                 if (!response.body().getError()) {
                     SharedPrefManager.getInstance(getActivity()).userLogin(response.body().getUser());
-                    SharedPrefManager.getInstance(getActivity()).Setpassword(password);
+                    SharedPrefManager.getInstance(getActivity()).setPassword(password);
                 }
             }
 

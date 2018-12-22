@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">SSRSI</string>
     <string name="logo_ssrsi_description">Logo SSRSI</string>
     <string name="trabajo_terminal">Trabajo Terminal</string>
@@ -36,7 +36,6 @@
     <string name="place_address_id">Centro</string>
     <string name="imagen_perfil_de_usuario">Imagen perfil de usuario</string>
 
-
     <!-- mensajes -->
     <string name="image_message_description">Mensaje</string>
 
@@ -51,13 +50,42 @@
     <string name="price_question">¿Qué precio?</string>
     <string name="distance_question">¿A qué distancia?</string>
     <string name="music_check">¿Música?</string>
-
+    <string name="with_music">Sin música</string>
+    <string name="without_music">Con música</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
         <item>Perfil</item>
         <item>Sitios</item>
-        <item>Busqueda</item>
+        <item>Búsqueda</item>
         <item>Configuración</item>
     </string-array>
+
+    <string-array name="places_type">
+        <item>Bar</item>
+        <item>Restaurante</item>
+    </string-array>
+
+    <string-array name="price">
+        <item>Precios accesibles</item>
+        <item>Un muy buen precio</item>
+        <item>Un buen precio</item>
+        <item>Una uena relación precio-costo</item>
+        <item>Precios no tan caros</item>
+        <item>Precios muy buenos</item>
+        <item>Con los precios justos para la calidad</item>
+        <item>Precio un poco caro</item>
+        <item>Precios un poco elevados</item>
+        <item>En general caro</item>
+        <item>Precios algo caros</item>
+        <item>Comida cara para la ración que sirven</item>
+        <item>Precios excesivos</item>
+        <item>Caro y malo</item>
+    </string-array>
+
+    <string-array name="distance">
+        <item>Cerca</item>
+        <item>Lejos</item>
+    </string-array>
+
 </resources>

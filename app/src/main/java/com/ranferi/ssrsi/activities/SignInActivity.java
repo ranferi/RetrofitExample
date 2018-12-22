@@ -97,7 +97,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                     Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
 
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
-                    SharedPrefManager.getInstance(getApplicationContext()).Setpassword(password);
+                    SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                 } else {
                     Toast.makeText(getApplicationContext(), "Email o password inválidos", Toast.LENGTH_LONG).show();

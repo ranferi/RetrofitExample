@@ -10,8 +10,6 @@ public class User {
     private String email;
     private String password;
 
-    // private String gender;
-
     // NUEVA En SignUpActivity.java, lo usamos para CREAR un usuario
     public User(String name, String lastName, String mothersMaidenName, String user, String email, String password) {
         this.name = name;

@@ -82,7 +82,7 @@ public class SharedPrefManager {
         return true;
     }
 
-    public void Setpassword(String password) {
+    public void setPassword(String password) {
         // Log.d("ActividadPT", "Estás en setPassword 1, SharedPrefManager pass : " + password);
         // Log.d("ActividadPT", "Estás en setpassword 2, SharedPrefManager contexto: " + sContext);
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);

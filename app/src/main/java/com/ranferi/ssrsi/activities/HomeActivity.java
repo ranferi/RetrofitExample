@@ -1,9 +1,9 @@
 package com.ranferi.ssrsi.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,28 +16,21 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.HomeFragment;
-import com.ranferi.ssrsi.fragments.ItemFragment;
-import com.ranferi.ssrsi.fragments.MessageFragment;
 import com.ranferi.ssrsi.fragments.PlaceListFragment;
 import com.ranferi.ssrsi.fragments.ProfileFragment;
 import com.ranferi.ssrsi.fragments.SearchFragment;
-import com.ranferi.ssrsi.fragments.dummy.DummyContent;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, SearchFragment.OnFragmentInteractionListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView mTextViewName;
     private DrawerLayout drawer;
-    private ActionBarDrawerToggle toggle;
-    private Thread mUiThread;
     private Handler mHandler;
     private Toolbar toolbar;
     NavigationView navigationView;
@@ -50,7 +43,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_PROFILE = "perfil";
     private static final String TAG_SEARCH = "busqueda";
     private static final String TAG_PLACES = "sitios";
-    private static final String TAG_SETTINGS = "settings";
     public static String CURRENT_TAG = TAG_HOME;
 
     // títulos de cada item en el menu nav.
@@ -103,7 +95,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -146,7 +138,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             // This method will trigger on item Click of navigation menu
             @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
                 //Check to see which item was being clicked and perform appropriate action
                 switch (menuItem.getItemId()) {
@@ -203,11 +195,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 super.onDrawerOpened(drawerView);
             }
         };
-
-        //Setting the actionbarToggle to drawer layout
         drawer.addDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
     }
 
@@ -234,15 +222,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void loadFragment() {
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
+            drawer.closeDrawer(GravityCompat.START);
             return;
         }
 
         setToolbarTitle();
 
-
         if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawers();
+            drawer.closeDrawer(GravityCompat.START);
             return;
         }
 
@@ -265,15 +252,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             }
         };
+        mHandler.post(mPendingRunnable);
 
-        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }
-
-        drawer.closeDrawers();
+        drawer.closeDrawer(GravityCompat.START);
 
         invalidateOptionsMenu();
-
     }
 
     private void logout() {
@@ -284,20 +267,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // displaySelectedScreen(item.getItemId());
         // return true;
 
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        // int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
-
 
 }

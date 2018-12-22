@@ -60,6 +60,7 @@
         android:layout_marginRight="16dp"
         android:text="@string/place_address"
         android:textSize="18sp"
+        android:paddingLeft="7dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_name" />

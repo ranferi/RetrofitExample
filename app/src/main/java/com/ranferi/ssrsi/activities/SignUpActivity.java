@@ -19,6 +19,7 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.User;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -90,7 +91,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
-
         // armar un objeto retrofit
         // problema cuando la url no es correcta
         Retrofit retrofit = new Retrofit.Builder()
@@ -98,10 +98,10 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        // defining retrofit api service
+        // Se define el servicio de Retrofit
         APIService service = retrofit.create(APIService.class);
 
-        // defining the user object as we need to pass it with the call
+        // Definimos el objecto 'user' para poder pasarlo con 'call'
         // -----> User user = new User(name, email, password, gender);
         User user = new User(name, lastName, maidenName, userName, email, password);
 
@@ -115,40 +115,40 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 user.getPassword()
         );
 
-        /*Call<UserResponse> call = service.createUser(
-                user.getName(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getGender()
-        );*/
-
-        // calling the api
+        // Se llama a la API
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 // se esconde el dialogo de progreso
                 progressDialog.dismiss();
-
-                // se envia un mensaje de respuesta en un toast
-                Toast.makeText(getApplicationContext(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("TT", "en call.enqueue, onResponse");
-
-                // si no hay error
-                if (!response.body().getError()) {
-                    // inicia la actividad 'Home'
-                    finish();
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
-                    SharedPrefManager.getInstance(getApplicationContext()).Setpassword(password);
-                    mButtonSignUp.setEnabled(true);
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                if (response.isSuccessful()) {
+                    UserResponse userResponse = response.body();
+                    // se envia un mensaje de respuesta en un toast
+                    if (userResponse != null) {
+                        Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.d("ActividadTT", "en call.enqueue, onResponse: " + userResponse.getMessage());
+                        // si no hay error
+                        if (!userResponse.getError()) {
+                            // inicia la actividad 'Home'
+                            finish();
+                            SharedPrefManager.getInstance(getApplicationContext()).userLogin(userResponse.getUser());
+                            SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        }
+                    }
+                } else {
+                    ResponseBody errorBody = response.errorBody();
+                    if (errorBody != null)
+                        Log.d("ActividadTT", "en SignUpActivity, call.enqueue, onResponse not successful, error: " + errorBody.toString());
                 }
+                mButtonSignUp.setEnabled(true);
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("TT", "en call.enqueue, onFailure");
+                Log.d("ActividadTT", "en SignUpActivity call.enqueue, onFailure message: " + t.getMessage());
             }
         });
 
@@ -164,25 +164,25 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String password = mEditTextPassword.getText().toString();
         String reEnterPassword = mReEnterPasswordText.getText().toString();
 
-        if (name.length() < 3) {
+        if (name.isEmpty() || name.length() >= 3) {
+            mEditTextName.setError(null);
+        } else {
             mEditTextName.setError("Al menos 3 caracteres");
             valid = false;
-        } else {
-            mEditTextName.setError(null);
         }
 
-        if (lastName.length() < 3) {
+        if (lastName.isEmpty() || lastName.length() >= 3) {
+            mEditTextLastName.setError(null);
+        } else {
             mEditTextLastName.setError("Al menos 3 caracteres");
             valid = false;
-        } else {
-            mEditTextLastName.setError(null);
         }
 
-        if (maidenName.length() < 3) {
+        if (maidenName.isEmpty() || maidenName.length() >= 3) {
+            mEditTextMaidenName.setError(null);
+        } else {
             mEditTextMaidenName.setError("Al menos 3 caracteres");
             valid = false;
-        } else {
-            mEditTextMaidenName.setError(null);
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -210,7 +210,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Falló el inicio de sesión", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Falló el registro. Intenta de nuevo más tarde.", Toast.LENGTH_LONG).show();
 
         mButtonSignUp.setEnabled(true);
     }
