@@ -68,6 +68,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void updateUser() {
+        if (!validate()) {
+            editFailed();
+            return;
+        }
+
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Actualizando...");
         progressDialog.show();
@@ -128,6 +133,68 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         final StringBuilder sb = new StringBuilder(charSequence.length());
         sb.append(charSequence);
         return sb.toString();
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        String name = mEditTextName.getText().toString();
+        String lastName = mEditTextLastName.getText().toString();
+        String maidenName = mEditTextMaidenName.getText().toString();
+        String email = mEditTextEmail.getText().toString();
+        String password = mEditTextPassword.getText().toString();
+        String reEnterPassword = mEditTextRePassword.getText().toString();
+
+        if (name.isEmpty() || name.length() >= 3) {
+            mEditTextName.setError(null);
+        } else {
+            mEditTextName.setError("Al menos 3 caracteres");
+            valid = false;
+        }
+
+        if (lastName.isEmpty() || lastName.length() >= 3) {
+            mEditTextLastName.setError(null);
+        } else {
+            mEditTextLastName.setError("Al menos 3 caracteres");
+            valid = false;
+        }
+
+        if (maidenName.isEmpty() || maidenName.length() >= 3) {
+            mEditTextMaidenName.setError(null);
+        } else {
+            mEditTextMaidenName.setError("Al menos 3 caracteres");
+            valid = false;
+        }
+
+        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            mEditTextEmail.setError("Ingresa un email válido");
+            valid = false;
+        } else {
+            mEditTextEmail.setError(null);
+        }
+
+        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+            mEditTextPassword.setError("Entre 4 y 10 caracteres alfanuméricos");
+            valid = false;
+        } else {
+            mEditTextPassword.setError(null);
+        }
+
+        if (reEnterPassword.isEmpty() || reEnterPassword.length() < 4 || reEnterPassword.length() > 10 || !(reEnterPassword.equals(password))) {
+            mEditTextRePassword.setError("El password no coincide");
+            valid = false;
+        } else {
+            mEditTextRePassword.setError(null);
+        }
+
+        return valid;
+    }
+
+
+    public void editFailed() {
+        Toast.makeText(getActivity(), "Tus datos están incompletos.", Toast.LENGTH_LONG).show();
+
+        buttonUpdate.setEnabled(true);
     }
 
 }
