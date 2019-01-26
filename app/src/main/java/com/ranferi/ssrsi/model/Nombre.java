@@ -4,7 +4,7 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Nombres {
+public class Nombre {
 
     @SerializedName("nombre_sitio")
     @Expose
@@ -17,7 +17,7 @@ public class Nombres {
      * No args constructor for use in serialization
      * 
      */
-    public Nombres() {
+    public Nombre() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class Nombres {
      * @param nombreSitio
      * @param proviene
      */
-    public Nombres(String nombreSitio, String proviene) {
+    public Nombre(String nombreSitio, String proviene) {
         super();
         this.nombreSitio = nombreSitio;
         this.proviene = proviene;

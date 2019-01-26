@@ -4,7 +4,7 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Imagenes {
+public class Imagene {
 
     @SerializedName("imagen")
     @Expose
@@ -14,14 +14,14 @@ public class Imagenes {
      * No args constructor for use in serialization
      * 
      */
-    public Imagenes() {
+    public Imagene() {
     }
 
     /**
      * 
      * @param imagen
      */
-    public Imagenes(String imagen) {
+    public Imagene(String imagen) {
         super();
         this.imagen = imagen;
     }

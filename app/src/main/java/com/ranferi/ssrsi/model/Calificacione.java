@@ -4,7 +4,7 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Calificaciones {
+public class Calificacione {
 
     @SerializedName("calificacion")
     @Expose
@@ -17,7 +17,7 @@ public class Calificaciones {
      * No args constructor for use in serialization
      * 
      */
-    public Calificaciones() {
+    public Calificacione() {
     }
 
     /**
@@ -25,7 +25,7 @@ public class Calificaciones {
      * @param calificacion calificación del sitio
      * @param proviene de una base de datos
      */
-    public Calificaciones(String calificacion, String proviene) {
+    public Calificacione(String calificacion, String proviene) {
         super();
         this.calificacion = calificacion;
         this.proviene = proviene;

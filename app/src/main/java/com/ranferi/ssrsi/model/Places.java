@@ -3,6 +3,7 @@ package com.ranferi.ssrsi.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -26,34 +27,32 @@ public class Places {
     @SerializedName("musica")
     @Expose
     private boolean musica;
-    @SerializedName("nombres")
+    @SerializedName("mNombres")
     @Expose
-    private List<Nombres> nombres = new ArrayList<Nombres>();
-    @SerializedName("calificaciones")
+    private List<Nombre> mNombres = new ArrayList<Nombre>();
+    @SerializedName("mCalificaciones")
     @Expose
-    private List<Calificaciones> calificaciones = new ArrayList<Calificaciones>();
+    private List<Calificacione> mCalificaciones = new ArrayList<Calificacione>();
     @SerializedName("total")
     @Expose
     private double total;
     @SerializedName("categorias")
     @Expose
     private List<Categoria> categorias = new ArrayList<Categoria>();
-    @SerializedName("imagenes")
+    @SerializedName("mImagenes")
     @Expose
-    private List<Imagenes> imagenes = new ArrayList<Imagenes>();
+    private List<Imagene> mImagenes = new ArrayList<Imagene>();
     @SerializedName("comentarios")
     @Expose
     private List<Comentario> comentarios = new ArrayList<Comentario>();
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public Places() {
     }
 
     /**
-     * 
      * @param total
      * @param id
      * @param musica
@@ -67,7 +66,7 @@ public class Places {
      * @param categorias
      * @param longitud
      */
-    public Places(int id, String medi, String latitud, String longitud, String direccion, boolean musica, List<Nombres> nombres, List<Calificaciones> calificaciones, double total, List<Categoria> categorias, List<Imagenes> imagenes, List<Comentario> comentarios) {
+    public Places(int id, String medi, String latitud, String longitud, String direccion, boolean musica, List<Nombre> nombres, List<Calificacione> calificaciones, double total, List<Categoria> categorias, List<Imagene> imagenes, List<Comentario> comentarios) {
         super();
         this.id = id;
         this.medi = medi;
@@ -75,11 +74,11 @@ public class Places {
         this.longitud = longitud;
         this.direccion = direccion;
         this.musica = musica;
-        this.nombres = nombres;
-        this.calificaciones = calificaciones;
+        this.mNombres = nombres;
+        this.mCalificaciones = calificaciones;
         this.total = total;
         this.categorias = categorias;
-        this.imagenes = imagenes;
+        this.mImagenes = imagenes;
         this.comentarios = comentarios;
     }
 
@@ -111,9 +110,11 @@ public class Places {
         return longitud;
     }
 
+
     public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
+
 
     public String getDireccion() {
         return direccion;
@@ -131,20 +132,20 @@ public class Places {
         this.musica = musica;
     }
 
-    public List<Nombres> getNombres() {
-        return nombres;
+    public List<Nombre> getNombres() {
+        return mNombres;
     }
 
-    public void setNombres(List<Nombres> nombres) {
-        this.nombres = nombres;
+    public void setNombres(List<Nombre> mNombres) {
+        this.mNombres = mNombres;
     }
 
-    public List<Calificaciones> getCalificaciones() {
-        return calificaciones;
+    public List<Calificacione> getCalificaciones() {
+        return mCalificaciones;
     }
 
-    public void setCalificaciones(List<Calificaciones> calificaciones) {
-        this.calificaciones = calificaciones;
+    public void setCalificaciones(List<Calificacione> mCalificaciones) {
+        this.mCalificaciones = mCalificaciones;
     }
 
     public double getTotal() {
@@ -163,12 +164,12 @@ public class Places {
         this.categorias = categorias;
     }
 
-    public List<Imagenes> getImagenes() {
-        return imagenes;
+    public List<Imagene> getImagenes() {
+        return mImagenes;
     }
 
-    public void setImagenes(List<Imagenes> imagenes) {
-        this.imagenes = imagenes;
+    public void setImagenes(List<Imagene> mImagenes) {
+        this.mImagenes = mImagenes;
     }
 
     public List<Comentario> getComentarios() {
