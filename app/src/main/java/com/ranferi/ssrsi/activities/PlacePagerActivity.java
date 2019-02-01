@@ -14,6 +14,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.PlaceFragment;
 import com.ranferi.ssrsi.helper.PlaceLab;
 import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.Place1;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,12 +22,12 @@ import java.util.UUID;
 public class PlacePagerActivity extends AppCompatActivity {
 
     private static final String EXTRA_CRIME_ID =
-            "com.bignerdranch.android.criminalintent.place_id";
+            "com.ranferi.ssrsi.place_id";
 
     private ViewPager mViewPager;
     private List<Place> mPlaces;
 
-    public static Intent newIntent(Context packageContext, UUID placeId) {
+    public static Intent newIntent(Context packageContext, int placeId) {
         Intent intent = new Intent(packageContext, PlacePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID, placeId);
         return intent;
@@ -37,7 +38,7 @@ public class PlacePagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_pager);
 
-        UUID placeId = (UUID) getIntent()
+        int placeId = (int) getIntent()
                 .getSerializableExtra(EXTRA_CRIME_ID);
 
 
@@ -57,7 +58,7 @@ public class PlacePagerActivity extends AppCompatActivity {
         });
 
         for (int i = 0; i < mPlaces.size(); i++) {
-            if (mPlaces.get(i).getId().equals(placeId)) {
+            if (mPlaces.get(i).getId() == placeId) {
                 mViewPager.setCurrentItem(i);
                 break;
             }

@@ -1,34 +1,122 @@
+
 package com.ranferi.ssrsi.model;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Place {
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private UUID mId;
-    private String nombre;
-    private boolean musica;
-    private double lat;
-    private double lon;
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
+public class Place extends RealmObject {
+
+    @SerializedName("id")
+    @Expose
+    @PrimaryKey
+    private int id;
+    @SerializedName("medi")
+    @Expose
+    private String medi;
+    @SerializedName("latitud")
+    @Expose
+    private String latitud;
+    @SerializedName("longitud")
+    @Expose
+    private String longitud;
+    @SerializedName("direccion")
+    @Expose
     private String direccion;
+    @SerializedName("musica")
+    @Expose
+    private boolean musica;
+    @SerializedName("nombres")
+    @Expose
+    private RealmList<Nombre> mNombres = new RealmList<Nombre>();
+    @SerializedName("calificaciones")
+    @Expose
+    private RealmList<Calificacione> mCalificaciones = new RealmList<Calificacione>();
+    @SerializedName("total")
+    @Expose
+    private double total;
+    @SerializedName("categorias")
+    @Expose
+    private RealmList<Categoria> categorias = new RealmList<Categoria>();
+    @SerializedName("imagenes")
+    @Expose
+    private RealmList<Imagene> mImagenes = new RealmList<Imagene>();
+    @SerializedName("comentarios")
+    @Expose
+    private RealmList<Comentario> comentarios = new RealmList<Comentario>();
 
-    private Date mDate;
-
+    /**
+     * No args constructor for use in serialization
+     */
     public Place() {
-        mId = UUID.randomUUID();
-        mDate = new Date();
     }
 
-    public UUID getId() {
-        return mId;
+
+    public Place(int id, String medi, String latitud, String longitud, String direccion,
+                 boolean musica, RealmList<Nombre> nombres, RealmList<Calificacione> calificaciones,
+                 double total, RealmList<Categoria> categorias, RealmList<Imagene> imagenes,
+                 RealmList<Comentario> comentarios) {
+        super();
+        this.id = id;
+        this.medi = medi;
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.direccion = direccion;
+        this.musica = musica;
+        this.mNombres = nombres;
+        this.mCalificaciones = calificaciones;
+        this.total = total;
+        this.categorias = categorias;
+        this.mImagenes = imagenes;
+        this.comentarios = comentarios;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getId() {
+        return id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getMedi() {
+        return medi;
+    }
+
+    public void setMedi(String medi) {
+        this.medi = medi;
+    }
+
+    public String getLatitud() {
+        return latitud;
+    }
+
+    public void setLatitud(String latitud) {
+        this.latitud = latitud;
+    }
+
+    public String getLongitud() {
+        return longitud;
+    }
+
+
+    public void setLongitud(String longitud) {
+        this.longitud = longitud;
+    }
+
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public boolean isMusica() {
@@ -39,24 +127,52 @@ public class Place {
         this.musica = musica;
     }
 
-    public double getLat() {
-        return lat;
+    public RealmList<Nombre> getNombres() {
+        return mNombres;
     }
 
-    public double getLon() {
-        return lon;
+    public void setNombres(RealmList<Nombre> mNombres) {
+        this.mNombres = mNombres;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public RealmList<Calificacione> getCalificaciones() {
+        return mCalificaciones;
     }
 
-
-    public Date getDate() {
-        return mDate;
+    public void setCalificaciones(RealmList<Calificacione> mCalificaciones) {
+        this.mCalificaciones = mCalificaciones;
     }
-    public void setDate(Date date) {
-        mDate = date;
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public RealmList<Categoria> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(RealmList<Categoria> categorias) {
+        this.categorias = categorias;
+    }
+
+    public RealmList<Imagene> getImagenes() {
+        return mImagenes;
+    }
+
+    public void setImagenes(RealmList<Imagene> mImagenes) {
+        this.mImagenes = mImagenes;
+    }
+
+    public RealmList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(RealmList<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
 }

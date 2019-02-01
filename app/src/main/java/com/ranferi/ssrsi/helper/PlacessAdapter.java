@@ -1,6 +1,7 @@
 package com.ranferi.ssrsi.helper;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,20 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.activities.PlacePagerActivity;
 import com.ranferi.ssrsi.model.Nombre;
-import com.ranferi.ssrsi.model.Places;
+import com.ranferi.ssrsi.model.Place;
 
 import java.util.List;
 
 public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHolder> {
-    private List<Places> mPlacess;
+    private List<Place> mPlaces;
     private Context sContext;
 
-    public PlacessAdapter(List<Places> places, Context context) {
-        Log.d("ActividadPT", String.valueOf(places.isEmpty()));
-        this.mPlacess = places;
+    public PlacessAdapter(List<Place> places, Context context) {
+        this.mPlaces = places;
         this.sContext = context;
     }
 
@@ -35,19 +37,19 @@ public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHo
 
     @Override
     public void onBindViewHolder(@NonNull PlacessAdapter.PlacesHolder placeHolder, int i) {
-        Places place = mPlacess.get(i);
+        Place place = mPlaces.get(i);
         placeHolder.bind(place);
     }
 
     @Override
     public int getItemCount() {
-        return mPlacess.size();
+        return mPlaces.size();
     }
 
     public class PlacesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
         private TextView mAddressTextView;
-        private Places mPlace;
+        private Place mPlace;
         private ImageView mSolvedImageView;
 
         public PlacesHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -58,24 +60,24 @@ public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHo
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.place_solved);
         }
 
-        public void bind(Places place) {
+        public void bind(Place place) {
             mPlace = place;
-            Nombre nombre1 = mPlace.getNombres().get(0);
-            mNameTextView.setText(nombre1.getNombreSitio());
+            if (mPlace.getNombres().size() != 0) {
+                Nombre nombre1 = mPlace.getNombres().get(0);
+               mNameTextView.setText(nombre1.getNombreSitio());
+            }
             mAddressTextView.setText(mPlace.getDireccion());
-            mSolvedImageView.setVisibility(place.isMusica() ? View.VISIBLE : View.GONE);
+            mSolvedImageView.setVisibility( View.VISIBLE);
         }
 
         @Override
         public void onClick(View view) {
-            //Intent intent = new Intent(getActivity(), PlaceActivity.class);
-            // Intent intent = PlaceActivity.newIntent(getActivity(), mPlace.getId()); CrimeActivity
-            //Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
-            //sContext.startActivity(intent);
-
-            //Toast.makeText(getActivity(),
-            //        mPlace.getNombre() + " clicked!", Toast.LENGTH_SHORT)
-            //        .show();
+            Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
+            sContext.startActivity(intent);
+            if (mPlace.getNombres().size() != 0) {
+                Nombre nombre1 = mPlace.getNombres().get(0);
+                Toast.makeText(sContext, nombre1.getNombreSitio() + " clicked!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

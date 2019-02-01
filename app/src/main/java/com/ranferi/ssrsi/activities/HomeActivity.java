@@ -28,6 +28,9 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int NAVDRAWER_LAUNCH_DELAY = 250;
@@ -62,6 +65,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finish();
             startActivity(new Intent(this, SignInActivity.class));
         }
+
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder().name("ssrsi.realm").build();
+        Realm.setDefaultConfiguration(config);
 
         setContentView(R.layout.activity_home);
 

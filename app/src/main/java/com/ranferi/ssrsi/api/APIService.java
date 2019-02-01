@@ -2,7 +2,7 @@ package com.ranferi.ssrsi.api;
 
 import com.ranferi.ssrsi.model.MessageResponse;
 import com.ranferi.ssrsi.model.Messages;
-import com.ranferi.ssrsi.model.Placess;
+import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
 
@@ -80,5 +80,5 @@ public interface APIService {
     Call<Messages> getMessages(@Path("id") int id);
 
     @GET("prueba")
-    Call<Placess> getPlaces();
+    Call<Places> getPlaces();
 }

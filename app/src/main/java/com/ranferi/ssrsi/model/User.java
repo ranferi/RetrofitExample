@@ -1,17 +1,25 @@
 package com.ranferi.ssrsi.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
 
     private int id;
     private String name;
     private String lastName;
     private String mothersMaidenName;
+    @SerializedName("usuario")
+    @Expose
     private String user;
     private String email;
     private String password;
 
+    public User() {}
+
     // NUEVA En SignUpActivity.java, lo usamos para CREAR un usuario
     public User(String name, String lastName, String mothersMaidenName, String user, String email, String password) {
+        super();
         this.name = name;
         this.lastName = lastName;
         this.mothersMaidenName = mothersMaidenName;
@@ -22,6 +30,7 @@ public class User {
 
     // NUEVA En ProfileFragment.java, para ver y actualizar información
     public User(int id, String name, String lastName, String mothersMaidenName, String user, String email, String password) {
+        super();
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -33,6 +42,7 @@ public class User {
 
     // NUEVA En SharedPrefManager.java, para obtener información del usuario (sin password)
     public User(int id, String name, String lastName, String mothersMaidenName, String user, String email) {
+        super();
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -43,6 +53,7 @@ public class User {
 
     // En SignUpActivity.java, lo usamos para CREAR un usuario
     public User(String name, String email, String password) {
+        super();
         this.name = name;
         this.email = email;
         this.password = password;
@@ -51,6 +62,7 @@ public class User {
 
     // En ProfileFragment.java, para ver y actualizar información
     public User(int id, String name, String email, String password) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
@@ -60,13 +72,12 @@ public class User {
 
     // En SharedPrefManager.java, para obtener información del usuario (sin password)
     public User(int id, String name, String email) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
         // this.gender = gender;
     }
-
-
 
     public int getId() {
         return id;
@@ -96,9 +107,33 @@ public class User {
         return user;
     }
 
-//    public String getGender() {
-//        return gender;
-//    }
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setMothersMaidenName(String mothersMaidenName) {
+        this.mothersMaidenName = mothersMaidenName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     @Override
     public String toString() {

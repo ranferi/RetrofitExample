@@ -6,7 +6,6 @@ import com.ranferi.ssrsi.model.Place;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class PlaceLab {
 
@@ -20,21 +19,24 @@ public class PlaceLab {
         }
         return sPlaceLab;
     }
+
     private PlaceLab(Context context) {
         mPlaces = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Place crime = new Place();
-            crime.setNombre("Sitio #" + i);
+            crime.setDireccion("Sitio #" + i);
             crime.setMusica(i % 2 == 0); // Every other one
             mPlaces.add(crime);
         }
     }
+
     public List<Place> getPlaces() {
         return mPlaces;
     }
-    public Place getPlace(UUID id) {
+
+    public Place getPlace(int id) {
         for (Place place : mPlaces) {
-            if (place.getId().equals(id)) {
+            if (place.getId() == id) {
                 return place;
             }
         }

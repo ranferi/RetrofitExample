@@ -4,7 +4,9 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Nombre {
+import io.realm.RealmObject;
+
+public class Nombre extends RealmObject {
 
     @SerializedName("nombre_sitio")
     @Expose

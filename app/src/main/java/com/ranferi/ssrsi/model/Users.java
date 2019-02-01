@@ -6,9 +6,7 @@ public class Users {
 
     private ArrayList<User> users;
 
-    public Users() {
-
-    }
+    public Users() { }
 
     public ArrayList<User> getUsers() {
         return users;

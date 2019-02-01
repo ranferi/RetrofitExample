@@ -12,16 +12,15 @@ import android.widget.TextView;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.activities.PlacePagerActivity;
-import com.ranferi.ssrsi.fragments.PlaceListFragment;
-import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.Place1;
 
 import java.util.List;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceHolder> {
-    private List<Place> mPlaces;
+    private List<Place1> mPlaces;
     private Context sContext;
 
-    public PlaceAdapter(List<Place> places, Context context) {
+    public PlaceAdapter(List<Place1> places, Context context) {
         this.mPlaces = places;
         this.sContext = context;
     }
@@ -35,7 +34,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceHolder>
 
     @Override
     public void onBindViewHolder(@NonNull PlaceHolder placeHolder, int i) {
-        Place place = mPlaces.get(i);
+        Place1 place = mPlaces.get(i);
         placeHolder.bind(place);
     }
 
@@ -47,7 +46,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceHolder>
     public class PlaceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
         private TextView mAddressTextView;
-        private Place mPlace;
+        private Place1 mPlace;
         private ImageView mSolvedImageView;
 
         public PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -58,7 +57,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceHolder>
             mSolvedImageView = (ImageView) itemView.findViewById(R.id.place_solved);
         }
 
-        public void bind(Place place) {
+        public void bind(Place1 place) {
             mPlace = place;
             mNameTextView.setText(mPlace.getNombre());
             mAddressTextView.setText(mPlace.getDate().toString());
@@ -69,8 +68,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceHolder>
         public void onClick(View view) {
             //Intent intent = new Intent(getActivity(), PlaceActivity.class);
             // Intent intent = PlaceActivity.newIntent(getActivity(), mPlace.getId()); CrimeActivity
-            Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
-            sContext.startActivity(intent);
+            //Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
+            //sContext.startActivity(intent);
 
             //Toast.makeText(getActivity(),
             //        mPlace.getNombre() + " clicked!", Toast.LENGTH_SHORT)

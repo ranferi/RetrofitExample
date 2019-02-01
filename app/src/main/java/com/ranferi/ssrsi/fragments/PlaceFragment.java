@@ -19,8 +19,6 @@ import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
-import java.util.UUID;
-
 public class PlaceFragment extends Fragment {
 
     private static final String ARG_PLACE_ID = "place_id";
@@ -36,7 +34,7 @@ public class PlaceFragment extends Fragment {
     public PlaceFragment() {
     }
 
-    public static PlaceFragment newInstance(UUID placeId) {
+    public static PlaceFragment newInstance(int placeId) {
         Bundle args = new Bundle();
         args.putSerializable(ARG_PLACE_ID, placeId);
         PlaceFragment fragment = new PlaceFragment();
@@ -47,10 +45,10 @@ public class PlaceFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mPlace = new Place();
+        //mPlace = new Place1();
         // UUID placeId = (UUID) getActivity().getIntent()
         //        .getSerializableExtra(PlaceActivity.EXTRA_CRIME_ID); private access
-        UUID placeId = (UUID) getArguments().getSerializable(ARG_PLACE_ID);
+        int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
         mPlace = PlaceLab.get(getActivity()).getPlace(placeId);
     }
 
@@ -60,10 +58,10 @@ public class PlaceFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_place, container, false);
 
         mNameField = (TextView) v.findViewById(R.id.place_name);
-        mNameField.setText(mPlace.getNombre());
+        mNameField.setText(mPlace.getNombres().get(0).getNombreSitio());
 
         mAddressField = (TextView) v.findViewById(R.id.place_address);
-        mAddressField.setText(mPlace.getNombre() + "!");
+        mAddressField.setText(mPlace.getNombres().get(0).getNombreSitio());
 
         mLikedCheckBox = (CheckBox)v.findViewById(R.id.place_like);
         mLikedCheckBox.setChecked(mPlace.isMusica());
@@ -86,7 +84,7 @@ public class PlaceFragment extends Fragment {
         });
 
         mDateButton = (Button) v.findViewById(R.id.crime_date);
-        mDateButton.setText(mPlace.getDate().toString());
+        mDateButton.setText(mPlace.getDireccion());
         mDateButton.setEnabled(false);
 
 
@@ -97,7 +95,7 @@ public class PlaceFragment extends Fragment {
         mViewPager.setAdapter(viewPagerAdapter);
 
         final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
-        pageIndicatorView.setCount(viewPagerAdapter.getCount()); // specify total count of indicators
+        pageIndicatorView.setCount(viewPagerAdapter.getCount()); // especifica el total de indicadores
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
