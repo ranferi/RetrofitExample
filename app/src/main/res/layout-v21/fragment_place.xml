@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,20 +27,20 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:elevation="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/place_name"
+        app:layout_constraintBottom_toBottomOf="@+id/viewPager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.990" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/place_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/place_name"
@@ -47,7 +48,77 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="216dp" />-->
+
+    <!--<at.blogc.android.views.ExpandableTextView
+        android:id="@+id/expandableTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/place_name"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:animation_duration="750"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+
+    <Button
+        android:id="@+id/button_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/expand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/expandableTextView" />-->
+
+    <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expandableTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+
+
+        expandableTextView:animDuration="200"
+        expandableTextView:layout_constraintEnd_toEndOf="parent"
+        expandableTextView:layout_constraintStart_toStartOf="parent"
+        expandableTextView:layout_constraintTop_toBottomOf="@+id/viewPager"
+        expandableTextView:maxCollapsedLines="4">
+
+        <TextView
+            android:id="@id/expandable_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/place_name"
+            android:layout_marginRight="10dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#666666"
+             />
+
+        <ImageButton
+            android:id="@id/expand_collapse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:background="@android:color/transparent"
+            android:padding="16dp" />
+    </com.ms.square.android.expandabletextview.ExpandableTextView>
 
     <TextView
         android:id="@+id/place_address"
@@ -63,7 +134,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_name" />
+        app:layout_constraintTop_toBottomOf="@+id/expandableTextView" />
 
     <TextView
         android:id="@+id/textView"
@@ -113,16 +184,17 @@
     <CheckBox
         android:id="@+id/place_like"
         style="?android:attr/starStyle"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:text="@string/place_like"
         android:textColor="@color/jumbo"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/place_music"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/place_music" />
 
 </android.support.constraint.ConstraintLayout>

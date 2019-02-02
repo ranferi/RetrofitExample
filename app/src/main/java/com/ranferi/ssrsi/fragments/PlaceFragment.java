@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Place;
@@ -44,14 +45,19 @@ public class PlaceFragment extends Fragment {
         int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
         realm = Realm.getDefaultInstance();
 
+        final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView)
+                .findViewById(R.id.expandable_text);
+
         RealmQuery<Place> query = realm.where(Place.class);
         Place place = query.equalTo("id", placeId).findFirst();
 
-        TextView nameField = (TextView) v.findViewById(R.id.place_name);
-        nameField.setText(place.getNombres().get(0).getNombreSitio());
+        // TextView nameField = (TextView) v.findViewById(R.id.place_name);
+        String nombres = place.getNombres().get(0).getNombreSitio() + "\n" + "Otros nombres" + "\n" + "Más nombres";
+        //nameField.setText(place.getNombres().get(0).getNombreSitio());
+        expandableTextView.setText(nombres);
 
         TextView addressField = (TextView) v.findViewById(R.id.place_address);
-        addressField.setText(place.getNombres().get(0).getNombreSitio());
+        addressField.setText(place.getDireccion());
 
         CheckBox likedCheckBox = (CheckBox) v.findViewById(R.id.place_like);
         likedCheckBox.setChecked(place.isMusica());
@@ -73,9 +79,9 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-        Button dateButton = (Button) v.findViewById(R.id.crime_date);
+        /*Button dateButton = (Button) v.findViewById(R.id.crime_date);
         dateButton.setText(place.getDireccion());
-        dateButton.setEnabled(false);
+        dateButton.setEnabled(false);*/
 
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());

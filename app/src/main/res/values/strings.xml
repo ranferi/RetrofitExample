@@ -52,6 +52,8 @@
     <string name="music_check">¿Música?</string>
     <string name="with_music">Sin música</string>
     <string name="without_music">Con música</string>
+    <string name="expand">Expand</string>
+    <string name="collapse">Collapse</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
