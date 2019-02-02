@@ -14,25 +14,20 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.helper.PlaceLab;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
+
+import io.realm.Realm;
+import io.realm.RealmQuery;
 
 public class PlaceFragment extends Fragment {
 
     private static final String ARG_PLACE_ID = "place_id";
 
-    private Place mPlace;
-    private TextView mNameField;
-    private TextView mAddressField;
-    private CheckBox mLikedCheckBox;
-    private CheckBox mMusicCheckBox;
-    private Button mDateButton;
-    private ViewPager mViewPager;
+    private Realm realm;
 
-    public PlaceFragment() {
-    }
+    public PlaceFragment() { }
 
     public static PlaceFragment newInstance(int placeId) {
         Bundle args = new Bundle();
@@ -42,30 +37,25 @@ public class PlaceFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //mPlace = new Place1();
-        // UUID placeId = (UUID) getActivity().getIntent()
-        //        .getSerializableExtra(PlaceActivity.EXTRA_CRIME_ID); private access
-        int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
-        mPlace = PlaceLab.get(getActivity()).getPlace(placeId);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_place, container, false);
+        int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
+        realm = Realm.getDefaultInstance();
 
-        mNameField = (TextView) v.findViewById(R.id.place_name);
-        mNameField.setText(mPlace.getNombres().get(0).getNombreSitio());
+        RealmQuery<Place> query = realm.where(Place.class);
+        Place place = query.equalTo("id", placeId).findFirst();
 
-        mAddressField = (TextView) v.findViewById(R.id.place_address);
-        mAddressField.setText(mPlace.getNombres().get(0).getNombreSitio());
+        TextView nameField = (TextView) v.findViewById(R.id.place_name);
+        nameField.setText(place.getNombres().get(0).getNombreSitio());
 
-        mLikedCheckBox = (CheckBox)v.findViewById(R.id.place_like);
-        mLikedCheckBox.setChecked(mPlace.isMusica());
-        mLikedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        TextView addressField = (TextView) v.findViewById(R.id.place_address);
+        addressField.setText(place.getNombres().get(0).getNombreSitio());
+
+        CheckBox likedCheckBox = (CheckBox) v.findViewById(R.id.place_like);
+        likedCheckBox.setChecked(place.isMusica());
+        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
@@ -73,35 +63,30 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-        mMusicCheckBox = (CheckBox)v.findViewById(R.id.place_music);
-        mMusicCheckBox.setChecked(mPlace.isMusica());
-        mMusicCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
+        musicCheckBox.setChecked(place.isMusica());
+        musicCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView,
                                          boolean isChecked) {
-                mPlace.setMusica(isChecked);
+                place.setMusica(isChecked);
             }
         });
 
-        mDateButton = (Button) v.findViewById(R.id.crime_date);
-        mDateButton.setText(mPlace.getDireccion());
-        mDateButton.setEnabled(false);
+        Button dateButton = (Button) v.findViewById(R.id.crime_date);
+        dateButton.setText(place.getDireccion());
+        dateButton.setEnabled(false);
 
-
-
-        mViewPager = (ViewPager) v.findViewById(R.id.viewPager);
-
+        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
-        mViewPager.setAdapter(viewPagerAdapter);
+        viewPager.setAdapter(viewPagerAdapter);
 
         final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setCount(viewPagerAdapter.getCount()); // especifica el total de indicadores
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
+            public void onPageScrolled(int i, float v, int i1) { }
 
             @Override
             public void onPageSelected(int i) {
@@ -109,13 +94,15 @@ public class PlaceFragment extends Fragment {
             }
 
             @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
+            public void onPageScrollStateChanged(int i) { }
         });
 
-
-
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        realm.close();
     }
 }

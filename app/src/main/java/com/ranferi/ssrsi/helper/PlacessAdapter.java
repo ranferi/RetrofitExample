@@ -76,7 +76,7 @@ public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHo
             sContext.startActivity(intent);
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
-                Toast.makeText(sContext, nombre1.getNombreSitio() + " clicked!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(sContext, nombre1.getNombreSitio(), Toast.LENGTH_SHORT).show();
             }
         }
     }

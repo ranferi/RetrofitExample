@@ -19,13 +19,16 @@ import com.ranferi.ssrsi.model.Place1;
 import java.util.List;
 import java.util.UUID;
 
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
+
 public class PlacePagerActivity extends AppCompatActivity {
 
     private static final String EXTRA_CRIME_ID =
             "com.ranferi.ssrsi.place_id";
 
-    private ViewPager mViewPager;
-    private List<Place> mPlaces;
+    private Realm realm;
 
     public static Intent newIntent(Context packageContext, int placeId) {
         Intent intent = new Intent(packageContext, PlacePagerActivity.class);
@@ -41,27 +44,36 @@ public class PlacePagerActivity extends AppCompatActivity {
         int placeId = (int) getIntent()
                 .getSerializableExtra(EXTRA_CRIME_ID);
 
+        realm = Realm.getDefaultInstance();
 
-        mViewPager = (ViewPager) findViewById(R.id.place_view_pager);
-        mPlaces = PlaceLab.get(this).getPlaces();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+        RealmQuery<Place> placesList = realm.where(Place.class);
+        RealmResults<Place> places = placesList.findAll();
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.place_view_pager);
+        viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {
-                Place place = mPlaces.get(position);
+                Place place = places.get(position);
                 return PlaceFragment.newInstance(place.getId());
             }
             @Override
             public int getCount() {
-                return mPlaces.size();
+                return places.size();
             }
         });
 
-        for (int i = 0; i < mPlaces.size(); i++) {
-            if (mPlaces.get(i).getId() == placeId) {
-                mViewPager.setCurrentItem(i);
+        for (int i = 0; i < places.size(); i++) {
+            if (places.get(i).getId() == placeId) {
+                viewPager.setCurrentItem(i);
                 break;
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
     }
 }
