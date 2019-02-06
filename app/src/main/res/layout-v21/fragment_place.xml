@@ -139,15 +139,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_like" />
+        app:layout_constraintTop_toBottomOf="@+id/first_dropdown_text_view" />
 
     <CheckBox
         android:id="@+id/place_music"
@@ -179,6 +177,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_music" />
+
+    <hakobastvatsatryan.DropdownTextView
+        android:id="@+id/first_dropdown_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:arrow_drawable="@drawable/arrow"
+        app:content_padding="6dp"
+        app:content_text_size="18sp"
+        app:expand_duration="150"
+        app:layout_constraintTop_toBottomOf="@+id/place_like"
+        app:panel_padding="10dp"
+        app:title_text_size="30sp" />
 
 
 

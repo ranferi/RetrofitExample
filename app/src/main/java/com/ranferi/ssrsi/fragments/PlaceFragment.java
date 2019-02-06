@@ -20,6 +20,7 @@ import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
 import at.blogc.android.views.ExpandableTextView;
+import hakobastvatsatryan.DropdownTextView;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -115,6 +116,11 @@ public class PlaceFragment extends Fragment {
             @Override
             public void onPageScrollStateChanged(int i) { }
         });
+
+
+        DropdownTextView secondDropdownTextView = (DropdownTextView) v.findViewById(R.id.first_dropdown_text_view);
+        secondDropdownTextView.setTitleText(place.getNombres().get(0).getNombreSitio());
+        secondDropdownTextView.setContentText(nombres);
 
         return v;
     }
