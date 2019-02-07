@@ -19,8 +19,8 @@ import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
-import at.blogc.android.views.ExpandableTextView;
-import hakobastvatsatryan.DropdownTextView;
+//import at.blogc.android.views.ExpandableTextView;
+//import hakobastvatsatryan.DropdownTextView;
 import io.realm.Realm;
 import io.realm.RealmQuery;
 
@@ -47,7 +47,7 @@ public class PlaceFragment extends Fragment {
         int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
         realm = Realm.getDefaultInstance();
 
-        final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
+        //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
         final ImageButton buttonToggle = (ImageButton) v.findViewById(R.id.imageButton);
 
 
@@ -58,7 +58,7 @@ public class PlaceFragment extends Fragment {
         //TextView nameField = (TextView) v.findViewById(R.id.place_name);
         //nameField.setText(place.getNombres().get(0).getNombreSitio());
         //nameField.setText(nombres);
-        expandableTextView.setText(nombres);
+        //expandableTextView.setText(nombres);
 
         TextView addressField = (TextView) v.findViewById(R.id.place_address);
         addressField.setText(place.getDireccion());
@@ -73,14 +73,14 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-        buttonToggle.setOnClickListener(new View.OnClickListener()
+        /*buttonToggle.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(final View v)
             {
                 expandableTextView.toggle();
             }
-        });
+        });*/
 
         CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
         musicCheckBox.setChecked(place.isMusica());
@@ -118,9 +118,9 @@ public class PlaceFragment extends Fragment {
         });
 
 
-        DropdownTextView secondDropdownTextView = (DropdownTextView) v.findViewById(R.id.first_dropdown_text_view);
+        /*DropdownTextView secondDropdownTextView = (DropdownTextView) v.findViewById(R.id.first_dropdown_text_view);
         secondDropdownTextView.setTitleText(place.getNombres().get(0).getNombreSitio());
-        secondDropdownTextView.setContentText(nombres);
+        secondDropdownTextView.setContentText(nombres);*/
 
         return v;
     }

@@ -71,7 +71,7 @@
         app:title_text_color="@color/your-title-text-color"
         app:title_text_size="30sp" />-->
 
-    <at.blogc.android.views.ExpandableTextView
+    <!--<at.blogc.android.views.ExpandableTextView
         android:id="@+id/expandableTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -88,7 +88,7 @@
         app:layout_constraintEnd_toStartOf="@+id/imageButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />-->
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -106,18 +106,16 @@
     <TextView
         android:id="@+id/place_address"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="25dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:paddingLeft="7dp"
         android:text="@string/place_address"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandableTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
     <TextView
         android:id="@+id/textView"
@@ -145,7 +143,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/first_dropdown_text_view" />
+         />
 
     <CheckBox
         android:id="@+id/place_music"
@@ -178,7 +176,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/place_music" />
 
-    <hakobastvatsatryan.DropdownTextView
+    <!--<hakobastvatsatryan.DropdownTextView
         android:id="@+id/first_dropdown_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -189,7 +187,7 @@
         app:expand_duration="150"
         app:layout_constraintTop_toBottomOf="@+id/place_like"
         app:panel_padding="10dp"
-        app:title_text_size="30sp" />
+        app:title_text_size="30sp" />-->
 
 
 
