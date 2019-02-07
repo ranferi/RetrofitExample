@@ -52,8 +52,8 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerViewUsers = (RecyclerView) view.findViewById(R.id.recyclerViewUsers);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
+        mProgressBar = view.findViewById(R.id.progressbar);
 
         return view;
     }
@@ -90,23 +90,24 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
                 if (response.isSuccessful()) {
-                    Log.d("ActividadPT", "asd " + response.body().getUsers());
-                    List<User> users = response.body().getUsers();
+                    // Log.d("ActividadPT", "asd " + response.body().getUsers());
+                    Users body = response.body();
+                    List<User> users = null;
+                    if (body != null) {
+                        users = body.getUsers();
+                    }
                     if (users != null) {
                         mUsers.clear();
                         mUsers.addAll(users);
                     } else {
                         Log.d("ActividadPT","Users null");
                     }
-
-
                     adapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
                     Log.e(LOG_TAG, "onResponse(): Error code = " + statusCode);
                 }
                 mProgressBar.setVisibility(View.GONE);
-
             }
 
             @Override

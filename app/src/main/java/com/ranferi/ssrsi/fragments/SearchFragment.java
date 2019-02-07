@@ -15,6 +15,8 @@ import android.widget.CheckedTextView;
 
 import com.ranferi.ssrsi.R;
 
+import java.util.Objects;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -42,7 +44,6 @@ public class SearchFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment SearchFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SearchFragment newInstance(String param1, String param2) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
@@ -55,10 +56,10 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        /*if (getArguments() != null) {
             // mParam1 = getArguments().getString(ARG_PARAM1);
             // mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        }*/
     }
 
     @Override
@@ -77,45 +78,42 @@ public class SearchFragment extends Fragment {
 
         AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
         ArrayAdapter<String> adapter1 =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, places);
+                new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.select_dialog_item, places);
         editText1.setAdapter(adapter1);
 
         AutoCompleteTextView editText = view.findViewById(R.id.autoCompleteTextView2);
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, places);
+                new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, places);
 
         editText.setAdapter(adapter);
 
         AutoCompleteTextView editText2 = view.findViewById(R.id.autoCompleteTextView3);
         ArrayAdapter<String> adapter2 =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, price);
+                new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, price);
 
         editText2.setAdapter(adapter2);
 
         AutoCompleteTextView editText3 = view.findViewById(R.id.autoCompleteTextView4);
         ArrayAdapter<String> adapter3 =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.select_dialog_item, distance);
+                new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, distance);
 
         editText3.setAdapter(adapter3);
 
 
 
-        mCheckedTextView = (CheckedTextView) view.findViewById(R.id.checkedTextView);
-        mCheckedTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mCheckedTextView.isChecked()) {
-                    mCheckedTextView.setChecked(false);
-                    mCheckedTextView.setText(getString(R.string.with_music));
-                } else {
-                    mCheckedTextView.setChecked(true);
-                    mCheckedTextView.setText(getString(R.string.without_music));
-                }
+        mCheckedTextView = view.findViewById(R.id.checkedTextView);
+        mCheckedTextView.setOnClickListener(view1 -> {
+            if (mCheckedTextView.isChecked()) {
+                mCheckedTextView.setChecked(false);
+                mCheckedTextView.setText(getString(R.string.with_music));
+            } else {
+                mCheckedTextView.setChecked(true);
+                mCheckedTextView.setText(getString(R.string.without_music));
             }
         });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    // Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
 /*        if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -139,18 +137,18 @@ public class SearchFragment extends Fragment {
 //        mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+    /*
+      This interface must be implemented by activities that contain this
+      fragment to allow an interaction in this fragment to be communicated
+      to the activity and potentially other fragments contained in that
+      activity.
+      <p>
+      See the Android Training lesson <a href=
+      "http://developer.android.com/training/basics/fragments/communicating.html"
+      >Communicating with Other Fragments</a> for more information.
      */
 /*    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+        //  Update argument type and name
         void onFragmentInteraction(Uri uri);
     }*/
 }
