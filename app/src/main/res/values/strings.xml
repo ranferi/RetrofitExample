@@ -54,6 +54,7 @@
     <string name="without_music">Con música</string>
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
+    <string name="flecha">Flecha</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
