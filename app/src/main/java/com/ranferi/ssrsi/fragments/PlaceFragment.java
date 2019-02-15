@@ -1,10 +1,14 @@
 package com.ranferi.ssrsi.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,57 +63,7 @@ public class PlaceFragment extends Fragment {
         int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
         realm = Realm.getDefaultInstance();
 
-        //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
-        final ImageButton buttonToggle = (ImageButton) v.findViewById(R.id.imageButton);
-
-
-        RealmQuery<Place> query = realm.where(Place.class);
-        Place place = query.equalTo("id", placeId).findFirst();
-        String nombres =  place.getNombres().get(0).getNombreSitio() + "\n" + "Otros nombres" + "\n" + "Más nombres";
-
-        //TextView nameField = (TextView) v.findViewById(R.id.place_name);
-        //nameField.setText(place.getNombres().get(0).getNombreSitio());
-        //nameField.setText(nombres);
-        //expandableTextView.setText(nombres);
-
-        TextView addressField = (TextView) v.findViewById(R.id.place_address);
-        addressField.setText(place.getDireccion());
-
-        CheckBox likedCheckBox = (CheckBox) v.findViewById(R.id.place_like);
-        likedCheckBox.setChecked(place.isMusica());
-        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                // mPlace.setLiked(isChecked);
-            }
-        });
-
-        /*buttonToggle.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(final View v)
-            {
-                expandableTextView.toggle();
-            }
-        });*/
-
-        CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
-        musicCheckBox.setChecked(place.isMusica());
-        musicCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                place.setMusica(isChecked);
-            }
-        });
-
-        /*Button dateButton = (Button) v.findViewById(R.id.crime_date);
-        dateButton.setText(place.getDireccion());
-        dateButton.setEnabled(false);*/
-
-
-        ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewPager);
+        ViewPager viewPager = v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
         viewPager.setAdapter(viewPagerAdapter);
 
@@ -129,7 +83,90 @@ public class PlaceFragment extends Fragment {
             public void onPageScrollStateChanged(int i) { }
         });
 
-        ExpandList = (ExpandableListView) v.findViewById(R.id.exp_list);
+        RealmQuery<Place> query = realm.where(Place.class);
+        Place place = query.equalTo("id", placeId).findFirst();
+        String nombres =  place.getNombres().get(0).getNombreSitio() + "\n" + "Otros nombres" + "\n" + "Más nombres";
+
+
+/*        // Define the new TextView and add it to the ConstraintLayout. Without constraints,
+        // this view will be positioned at (0,0).
+        TextView middleView = new TextView(getActivity());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            middleView.setId(View.generateViewId());
+        }
+        middleView.setText("Middle View");
+        middleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20.0f);
+        ConstraintLayout layout = v.findViewById(R.id.linearLayout);
+        ConstraintLayout.LayoutParams lp =
+                new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        layout.addView(middleView, lp);
+
+        // Move the new view into place by applying constraints.
+        ConstraintSet set = new ConstraintSet();
+        // Get existing constraints. This will be the base for modification.
+        set.clone(layout);
+        int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                16, getResources().getDisplayMetrics());
+        // Set up the connections for the new view. Constrain its top to the bottom of the top view.
+        set.connect(middleView.getId(), ConstraintSet.TOP, R.id.topView, ConstraintSet.BOTTOM, topMargin);
+        // Constrain the top of the bottom view to the bottom of the new view. This will replace
+        // the constraint from the bottom view to the bottom of the top view.
+        set.connect(R.id.bottomView, ConstraintSet.TOP, middleView.getId(), ConstraintSet.BOTTOM, topMargin);
+        // Since views must be constrained vertically and horizontally, establish the horizontal
+        // constaints such that the new view is centered.
+        set.centerHorizontally(middleView.getId(),ConstraintSet.PARENT_ID);
+        // Finally, apply our good work to the layout.
+        set.applyTo(layout);*/
+
+        //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
+        // final ImageButton buttonToggle = (ImageButton) v.findViewById(R.id.imageButton);
+
+        //TextView nameField = (TextView) v.findViewById(R.id.place_name);
+        //nameField.setText(place.getNombres().get(0).getNombreSitio());
+        //nameField.setText(nombres);
+        //expandableTextView.setText(nombres);
+
+        //TextView addressField = (TextView) v.findViewById(R.id.place_address);
+        //addressField.setText(place.getDireccion());
+
+        //CheckBox likedCheckBox = (CheckBox) v.findViewById(R.id.place_like);
+        //likedCheckBox.setChecked(place.isMusica());
+//        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView,
+//                                         boolean isChecked) {
+//                // mPlace.setLiked(isChecked);
+//            }
+//        });
+
+        /*buttonToggle.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(final View v)
+            {
+                expandableTextView.toggle();
+            }
+        });*/
+
+        /*CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
+        musicCheckBox.setChecked(place.isMusica());
+        musicCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                place.setMusica(isChecked);
+            }
+        });*/
+
+        /*Button dateButton = (Button) v.findViewById(R.id.crime_date);
+        dateButton.setText(place.getDireccion());
+        dateButton.setEnabled(false);*/
+
+
+
+
+        /*ExpandList = (ExpandableListView) v.findViewById(R.id.exp_list);
         ExpListItems = SetStandardGroups();
         ExpAdapter = new ExpandListAdapter(getContext(), ExpListItems);
         ExpandList.setAdapter(ExpAdapter);
@@ -172,7 +209,7 @@ public class PlaceFragment extends Fragment {
                 showToastMsg(group_name + "\n Expanded");
 
             }
-        });
+        });*/
 
         /*DropdownTextView secondDropdownTextView = (DropdownTextView) v.findViewById(R.id.first_dropdown_text_view);
         secondDropdownTextView.setTitleText(place.getNombres().get(0).getNombreSitio());
@@ -187,7 +224,7 @@ public class PlaceFragment extends Fragment {
         realm.close();
     }
 
-    public ArrayList<Group> SetStandardGroups() {
+/*    public ArrayList<Group> SetStandardGroups() {
 
         ArrayList<Group> group_list = new ArrayList<>();
         ArrayList<Child> child_list;
@@ -243,5 +280,5 @@ public class PlaceFragment extends Fragment {
 
     public void showToastMsg(String Msg) {
         Toast.makeText(getContext(), Msg, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 }
