@@ -1,10 +1,10 @@
 package com.ranferi.ssrsi.fragments;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
@@ -15,20 +15,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.helper.Child;
 import com.ranferi.ssrsi.helper.ExpandListAdapter;
 import com.ranferi.ssrsi.helper.Group;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
-import com.ranferi.ssrsi.misc.Utility;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
@@ -90,36 +84,20 @@ public class PlaceFragment extends Fragment {
         Place place = query.equalTo("id", placeId).findFirst();
         String nombres =  place.getNombres().get(0).getNombreSitio() + "\n" + "Otros nombres" + "\n" + "Más nombres";
 
-
-        // Define the new TextView and add it to the ConstraintLayout. Without constraints,
-        // this view will be positioned at (0,0).
         TextView middleView = new TextView(getActivity());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             middleView.setId(View.generateViewId());
         }
-        float desiredSp = getResources().getDimension(R.dimen.desired_sp);
-        float density = getResources().getDisplayMetrics().density;
-        middleView.setText("Middle View ");
+        middleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+        middleView.setText(buildStringWithIcon(getActivity().getApplicationContext(), "Middle View", R.drawable.foursquare_));
 
-        middleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, desiredSp / density);
-        // middleView.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(middleView.getText()).append(" ");
-        builder.setSpan(new ImageSpan(getActivity().getApplicationContext(), R.drawable.foursquare_),
-                builder.length() - 1, builder.length(), 0);
-        builder.append(" Cree by Dexode");
-        middleView.setText(builder);
-
-        // middleView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20.0f);
         ConstraintLayout layout = v.findViewById(R.id.linearLayout);
         ConstraintLayout.LayoutParams lp =
                 new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
                         ConstraintLayout.LayoutParams.WRAP_CONTENT);
         layout.addView(middleView, lp);
 
-        // Move the new view into place by applying constraints.
         ConstraintSet set = new ConstraintSet();
-        // Get existing constraints. This will be the base for modification.
         set.clone(layout);
         int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 8, getResources().getDisplayMetrics());
@@ -130,13 +108,9 @@ public class PlaceFragment extends Fragment {
         // Constrain the top of the bottom view to the bottom of the new view. This will replace
         // the constraint from the bottom view to the bottom of the top view.
         set.connect(R.id.place_address, ConstraintSet.TOP, middleView.getId(), ConstraintSet.BOTTOM, topMargin);
-        // Since views must be constrained vertically and horizontally, establish the horizontal
-        // constaints such that the new view is centered.
-        // set.centerHorizontally(middleView.getId(),ConstraintSet.PARENT_ID);
-        // set.connect(middleView.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM);
+
         set.connect(middleView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
         set.connect(middleView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-        // Finally, apply our good work to the layout.
         set.applyTo(layout);
 
         //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
@@ -183,58 +157,6 @@ public class PlaceFragment extends Fragment {
         dateButton.setText(place.getDireccion());
         dateButton.setEnabled(false);*/
 
-
-
-
-        /*ExpandList = (ExpandableListView) v.findViewById(R.id.exp_list);
-        ExpListItems = SetStandardGroups();
-        ExpAdapter = new ExpandListAdapter(getContext(), ExpListItems);
-        ExpandList.setAdapter(ExpAdapter);
-        Utility.setListViewHeightBasedOnChildren(ExpandList);
-
-        ExpandList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-
-                String group_name = ExpListItems.get(groupPosition).getName();
-
-                ArrayList<Child> ch_list = ExpListItems.get(
-                        groupPosition).getItems();
-
-                String child_name = ch_list.get(childPosition).getName();
-
-                showToastMsg(group_name + "\n" + child_name);
-
-                return false;
-            }
-        });
-
-        ExpandList.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                String group_name = ExpListItems.get(groupPosition).getName();
-                showToastMsg(group_name + "\n Expanded");
-
-            }
-        });
-
-        ExpandList.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                String group_name = ExpListItems.get(groupPosition).getName();
-                showToastMsg(group_name + "\n Expanded");
-
-            }
-        });*/
-
-        /*DropdownTextView secondDropdownTextView = (DropdownTextView) v.findViewById(R.id.first_dropdown_text_view);
-        secondDropdownTextView.setTitleText(place.getNombres().get(0).getNombreSitio());
-        secondDropdownTextView.setContentText(nombres);*/
-
         return v;
     }
 
@@ -244,61 +166,21 @@ public class PlaceFragment extends Fragment {
         realm.close();
     }
 
-/*    public ArrayList<Group> SetStandardGroups() {
-
-        ArrayList<Group> group_list = new ArrayList<>();
-        ArrayList<Child> child_list;
-
-        // Setting Group 1
-        child_list = new ArrayList<>();
-        Group gru1 = new Group();
-        gru1.setName("Apple");
-
-        Child ch1_1 = new Child();
-        ch1_1.setName("Iphone");
-        child_list.add(ch1_1);
-
-        Child ch1_2 = new Child();
-        ch1_2.setName("ipad");
-        child_list.add(ch1_2);
-
-        Child ch1_3 = new Child();
-        ch1_3.setName("ipod");
-        child_list.add(ch1_3);
-
-        gru1.setItems(child_list);
-
-        // Setting Group 2
-        child_list = new ArrayList<>();
-        Group gru2 = new Group();
-        gru2.setName("SAMSUNG");
-
-        Child ch2_1 = new Child();
-        ch2_1.setName("Galaxy Grand");
-        child_list.add(ch2_1);
-
-        Child ch2_2 = new Child();
-        ch2_2.setName("Galaxy Note");
-        child_list.add(ch2_2);
-
-        Child ch2_3 = new Child();
-        ch2_3.setName("Galaxy Mega");
-        child_list.add(ch2_3);
-
-        Child ch2_4 = new Child();
-        ch2_4.setName("Galaxy Neo");
-        child_list.add(ch2_4);
-
-        gru2.setItems(child_list);
-
-        //listing all groups
-        group_list.add(gru1);
-        group_list.add(gru2);
-
-        return group_list;
-    }
-
     public void showToastMsg(String Msg) {
         Toast.makeText(getContext(), Msg, Toast.LENGTH_SHORT).show();
-    }*/
+    }
+
+    public SpannableStringBuilder buildStringWithIcon(Context context, CharSequence text, int resource) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(text).append(" ");
+        builder.setSpan(new ImageSpan(context, resource),
+                builder.length() - 1, builder.length(), 0);
+        return builder;
+    }
+
+    public float sizeOfText(int dimension) {
+        float desiredSp = getResources().getDimension(dimension);
+        float density = getResources().getDisplayMetrics().density;
+        return desiredSp / density;
+    }
 }
