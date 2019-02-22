@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
@@ -23,12 +24,14 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.helper.ExpandListAdapter;
 import com.ranferi.ssrsi.helper.Group;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
+import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
 //import at.blogc.android.views.ExpandableTextView;
 //import hakobastvatsatryan.DropdownTextView;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -43,7 +46,8 @@ public class PlaceFragment extends Fragment {
 
     private Realm realm;
 
-    public PlaceFragment() { }
+    public PlaceFragment() {
+    }
 
     public static PlaceFragment newInstance(int placeId) {
         Bundle args = new Bundle();
@@ -69,7 +73,8 @@ public class PlaceFragment extends Fragment {
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i1) { }
+            public void onPageScrolled(int i, float v, int i1) {
+            }
 
             @Override
             public void onPageSelected(int i) {
@@ -77,41 +82,72 @@ public class PlaceFragment extends Fragment {
             }
 
             @Override
-            public void onPageScrollStateChanged(int i) { }
+            public void onPageScrollStateChanged(int i) {
+            }
         });
 
         RealmQuery<Place> query = realm.where(Place.class);
         Place place = query.equalTo("id", placeId).findFirst();
-        String nombres =  place.getNombres().get(0).getNombreSitio() + "\n" + "Otros nombres" + "\n" + "Más nombres";
+        List<Nombre> nombresSitio = place.getNombres();
 
-        TextView middleView = new TextView(getActivity());
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            middleView.setId(View.generateViewId());
+        TextView nameField = v.findViewById(R.id.place_name);
+        nameField.setText(nombresSitio.get(0).getNombreSitio());
+        ArrayList<TextView> nombresTextViews = new ArrayList<>();
+
+        for (Nombre nombre : nombresSitio) {
+            TextView textView1 = new TextView(getActivity());
+            TextView textView2 = new TextView(getActivity());
+            textView1.setId(generateId());
+            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+            textView1.setText(nombre.getNombreSitio());
+            nombresTextViews.add(textView1);
+            textView2.setId(generateId());
+            textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+            textView2.setText(buildStringWithIcon(getActivity().getApplicationContext(), "proviene de ", getIconResource(nombre.getProviene())));
+            nombresTextViews.add(textView2);
         }
-        middleView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-        middleView.setText(buildStringWithIcon(getActivity().getApplicationContext(), "Middle View", R.drawable.foursquare_));
 
         ConstraintLayout layout = v.findViewById(R.id.linearLayout);
         ConstraintLayout.LayoutParams lp =
                 new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
                         ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        layout.addView(middleView, lp);
+        for (TextView textView :
+                nombresTextViews) {
+            layout.addView(textView, lp);
+        }
 
-        ConstraintSet set = new ConstraintSet();
-        set.clone(layout);
+        // margenes
         int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 8, getResources().getDisplayMetrics());
         int sideMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 16, getResources().getDisplayMetrics());
-        // Set up the connections for the new view. Constrain its top to the bottom of the top view.
+
+        ConstraintSet set = new ConstraintSet();
+        set.clone(layout);
+        int topFieldId = R.id.place_name;
+        for (int i = 1; i < nombresTextViews.size(); i++) {
+            int currentId = nombresTextViews.get(i).getId();
+            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+            if (i == nombresTextViews.size() - 1) {
+                set.connect(R.id.place_address, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+            } else {
+                int next = nombresTextViews.get(i + 1).getId();
+                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                topFieldId = currentId;
+            }
+            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+        }
+        set.applyTo(layout);
+        /*// Set up the connections for the new view. Constrain its top to the bottom of the top view.
         set.connect(middleView.getId(), ConstraintSet.TOP, R.id.place_name, ConstraintSet.BOTTOM, topMargin);
         // Constrain the top of the bottom view to the bottom of the new view. This will replace
         // the constraint from the bottom view to the bottom of the top view.
         set.connect(R.id.place_address, ConstraintSet.TOP, middleView.getId(), ConstraintSet.BOTTOM, topMargin);
 
         set.connect(middleView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-        set.connect(middleView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-        set.applyTo(layout);
+        set.connect(middleView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);*/
+        // set.applyTo(layout);
 
         //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
         // final ImageButton buttonToggle = (ImageButton) v.findViewById(R.id.imageButton);
@@ -172,7 +208,7 @@ public class PlaceFragment extends Fragment {
 
     public SpannableStringBuilder buildStringWithIcon(Context context, CharSequence text, int resource) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        builder.append(text).append(" ");
+        builder.append(text).append("  ");
         builder.setSpan(new ImageSpan(context, resource),
                 builder.length() - 1, builder.length(), 0);
         return builder;
@@ -182,5 +218,31 @@ public class PlaceFragment extends Fragment {
         float desiredSp = getResources().getDimension(dimension);
         float density = getResources().getDisplayMetrics().density;
         return desiredSp / density;
+    }
+
+    public int generateId() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return View.generateViewId();
+        } else {
+            return ViewCompat.generateViewId();
+        }
+    }
+
+    public int getIconResource(String provieneDe) {
+        int iconResourceId;
+        switch (provieneDe) {
+            case "GooglePlaces":
+                iconResourceId = R.drawable.google;
+                break;
+            case "Foursquare":
+                iconResourceId = R.drawable.foursquare_;
+                break;
+            case "DENUE":
+                iconResourceId = R.drawable.google;
+                break;
+            default:
+                iconResourceId = R.drawable.google;
+        }
+        return iconResourceId;
     }
 }
