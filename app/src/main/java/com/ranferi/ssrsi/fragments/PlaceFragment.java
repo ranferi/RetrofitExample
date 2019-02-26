@@ -12,6 +12,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,8 +112,7 @@ public class PlaceFragment extends Fragment {
         ConstraintLayout.LayoutParams lp =
                 new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
                         ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        for (TextView textView :
-                nombresTextViews) {
+        for (TextView textView : nombresTextViews) {
             layout.addView(textView, lp);
         }
 
@@ -125,18 +125,22 @@ public class PlaceFragment extends Fragment {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
         int topFieldId = R.id.place_name;
-        for (int i = 1; i < nombresTextViews.size(); i++) {
+        for (int i = 0; i < nombresTextViews.size(); i++) {
             int currentId = nombresTextViews.get(i).getId();
+            Log.d("ActividadPT", "id <<< " + topFieldId);
             set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
             if (i == nombresTextViews.size() - 1) {
                 set.connect(R.id.place_address, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
             } else {
                 int next = nombresTextViews.get(i + 1).getId();
+                Log.d("ActividadPT", "next id <<< " + next);
                 set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
                 topFieldId = currentId;
             }
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
         }
         set.applyTo(layout);
         /*// Set up the connections for the new view. Constrain its top to the bottom of the top view.
