@@ -17,21 +17,17 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.helper.ExpandListAdapter;
-import com.ranferi.ssrsi.helper.Group;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
-//import at.blogc.android.views.ExpandableTextView;
-//import hakobastvatsatryan.DropdownTextView;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -40,10 +36,6 @@ import io.realm.RealmQuery;
 public class PlaceFragment extends Fragment {
 
     private static final String ARG_PLACE_ID = "place_id";
-
-    private ExpandListAdapter ExpAdapter;
-    private ArrayList<Group> ExpListItems;
-    private ExpandableListView ExpandList;
 
     private Realm realm;
 
@@ -93,7 +85,8 @@ public class PlaceFragment extends Fragment {
 
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
-        ArrayList<TextView> nombresTextViews = new ArrayList<>();
+        List<TextView> nombresTextViews = new ArrayList<>();
+        ConstraintLayout layout = v.findViewById(R.id.linearLayout);
 
         for (Nombre nombre : nombresSitio) {
             TextView textView1 = new TextView(getActivity());
@@ -101,19 +94,17 @@ public class PlaceFragment extends Fragment {
             textView1.setId(generateId());
             textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
             textView1.setText(nombre.getNombreSitio());
+            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
             nombresTextViews.add(textView1);
+            layout.addView(textView1);
             textView2.setId(generateId());
             textView2.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
             textView2.setText(buildStringWithIcon(getActivity().getApplicationContext(), "proviene de ", getIconResource(nombre.getProviene())));
+            textView2.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
             nombresTextViews.add(textView2);
-        }
-
-        ConstraintLayout layout = v.findViewById(R.id.linearLayout);
-        ConstraintLayout.LayoutParams lp =
-                new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT);
-        for (TextView textView : nombresTextViews) {
-            layout.addView(textView, lp);
+            layout.addView(textView2);
         }
 
         // margenes
@@ -125,41 +116,33 @@ public class PlaceFragment extends Fragment {
         ConstraintSet set = new ConstraintSet();
         set.clone(layout);
         int topFieldId = R.id.place_name;
-        for (int i = 0; i < nombresTextViews.size(); i++) {
-            int currentId = nombresTextViews.get(i).getId();
-            Log.d("ActividadPT", "id <<< " + topFieldId);
+        int currentId = 0;
+        for (Iterator<TextView> it = nombresTextViews.iterator(); it.hasNext();) {
+            TextView tw = it.next();
+            currentId = tw.getId();
             set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
             set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
             set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (i == nombresTextViews.size() - 1) {
+            if (!it.hasNext()) {
                 set.connect(R.id.place_address, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
             } else {
-                int next = nombresTextViews.get(i + 1).getId();
-                Log.d("ActividadPT", "next id <<< " + next);
+                TextView tv = it.next();
+                int next = tv.getId();
+                Log.d("ActividadPT", "id <<< " + currentId + " <" + tw.getText());
+                Log.d("ActividadPT", "next <<< " + next + " " + tv.getText());
                 set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
                 set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
                 set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-                topFieldId = currentId;
+                if (!it.hasNext()) {
+                    Log.d("ActividadPT", "next <<< adentro");
+                    set.connect(R.id.place_address, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
+                }
+                topFieldId = next;
             }
         }
+
         set.applyTo(layout);
-        /*// Set up the connections for the new view. Constrain its top to the bottom of the top view.
-        set.connect(middleView.getId(), ConstraintSet.TOP, R.id.place_name, ConstraintSet.BOTTOM, topMargin);
-        // Constrain the top of the bottom view to the bottom of the new view. This will replace
-        // the constraint from the bottom view to the bottom of the top view.
-        set.connect(R.id.place_address, ConstraintSet.TOP, middleView.getId(), ConstraintSet.BOTTOM, topMargin);
 
-        set.connect(middleView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-        set.connect(middleView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);*/
-        // set.applyTo(layout);
-
-        //final ExpandableTextView expandableTextView = (ExpandableTextView) v.findViewById(R.id.expandableTextView);
-        // final ImageButton buttonToggle = (ImageButton) v.findViewById(R.id.imageButton);
-
-        //TextView nameField = (TextView) v.findViewById(R.id.place_name);
-        //nameField.setText(place.getNombres().get(0).getNombreSitio());
-        //nameField.setText(nombres);
-        //expandableTextView.setText(nombres);
 
         //TextView addressField = (TextView) v.findViewById(R.id.place_address);
         //addressField.setText(place.getDireccion());
@@ -174,14 +157,6 @@ public class PlaceFragment extends Fragment {
 //            }
 //        });
 
-        /*buttonToggle.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(final View v)
-            {
-                expandableTextView.toggle();
-            }
-        });*/
 
         /*CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
         musicCheckBox.setChecked(place.isMusica());
