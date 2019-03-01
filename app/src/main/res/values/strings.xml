@@ -55,6 +55,7 @@
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="flecha">Flecha</string>
+    <string name="names_info">Otros nombres:</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

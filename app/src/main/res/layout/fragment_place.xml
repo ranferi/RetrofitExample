@@ -64,7 +64,7 @@
         app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/details_place"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -106,7 +106,7 @@
         android:textColor="@color/monsoon"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/details_place" />
 
     <CheckBox
         android:id="@+id/place_like"
@@ -123,6 +123,6 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/place_music"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/details_place" />
 
 </android.support.constraint.ConstraintLayout>
