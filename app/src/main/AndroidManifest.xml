@@ -16,7 +16,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBlLBTuoJER7fdroezd2lYWkqtKJDZefrA" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
         <activity
             android:name="com.ranferi.ssrsi.activities.SignUpActivity"
             android:theme="@style/AppTheme.Dark" />

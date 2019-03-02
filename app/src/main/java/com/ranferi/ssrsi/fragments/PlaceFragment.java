@@ -2,6 +2,7 @@ package com.ranferi.ssrsi.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +24,25 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.util.DirectionConverter;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Calificacione;
 import com.ranferi.ssrsi.model.Categoria;
@@ -46,6 +65,8 @@ public class PlaceFragment extends Fragment {
     private static final String ARG_PLACE_ID = "place_id";
 
     private Realm realm;
+    MapView mMapView;
+    private GoogleMap googleMap;
 
     public PlaceFragment() {
     }
@@ -65,6 +86,19 @@ public class PlaceFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_place, container, false);
         int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
         realm = Realm.getDefaultInstance();
+
+        mMapView = v.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume();
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
 
         ViewPager viewPager = v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
@@ -214,20 +248,70 @@ public class PlaceFragment extends Fragment {
         TextView ratingField = v.findViewById(R.id.place_rating);
         ratingField.setText("Calificación: " + String.valueOf(place.getTotal()));
 
-        CheckBox musicCheckBox = (CheckBox) v.findViewById(R.id.place_music);
+        CheckBox musicCheckBox = v.findViewById(R.id.place_music);
         musicCheckBox.setChecked(place.isMusica());
 
-//        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView,
-//                                         boolean isChecked) {
-//                // mPlace.setLiked(isChecked);
-//            }
-//        });
+        mMapView.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap mMap) {
+                googleMap = mMap;
+                LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
+                LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud ()));
+                googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
+                googleMap.addMarker(new MarkerOptions().position(destination).title("Tu posición").snippet(""));
+                /*GoogleDirection.withServerKey(APIUrl.serverKey)
+                        .from(origin)
+                        .to(destination)
+                        .execute(new DirectionCallback() {
+                            @Override
+                            public void onDirectionSuccess(Direction direction, String rawBody) {
+                                if(direction.isOK()) {
+                                    Route route = direction.getRouteList().get(0);
+                                    Leg leg = route.getLegList().get(0);
 
-        /*Button dateButton = (Button) v.findViewById(R.id.crime_date);
-        dateButton.setText(place.getDireccion());
-        dateButton.setEnabled(false);*/
+                                    ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                                    PolylineOptions polylineOptions = DirectionConverter.createPolyline(getActivity(), directionPositionList, 5, Color.RED);
+                                    googleMap.addPolyline(polylineOptions);
+                                } else {
+                                    Log.d("ActividadPT", direction.getStatus() + " " + direction.getErrorMessage());
+                                }
+                            }
+
+                            @Override
+                            public void onDirectionFailure(Throwable t) {
+
+                            }
+                        });*/
+
+                CameraPosition cameraPosition = new CameraPosition.Builder().target(origin).zoom(12).build();
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            }
+        });
+
+        CheckBox likedCheckBox = v.findViewById(R.id.place_like);
+        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                } else {
+                    // The toggle is disabled
+                }
+            }
+        });
+
+        ToggleButton toggle = v.findViewById(R.id.toggleButton);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                } else {
+                    // The toggle is disabled
+                }
+            }
+        });
+
 
         return v;
     }
@@ -236,6 +320,29 @@ public class PlaceFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         realm.close();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 
     public void showToastMsg(String Msg) {
