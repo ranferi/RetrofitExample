@@ -55,7 +55,15 @@
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="flecha">Flecha</string>
-    <string name="names_info">Otros nombres:</string>
+    <string name="names_info">Otros Nombres</string>
+    <string name="categories">Categorías</string>
+    <string name="ratings">Calificaciones</string>
+    <string name="more_info">Más Información</string>
+    <string name="location">Localización</string>
+    <string name="no_visitado">No visitado</string>
+    <string name="visitado">Visitado</string>
+    <string name="togglebutton">ToggleButton</string>
+    <string name="rating">Calificación</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

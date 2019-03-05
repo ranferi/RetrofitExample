@@ -12,6 +12,7 @@ import android.support.constraint.ConstraintSet;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
@@ -46,11 +47,10 @@ import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Calificacione;
 import com.ranferi.ssrsi.model.Categoria;
+import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -99,7 +99,6 @@ public class PlaceFragment extends Fragment {
         }
 
 
-
         ViewPager viewPager = v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
         viewPager.setAdapter(viewPagerAdapter);
@@ -127,10 +126,13 @@ public class PlaceFragment extends Fragment {
         List<Nombre> nombresSitio = place.getNombres();
         List<Categoria> categoriasSitio = place.getCategorias();
         List<Calificacione> calificacionesSitios = place.getCalificaciones();
+        List<Comentario> comentariosSitios = place.getComentarios();
 
         List<TextView> nombresTextViews = new ArrayList<>();
         List<TextView> categoriasTextViews = new ArrayList<>();
+        List<TextView> categoriasGooglePlacesTextViews = new ArrayList<>();
         List<TextView> calificacionesTextViews = new ArrayList<>();
+        List<TextView> comentariosTextViews = new ArrayList<>();
 
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
@@ -143,6 +145,8 @@ public class PlaceFragment extends Fragment {
                 8, getResources().getDisplayMetrics());
         int sideMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 25, getResources().getDisplayMetrics());
+        int bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                24, getResources().getDisplayMetrics());
 
         for (Nombre nombre : nombresSitio) {
             TextView textView1 = new TextView(getActivity());
@@ -153,6 +157,19 @@ public class PlaceFragment extends Fragment {
                     ConstraintLayout.LayoutParams.WRAP_CONTENT));
             nombresTextViews.add(textView1);
             layout.addView(textView1);
+        }
+
+        for (Categoria categoria : categoriasSitio) {
+            if (categoria.getProviene().equals("GooglePlaces")) {
+                TextView textView1 = new TextView(getActivity());
+                textView1.setId(generateId());
+                textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+                textView1.setText(categoria.getCategoria());
+                textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+                        ConstraintLayout.LayoutParams.WRAP_CONTENT));
+                categoriasGooglePlacesTextViews.add(textView1);
+                layout.addView(textView1);
+            }
         }
 
         for (Categoria categoria : categoriasSitio) {
@@ -177,31 +194,42 @@ public class PlaceFragment extends Fragment {
             layout.addView(textView1);
         }
 
+        for (Comentario comentario : comentariosSitios) {
+            TextView textView1 = new TextView(getActivity());
+            textView1.setId(generateId());
+            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+            textView1.setText(buildStringWithIcon(getActivity().getApplicationContext(), comentario.getComentario() + " (de ", getIconResource(comentario.getProviene())));
+            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
+            comentariosTextViews.add(textView1);
+            layout.addView(textView1);
+        }
+
         set.clone(layout);
 
-        int topFieldId = R.id.names_info;
-        int currentId = 0;
+        int topFieldId = R.id.namesInfo;
+        int currentId;
         for (Iterator<TextView> it = nombresTextViews.iterator(); it.hasNext();) {
             currentId = it.next().getId();
             set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
             set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
             set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
             if (!it.hasNext()) {
-                set.connect(R.id.details_place, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                set.connect(R.id.moreCategories, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
             } else {
                 int next = it.next().getId();
                 set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
                 set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
                 set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
                 if (!it.hasNext()) {
-                    set.connect(R.id.details_place, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
+                    set.connect(R.id.moreCategories, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
                 }
                 topFieldId = next;
             }
         }
 
         topFieldId = R.id.place_categories;
-        for (Iterator<TextView> it = categoriasTextViews.iterator(); it.hasNext();) {
+        for (Iterator<TextView> it = categoriasGooglePlacesTextViews.iterator(); it.hasNext();) {
             currentId = it.next().getId();
             set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
             set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
@@ -220,25 +248,57 @@ public class PlaceFragment extends Fragment {
             }
         }
 
-/*        topFieldId = R.id.place_categories;
+        topFieldId = R.id.moreCategories;
         for (Iterator<TextView> it = categoriasTextViews.iterator(); it.hasNext();) {
             currentId = it.next().getId();
             set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
             set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
             set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
             if (!it.hasNext()) {
-                set.connect(R.id.place_music, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                set.connect(R.id.moreRatings, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
             } else {
                 int next = it.next().getId();
                 set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
                 set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
                 set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
                 if (!it.hasNext()) {
-                    set.connect(R.id.place_music, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
+                    set.connect(R.id.moreRatings, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
                 }
                 topFieldId = next;
             }
-        }*/
+        }
+
+        topFieldId = R.id.moreRatings;
+        for (Iterator<TextView> it = calificacionesTextViews.iterator(); it.hasNext();) {
+            currentId = it.next().getId();
+            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+            if (!it.hasNext()) {
+                set.connect(R.id.comments, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+            } else {
+                int next = it.next().getId();
+                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+                if (!it.hasNext()) {
+                    set.connect(R.id.comments, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
+                }
+                topFieldId = next;
+            }
+        }
+
+        topFieldId = R.id.comments;
+        for (Iterator<TextView> it = comentariosTextViews.iterator(); it.hasNext();) {
+            currentId = it.next().getId();
+            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+            if (!it.hasNext()) {
+                set.connect(currentId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, bottomMargin);
+            }
+            topFieldId = currentId;
+        }
 
         set.applyTo(layout);
 
@@ -246,69 +306,61 @@ public class PlaceFragment extends Fragment {
         addressField.setText(place.getDireccion());
 
         TextView ratingField = v.findViewById(R.id.place_rating);
-        ratingField.setText("Calificación: " + String.valueOf(place.getTotal()));
+        String sourceString = "Calificación (promedio):    " +  "<b>" + String.valueOf(place.getTotal()) + "</b> ";
+        ratingField.setText(Html.fromHtml(sourceString));
 
         CheckBox musicCheckBox = v.findViewById(R.id.place_music);
         musicCheckBox.setChecked(place.isMusica());
 
-        mMapView.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap mMap) {
-                googleMap = mMap;
-                LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
-                LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud ()));
-                googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
-                googleMap.addMarker(new MarkerOptions().position(destination).title("Tu posición").snippet(""));
-                /*GoogleDirection.withServerKey(APIUrl.serverKey)
-                        .from(origin)
-                        .to(destination)
-                        .execute(new DirectionCallback() {
-                            @Override
-                            public void onDirectionSuccess(Direction direction, String rawBody) {
-                                if(direction.isOK()) {
-                                    Route route = direction.getRouteList().get(0);
-                                    Leg leg = route.getLegList().get(0);
+        mMapView.getMapAsync(mMap -> {
+            googleMap = mMap;
+            LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
+            LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud ()));
+            googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
+            googleMap.addMarker(new MarkerOptions().position(destination).title("Tu posición").snippet(""));
+            /*GoogleDirection.withServerKey(APIUrl.serverKey)
+                    .from(origin)
+                    .to(destination)
+                    .execute(new DirectionCallback() {
+                        @Override
+                        public void onDirectionSuccess(Direction direction, String rawBody) {
+                            if(direction.isOK()) {
+                                Route route = direction.getRouteList().get(0);
+                                Leg leg = route.getLegList().get(0);
 
-                                    ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
-                                    PolylineOptions polylineOptions = DirectionConverter.createPolyline(getActivity(), directionPositionList, 5, Color.RED);
-                                    googleMap.addPolyline(polylineOptions);
-                                } else {
-                                    Log.d("ActividadPT", direction.getStatus() + " " + direction.getErrorMessage());
-                                }
+                                ArrayList<LatLng> directionPositionList = leg.getDirectionPoint();
+                                PolylineOptions polylineOptions = DirectionConverter.createPolyline(getActivity(), directionPositionList, 5, Color.RED);
+                                googleMap.addPolyline(polylineOptions);
+                            } else {
+                                Log.d("ActividadPT", direction.getStatus() + " " + direction.getErrorMessage());
                             }
+                        }
 
-                            @Override
-                            public void onDirectionFailure(Throwable t) {
+                        @Override
+                        public void onDirectionFailure(Throwable t) {
 
-                            }
-                        });*/
+                        }
+                    });*/
 
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(origin).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            }
+            CameraPosition cameraPosition = new CameraPosition.Builder().target(origin).zoom(15).build();
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
 
         CheckBox likedCheckBox = v.findViewById(R.id.place_like);
-        likedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                } else {
-                    // The toggle is disabled
-                }
+        likedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // The toggle is enabled
+            } else {
+                // The toggle is disabled
             }
         });
 
         ToggleButton toggle = v.findViewById(R.id.toggleButton);
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                } else {
-                    // The toggle is disabled
-                }
+        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // The toggle is enabled
+            } else {
+                // The toggle is disabled
             }
         });
 
@@ -389,4 +441,7 @@ public class PlaceFragment extends Fragment {
         }
         return iconResourceId;
     }
+
+
+
 }

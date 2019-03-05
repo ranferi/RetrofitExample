@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView3"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -40,28 +39,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.990" />
 
-<!--        <TextView
-            android:id="@+id/topView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Top View"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPager" />
-
-        <TextView
-            android:id="@+id/bottomView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Bottom View"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topView" />-->
-
         <TextView
             android:id="@+id/place_name"
             android:layout_width="0dp"
@@ -78,61 +55,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/viewPager" />
 
-        <!--<hakobastvatsatryan.DropdownTextView
-        android:id="@+id/first_dropdown_text_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Nombe de Sitio"
-        app:arrow_drawable="@drawable/arrow"
-        app:content_padding="0dp"
-        app:content_text="@string/your-content-text"
-        app:content_text_color="@color/your-content-text-color"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/expandableTextView"
-        app:title_text="@string/your-title-text"
-        app:title_text_color="@color/your-title-text-color"
-        app:title_text_size="30sp" />-->
-
-        <!--<at.blogc.android.views.ExpandableTextView
-        android:id="@+id/expandableTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:maxLines="1"
-        android:text="@string/place_name"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:animation_duration="150"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewPager" />-->
-
-        <!--<ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/flecha"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPager"
-            app:srcCompat="@drawable/down_arrow"
-            tools:ignore="RtlHardcoded" />-->
-
-
         <TextView
             android:id="@+id/place_address"
             android:layout_width="0dp"
@@ -147,19 +69,19 @@
             app:layout_constraintTop_toBottomOf="@+id/place_name" />
 
         <TextView
-            android:id="@+id/names_info"
+            android:id="@+id/namesInfo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:text="@string/names_info"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/place_address" />
+            app:layout_constraintTop_toBottomOf="@+id/moreInfo" />
 
         <TextView
             android:id="@+id/details_place"
@@ -174,15 +96,15 @@
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/names_info" />
+            app:layout_constraintTop_toBottomOf="@+id/place_address" />
 
         <CheckBox
             android:id="@+id/place_music"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:text="@string/place_music"
             android:textColor="@color/monsoon"
@@ -196,7 +118,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:text="@string/place_like"
@@ -215,7 +136,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="Categorias"
+            android:text="@string/categories"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +151,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="Calificación"
+            android:text="@string/rating"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -245,12 +166,10 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="16dp"
             android:checked="false"
-            android:text="ToggleButton"
-            android:textOff="No visitado"
-            android:textOn="Visitado"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/togglebutton"
+            android:textOff="@string/no_visitado"
+            android:textOn="@string/visitado"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/place_like" />
@@ -258,7 +177,7 @@
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
             android:layout_width="0dp"
-            android:layout_height="342dp"
+            android:layout_height="245dp"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
@@ -277,37 +196,73 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="Localización"
+            android:text="@string/location"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/place_music" />
 
-
-        <!--<hakobastvatsatryan.DropdownTextView
-        android:id="@+id/first_dropdown_text_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        app:arrow_drawable="@drawable/arrow"
-        app:content_padding="6dp"
-        app:content_text_size="18sp"
-        app:expand_duration="150"
-        app:layout_constraintTop_toBottomOf="@+id/place_like"
-        app:panel_padding="10dp"
-        app:title_text_size="30sp" />-->
-
-        <!--<ExpandableListView
-            android:id="@+id/exp_list"
+        <TextView
+            android:id="@+id/moreInfo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/more_info"
+            android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPager" />-->
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+
+        <TextView
+            android:id="@+id/moreCategories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/categories"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/namesInfo" />
+
+        <TextView
+            android:id="@+id/moreRatings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/ratings"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moreCategories" />
+
+        <TextView
+            android:id="@+id/comments"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/ratings"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/moreRatings" />
+
     </android.support.constraint.ConstraintLayout>
 
 </ScrollView>
