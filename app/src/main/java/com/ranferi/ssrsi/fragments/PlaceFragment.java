@@ -2,7 +2,6 @@ package com.ranferi.ssrsi.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,32 +15,22 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.akexorcist.googledirection.DirectionCallback;
-import com.akexorcist.googledirection.GoogleDirection;
-import com.akexorcist.googledirection.model.Direction;
-import com.akexorcist.googledirection.model.Leg;
-import com.akexorcist.googledirection.model.Route;
-import com.akexorcist.googledirection.util.DirectionConverter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
@@ -53,6 +42,7 @@ import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -67,6 +57,11 @@ public class PlaceFragment extends Fragment {
     private Realm realm;
     MapView mMapView;
     private GoogleMap googleMap;
+    private ConstraintLayout layout;
+    private ConstraintSet set;
+    private int topMargin;
+    private int sideMargin;
+    private int bottomMargin;
 
     public PlaceFragment() {
     }
@@ -97,7 +92,6 @@ public class PlaceFragment extends Fragment {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         ViewPager viewPager = v.findViewById(R.id.viewPager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
@@ -137,171 +131,6 @@ public class PlaceFragment extends Fragment {
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
 
-        ConstraintLayout layout = v.findViewById(R.id.linearLayout);
-        ConstraintSet set = new ConstraintSet();
-
-        // margenes
-        int topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                8, getResources().getDisplayMetrics());
-        int sideMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                25, getResources().getDisplayMetrics());
-        int bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                24, getResources().getDisplayMetrics());
-
-        for (Nombre nombre : nombresSitio) {
-            TextView textView1 = new TextView(getActivity());
-            textView1.setId(generateId());
-            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-            textView1.setText(buildStringWithIcon(getActivity().getApplicationContext(), nombre.getNombreSitio() + " (de ", getIconResource(nombre.getProviene())));
-            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-            nombresTextViews.add(textView1);
-            layout.addView(textView1);
-        }
-
-        for (Categoria categoria : categoriasSitio) {
-            if (categoria.getProviene().equals("GooglePlaces")) {
-                TextView textView1 = new TextView(getActivity());
-                textView1.setId(generateId());
-                textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-                textView1.setText(categoria.getCategoria());
-                textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                        ConstraintLayout.LayoutParams.WRAP_CONTENT));
-                categoriasGooglePlacesTextViews.add(textView1);
-                layout.addView(textView1);
-            }
-        }
-
-        for (Categoria categoria : categoriasSitio) {
-            TextView textView1 = new TextView(getActivity());
-            textView1.setId(generateId());
-            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-            textView1.setText(buildStringWithIcon(getActivity().getApplicationContext(), categoria.getCategoria() + " (de ", getIconResource(categoria.getProviene())));
-            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-            categoriasTextViews.add(textView1);
-            layout.addView(textView1);
-        }
-
-        for (Calificacione calificacione : calificacionesSitios) {
-            TextView textView1 = new TextView(getActivity());
-            textView1.setId(generateId());
-            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-            textView1.setText(buildStringWithIcon(getActivity().getApplicationContext(), calificacione.getCalificacion() + " (de ", getIconResource(calificacione.getProviene())));
-            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-            calificacionesTextViews.add(textView1);
-            layout.addView(textView1);
-        }
-
-        for (Comentario comentario : comentariosSitios) {
-            TextView textView1 = new TextView(getActivity());
-            textView1.setId(generateId());
-            textView1.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
-            textView1.setText(buildStringWithIcon(getActivity().getApplicationContext(), comentario.getComentario() + " (de ", getIconResource(comentario.getProviene())));
-            textView1.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
-            comentariosTextViews.add(textView1);
-            layout.addView(textView1);
-        }
-
-        set.clone(layout);
-
-        int topFieldId = R.id.namesInfo;
-        int currentId;
-        for (Iterator<TextView> it = nombresTextViews.iterator(); it.hasNext();) {
-            currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                set.connect(R.id.moreCategories, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-            } else {
-                int next = it.next().getId();
-                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-                if (!it.hasNext()) {
-                    set.connect(R.id.moreCategories, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
-                }
-                topFieldId = next;
-            }
-        }
-
-        topFieldId = R.id.place_categories;
-        for (Iterator<TextView> it = categoriasGooglePlacesTextViews.iterator(); it.hasNext();) {
-            currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                set.connect(R.id.place_music, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-            } else {
-                int next = it.next().getId();
-                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-                if (!it.hasNext()) {
-                    set.connect(R.id.place_music, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
-                }
-                topFieldId = next;
-            }
-        }
-
-        topFieldId = R.id.moreCategories;
-        for (Iterator<TextView> it = categoriasTextViews.iterator(); it.hasNext();) {
-            currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                set.connect(R.id.moreRatings, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-            } else {
-                int next = it.next().getId();
-                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-                if (!it.hasNext()) {
-                    set.connect(R.id.moreRatings, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
-                }
-                topFieldId = next;
-            }
-        }
-
-        topFieldId = R.id.moreRatings;
-        for (Iterator<TextView> it = calificacionesTextViews.iterator(); it.hasNext();) {
-            currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                set.connect(R.id.comments, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-            } else {
-                int next = it.next().getId();
-                set.connect(next, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
-                set.connect(next, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-                set.connect(next, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-                if (!it.hasNext()) {
-                    set.connect(R.id.comments, ConstraintSet.TOP, next, ConstraintSet.BOTTOM, topMargin);
-                }
-                topFieldId = next;
-            }
-        }
-
-        topFieldId = R.id.comments;
-        for (Iterator<TextView> it = comentariosTextViews.iterator(); it.hasNext();) {
-            currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                set.connect(currentId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, bottomMargin);
-            }
-            topFieldId = currentId;
-        }
-
-        set.applyTo(layout);
-
         TextView addressField = v.findViewById(R.id.place_address);
         addressField.setText(place.getDireccion());
 
@@ -317,7 +146,7 @@ public class PlaceFragment extends Fragment {
             LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
             LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud ()));
             googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
-            googleMap.addMarker(new MarkerOptions().position(destination).title("Tu posición").snippet(""));
+            googleMap.addMarker(new MarkerOptions().position(destination).title("Sitio De Interés").snippet(""));
             /*GoogleDirection.withServerKey(APIUrl.serverKey)
                     .from(origin)
                     .to(destination)
@@ -364,6 +193,33 @@ public class PlaceFragment extends Fragment {
             }
         });
 
+
+        layout = v.findViewById(R.id.linearLayout);
+        set = new ConstraintSet();
+
+        // margenes
+        topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                8, getResources().getDisplayMetrics());
+        sideMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                25, getResources().getDisplayMetrics());
+        bottomMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                24, getResources().getDisplayMetrics());
+
+        addTextViewsToCollection(nombresSitio, nombresTextViews, getActivity().getApplicationContext(), false);
+        addTextViewsToCollection(categoriasSitio, categoriasGooglePlacesTextViews, getActivity().getApplicationContext(), true);
+        addTextViewsToCollection(categoriasSitio, categoriasTextViews, getActivity().getApplicationContext(), false);
+        addTextViewsToCollection(comentariosSitios, comentariosTextViews, getActivity().getApplicationContext(), false);
+        addTextViewsToCollection(calificacionesSitios, calificacionesTextViews, getActivity().getApplicationContext(), false);
+
+        set.clone(layout);
+
+        setConstraintsViews(nombresTextViews, R.id.namesInfo, R.id.moreCategories);
+        setConstraintsViews(categoriasGooglePlacesTextViews, R.id.place_categories, R.id.place_music);
+        setConstraintsViews(categoriasTextViews, R.id.moreCategories, R.id.moreRatings);
+        setConstraintsViews(calificacionesTextViews, R.id.moreRatings, R.id.comments);
+        setConstraintsViews(comentariosTextViews, R.id.comments, 0);
+
+        set.applyTo(layout);
 
         return v;
     }
@@ -442,6 +298,68 @@ public class PlaceFragment extends Fragment {
         return iconResourceId;
     }
 
+    public <T, V> void addTextViewsToCollection(Collection<T> c, Collection<V> cv, Context context, Boolean soloNombres) {
+        CharSequence text;
+        for (T t : c) {
+            TextView textView = new TextView(getActivity());
+            textView.setId(generateId());
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+            if (soloNombres) {
+                text = setTextForView(t);
+            } else {
+                text = buildStringWithIcon(context, setTextForView(t) + " (de ", getIconResource(getDBForIcon(t)));
+            }
+            textView.setText(text);
+            textView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT));
+            cv.add((V) textView);
+            layout.addView(textView);
+        }
+    }
 
+    public <T> void setConstraintsViews(Collection<T> c, int topFieldId, int bottomFieldId) {
+        int currentId;
+        for (Iterator<TextView> it = (Iterator<TextView>) c.iterator(); it.hasNext();) {
+             currentId = it.next().getId();
+            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+            if (!it.hasNext()) {
+                if (bottomFieldId == 0) {
+                    set.connect(currentId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, bottomMargin);
+                } else {
+                    set.connect(bottomFieldId, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                }
+            } else {
+                topFieldId = currentId;
+            }
+        }
+    }
+
+    private <T> String setTextForView(T o) {
+        if(o instanceof Nombre)
+            return ((Nombre) o).getNombreSitio();
+        else if(o instanceof Categoria)
+            return ((Categoria) o).getCategoria();
+        else if(o instanceof Calificacione)
+            return ((Calificacione) o).getCalificacion();
+        else if(o instanceof Comentario)
+            return ((Comentario) o).getComentario();
+        else
+            return null;
+    }
+
+    private <T> String getDBForIcon(T o) {
+        if(o instanceof Nombre)
+            return ((Nombre) o).getProviene();
+        else if(o instanceof Categoria)
+            return ((Categoria) o).getProviene();
+        else if(o instanceof Calificacione)
+            return ((Calificacione) o).getProviene();
+        else if(o instanceof Comentario)
+            return ((Comentario) o).getProviene();
+        else
+            return null;
+    }
 
 }
