@@ -37,6 +37,7 @@ import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Calificacione;
 import com.ranferi.ssrsi.model.Categoria;
 import com.ranferi.ssrsi.model.Comentario;
+import com.ranferi.ssrsi.model.Imagene;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.rd.PageIndicatorView;
@@ -93,8 +94,23 @@ public class PlaceFragment extends Fragment {
             e.printStackTrace();
         }
 
+
+        RealmQuery<Place> query = realm.where(Place.class);
+        Place place = query.equalTo("id", placeId).findFirst();
+        List<Nombre> nombresSitio = place.getNombres();
+        List<Categoria> categoriasSitio = place.getCategorias();
+        List<Calificacione> calificacionesSitio = place.getCalificaciones();
+        List<Comentario> comentariosSitio = place.getComentarios();
+        List<Imagene> imagenesSitio = place.getImagenes();
+
+        List<TextView> nombresTextViews = new ArrayList<>();
+        List<TextView> categoriasTextViews = new ArrayList<>();
+        List<TextView> categoriasGooglePlacesTextViews = new ArrayList<>();
+        List<TextView> calificacionesTextViews = new ArrayList<>();
+        List<TextView> comentariosTextViews = new ArrayList<>();
+
         ViewPager viewPager = v.findViewById(R.id.viewPager);
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity());
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getActivity(), imagenesSitio);
         viewPager.setAdapter(viewPagerAdapter);
 
         final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
@@ -114,19 +130,6 @@ public class PlaceFragment extends Fragment {
             public void onPageScrollStateChanged(int i) {
             }
         });
-
-        RealmQuery<Place> query = realm.where(Place.class);
-        Place place = query.equalTo("id", placeId).findFirst();
-        List<Nombre> nombresSitio = place.getNombres();
-        List<Categoria> categoriasSitio = place.getCategorias();
-        List<Calificacione> calificacionesSitios = place.getCalificaciones();
-        List<Comentario> comentariosSitios = place.getComentarios();
-
-        List<TextView> nombresTextViews = new ArrayList<>();
-        List<TextView> categoriasTextViews = new ArrayList<>();
-        List<TextView> categoriasGooglePlacesTextViews = new ArrayList<>();
-        List<TextView> calificacionesTextViews = new ArrayList<>();
-        List<TextView> comentariosTextViews = new ArrayList<>();
 
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
@@ -208,8 +211,8 @@ public class PlaceFragment extends Fragment {
         addTextViewsToCollection(nombresSitio, nombresTextViews, getActivity().getApplicationContext(), false);
         addTextViewsToCollection(categoriasSitio, categoriasGooglePlacesTextViews, getActivity().getApplicationContext(), true);
         addTextViewsToCollection(categoriasSitio, categoriasTextViews, getActivity().getApplicationContext(), false);
-        addTextViewsToCollection(comentariosSitios, comentariosTextViews, getActivity().getApplicationContext(), false);
-        addTextViewsToCollection(calificacionesSitios, calificacionesTextViews, getActivity().getApplicationContext(), false);
+        addTextViewsToCollection(comentariosSitio, comentariosTextViews, getActivity().getApplicationContext(), false);
+        addTextViewsToCollection(calificacionesSitio, calificacionesTextViews, getActivity().getApplicationContext(), false);
 
         set.clone(layout);
 

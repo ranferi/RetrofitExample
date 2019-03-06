@@ -11,23 +11,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.model.Imagene;
+import com.squareup.picasso.Picasso;
+
+import java.util.Collection;
+import java.util.List;
+
+import static com.ranferi.ssrsi.api.APIUrl.BASE_URL;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater mLayoutInflater;
     private Integer[] images = {
-            R.drawable.el_gallo_1,
-            R.drawable.el_gallo_2
+            R.drawable.bar_generic,
+            R.drawable.restaurant_generic
     };
+    private List<Imagene> mImagenes;
 
-    public ViewPagerAdapter(Context context) {
+    public ViewPagerAdapter(Context context, List<Imagene> c) {
         this.context = context;
+        mImagenes = c;
     }
 
     @Override
     public int getCount() {
-        return images.length;
+        if ((mImagenes == null || mImagenes.isEmpty())) {
+            return images.length;
+        } else {
+            return mImagenes.size();
+        }
     }
 
     @Override
@@ -41,10 +54,20 @@ public class ViewPagerAdapter extends PagerAdapter {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = mLayoutInflater.inflate(R.layout.custom_layout, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
-        imageView.setImageResource(images[position]);
+        if ((mImagenes == null || mImagenes.isEmpty())) {
+            imageView.setImageResource(images[position]);
+        } else {
+            for (Imagene imagene :
+                    mImagenes) {
+                Picasso.get()
+                        .load(BASE_URL + "sitios/img/" + imagene.getImagen())
+                        .centerCrop()
+                        .into(imageView);
+            }
+        }
 
         ViewPager vp = (ViewPager) container;
-        vp. addView(view, 0);
+        vp.addView(view, 0);
 
         return view;
     }
