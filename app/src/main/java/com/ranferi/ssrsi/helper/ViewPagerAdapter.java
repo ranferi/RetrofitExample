@@ -5,6 +5,7 @@ import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,16 +55,17 @@ public class ViewPagerAdapter extends PagerAdapter {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = mLayoutInflater.inflate(R.layout.custom_layout, null);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        String[] imagesURL = new String[10];
         if ((mImagenes == null || mImagenes.isEmpty())) {
             imageView.setImageResource(images[position]);
         } else {
-            for (Imagene imagene :
-                    mImagenes) {
-                Picasso.get()
-                        .load(BASE_URL + "sitios/img/" + imagene.getImagen())
-                        .centerCrop()
-                        .into(imageView);
+            for (int i = 0; i < mImagenes.size(); i++) {
+                imagesURL[i] = BASE_URL + "sitios/img/" + mImagenes.get(i).getImagen();
             }
+            Picasso.get()
+                    .load(imagesURL[position])
+                    .fit()
+                    .into(imageView);
         }
 
         ViewPager vp = (ViewPager) container;

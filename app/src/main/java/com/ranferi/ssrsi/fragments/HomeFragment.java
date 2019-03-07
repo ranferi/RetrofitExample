@@ -54,14 +54,15 @@ public class HomeFragment extends Fragment {
 
         recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
         mProgressBar = view.findViewById(R.id.progressbar);
+        setupRecyclerView(recyclerViewUsers);
+        fetchUsers();
 
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        setupRecyclerView(recyclerViewUsers);
-        fetchUsers();
+
     }
 
     @Override
@@ -90,7 +91,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
                 if (response.isSuccessful()) {
-                    // Log.d("ActividadPT", "asd " + response.body().getUsers());
+                    Log.d("ActividadPT", "asd " + response.body().getUsers());
                     Users body = response.body();
                     List<User> users = null;
                     if (body != null) {
