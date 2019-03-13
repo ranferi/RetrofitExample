@@ -15,7 +15,6 @@ import retrofit2.http.Path;
 
 public interface APIService {
 
-    // The register call
     @FormUrlEncoded
     @POST("register")
     Call<UserResponse> createUser(
@@ -26,13 +25,6 @@ public interface APIService {
             @Field("email") String email,
             @Field("password") String password);
 
-    /* Call<UserResponse> createUser(
-            @Field("name") String name,
-            @Field("email") String email,
-            @Field("password") String password,
-            @Field("gender") String gender);*/
-
-    // the signing call
     @FormUrlEncoded
     @POST("login")
     Call<UserResponse> userLogin(
@@ -43,7 +35,6 @@ public interface APIService {
     @GET("users")
     Call<Users> getUsers();
 
-    // sending message
     @FormUrlEncoded
     @POST("sendmessage")
     Call<MessageResponse> sendMessage(
@@ -53,7 +44,6 @@ public interface APIService {
             @Field("message") String message
     );
 
-    // updating user
     @FormUrlEncoded
     @POST("update/{id}")
     Call<UserResponse> updateUser(
@@ -66,16 +56,6 @@ public interface APIService {
             @Field("password") String password
     );
 
-
-    /*Call<UserResponse> updateUser(
-            @Path("id") int id,
-            @Field("name") String name,
-            @Field("email") String email,
-            @Field("password") String password,
-            @Field("gender") String gender
-    );*/
-
-    // getting messages
     @GET("messages/{id}")
     Call<Messages> getMessages(@Path("id") int id);
 

@@ -48,14 +48,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
         Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
-        buttonUpdate = (Button) view.findViewById(R.id.buttonUpdate);
-        mEditTextName = (TextInputEditText) view.findViewById(R.id.editTextNameProfile);
-        mEditTextLastName = (TextInputEditText) view.findViewById(R.id.editTextLastNameProfile);
-        mEditTextMaidenName = (TextInputEditText) view.findViewById(R.id.editTextMaidenNameProfile);
-        mEditTextUser = (TextInputEditText) view.findViewById(R.id.editTextUserProfile);
-        mEditTextEmail = (TextInputEditText) view.findViewById(R.id.editTextEmailProfile);
-        mEditTextPassword = (TextInputEditText) view.findViewById(R.id.editTextPasswordProfile);
-        mEditTextRePassword = (TextInputEditText) view.findViewById(R.id.editTextRePasswordProfile);
+        buttonUpdate = view.findViewById(R.id.buttonUpdate);
+        mEditTextName = view.findViewById(R.id.editTextNameProfile);
+        mEditTextLastName = view.findViewById(R.id.editTextLastNameProfile);
+        mEditTextMaidenName = view.findViewById(R.id.editTextMaidenNameProfile);
+        mEditTextUser = view.findViewById(R.id.editTextUserProfile);
+        mEditTextEmail = view.findViewById(R.id.editTextEmailProfile);
+        mEditTextPassword = view.findViewById(R.id.editTextPasswordProfile);
+        mEditTextRePassword = view.findViewById(R.id.editTextRePasswordProfile);
 
         buttonUpdate.setOnClickListener(this);
         mEditTextName.setText(user.getName());
@@ -130,9 +130,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     String toStringACharSequence(CharSequence charSequence) {
-        final StringBuilder sb = new StringBuilder(charSequence.length());
-        sb.append(charSequence);
-        return sb.toString();
+        return String.valueOf(charSequence);
     }
 
     public boolean validate() {

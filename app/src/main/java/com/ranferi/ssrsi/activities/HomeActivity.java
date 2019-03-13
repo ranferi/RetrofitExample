@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             navItemIndex = 0;
             CURRENT_TAG = TAG_HOME;
-            loadFragment();
+            loadFragment().run();
         }
     }
 
@@ -158,7 +158,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         navItemIndex = 0;
                 }
 
-                //Checking if the item is in checked state or not, if not make it in checked state
                 if (menuItem.isChecked()) {
                     menuItem.setChecked(false);
                 } else {
@@ -177,11 +176,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragment() {
         switch (navItemIndex) {
             case 0:
-                return new HomeFragment();
+                return new PlaceListFragment();
             case 1:
                 return new ProfileFragment();
             case 2:
-                return new PlaceListFragment();
+                return new HomeFragment();
             case 3:
                 return new SearchFragment();
             default:
@@ -206,7 +205,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Runnable mPendingRunnable = new Runnable() {
             @Override
             public void run() {
-                // update the main content by replacing fragments
+                // Se actualiza el contenido principal
                 Fragment fragment = getFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 // fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);

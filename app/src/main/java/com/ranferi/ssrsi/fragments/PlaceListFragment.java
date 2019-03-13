@@ -51,7 +51,7 @@ public class PlaceListFragment extends Fragment {
 
         realm = Realm.getDefaultInstance();
 
-        mPlaceRecyclerView = (RecyclerView) view.findViewById(R.id.place_recycler_view);
+        mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -71,13 +71,12 @@ public class PlaceListFragment extends Fragment {
 
         call.enqueue(new Callback<Places>() {
             @Override
-            public void onResponse(Call<Places> call, Response<Places> response) {
+            public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
 
                     RealmList<Place> places = response.body().getPlaces();
 
                     if (places != null) {
-                        Log.d("ActividadPT", "11ass <<< ");
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);
                         realm.beginTransaction();
@@ -89,16 +88,15 @@ public class PlaceListFragment extends Fragment {
                     }
                 } else {
                     int statusCode = response.code();
-                    Log.e("ActividadTT", "PlaceListFragment onResponse(): Error code = " + statusCode);
+                    Log.d("ActividadTT", "PlaceListFragment onResponse(): Error code = " + statusCode);
                 }
             }
 
             @Override
-            public void onFailure(Call<Places> call, Throwable t) {
+            public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
         });
-
     }
 
     @Override

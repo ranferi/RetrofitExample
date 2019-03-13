@@ -72,7 +72,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         String email = mEditTextEmail.getText().toString().trim();
         final String password = mEditTextPassword.getText().toString().trim();
 
-        Log.d("ActividadPT", "Estás en userSignIn, antes de service.userLogin" );
+        // Log.d("ActividadPT", "Estás en userSignIn, antes de service.userLogin" );
 
 
         /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -94,7 +94,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 progressDialog.dismiss();
                 if (!response.body().getError()) {
                     finish();
-                    Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
+                    // Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
 
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);

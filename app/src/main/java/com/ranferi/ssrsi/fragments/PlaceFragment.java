@@ -196,7 +196,6 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-
         layout = v.findViewById(R.id.linearLayout);
         set = new ConstraintSet();
 

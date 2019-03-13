@@ -37,7 +37,6 @@ public class HomeFragment extends Fragment {
 
     private static final String LOG_TAG = HomeFragment.class.getSimpleName();
 
-    private RecyclerView recyclerViewUsers;
     private ProgressBar mProgressBar;
     private RecyclerView.Adapter adapter;
     private List<User> mUsers = new ArrayList<>();
@@ -52,7 +51,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
+        RecyclerView recyclerViewUsers = view.findViewById(R.id.recyclerViewUsers);
         mProgressBar = view.findViewById(R.id.progressbar);
         setupRecyclerView(recyclerViewUsers);
         fetchUsers();
@@ -74,12 +73,11 @@ public class HomeFragment extends Fragment {
     private void fetchUsers() {
         mProgressBar.setVisibility(View.VISIBLE);
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -91,7 +89,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
                 if (response.isSuccessful()) {
-                    Log.d("ActividadPT", "asd " + response.body().getUsers());
+                    // Log.d("ActividadPT", "asd " + response.body().getUsers());
                     Users body = response.body();
                     List<User> users = null;
                     if (body != null) {
