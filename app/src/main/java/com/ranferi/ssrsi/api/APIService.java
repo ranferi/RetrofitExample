@@ -56,6 +56,16 @@ public interface APIService {
             @Field("password") String password
     );
 
+    @FormUrlEncoded
+    @POST("query/{id}")
+    Call<UserResponse> updateUserSite(
+            @Path("id") int id,
+            @Field("id_sitio") int last,
+            @Field("gusto") boolean liked,
+            @Field("precio") String price,
+            @Field("comentario") String comment
+    );
+
     @GET("messages/{id}")
     Call<Messages> getMessages(@Path("id") int id);
 

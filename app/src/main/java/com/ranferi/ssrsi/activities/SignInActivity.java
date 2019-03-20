@@ -91,7 +91,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         call.enqueue(new Callback<UserResponse>() {
             @Override
             public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+
                 progressDialog.dismiss();
+                //TODO: me muestra java.lang.NullPointerException: Attempt to invoke virtual method
+                // 'java.lang.Boolean com.ranferi.ssrsi.model.UserResponse.getError()' on a null object reference
+                // cuando no hay usuario
+
                 if (!response.body().getError()) {
                     finish();
                     // Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
