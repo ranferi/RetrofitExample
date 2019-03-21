@@ -65,9 +65,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finish();
             startActivity(new Intent(this, SignInActivity.class));
         }
-
         Realm.init(this);
-        RealmConfiguration config = new RealmConfiguration.Builder().name("ssrsi.realm").build();
+
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .name("ssrsi.realm")
+                .build();
         Realm.setDefaultConfiguration(config);
 
         setContentView(R.layout.activity_home);

@@ -14,6 +14,8 @@ public class Comentario extends RealmObject {
     @SerializedName("proviene")
     @Expose
     private String proviene;
+    @SerializedName("user")
+    private User user;
 
     /**
      * No args constructor for use in serialization
@@ -23,14 +25,28 @@ public class Comentario extends RealmObject {
     }
 
     /**
-     * 
-     * @param proviene
+     *
      * @param comentario
+     * @param proviene
      */
     public Comentario(String comentario, String proviene) {
         super();
         this.comentario = comentario;
         this.proviene = proviene;
+    }
+
+
+    /**
+     *
+     * @param comentario
+     * @param proviene
+     * @param user
+     */
+    public Comentario(String comentario, String proviene, User user) {
+        super();
+        this.comentario = comentario;
+        this.proviene = proviene;
+        this.user = user;
     }
 
     public String getComentario() {
@@ -47,6 +63,14 @@ public class Comentario extends RealmObject {
 
     public void setProviene(String proviene) {
         this.proviene = proviene;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

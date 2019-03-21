@@ -5,15 +5,26 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import io.realm.RealmObject;
 
+public class User extends RealmObject {
+    @SerializedName("id")
+    @Expose
     private int id;
+    @SerializedName("name")
+    @Expose
     private String name;
+    @SerializedName("lastName")
+    @Expose
     private String lastName;
+    @SerializedName("mothersMaidenName")
+    @Expose
     private String mothersMaidenName;
     @SerializedName("usuario")
     @Expose
     private String user;
+    @SerializedName("email")
+    @Expose
     private String email;
     private String password;
 
