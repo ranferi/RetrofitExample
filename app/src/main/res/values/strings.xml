@@ -64,6 +64,9 @@
     <string name="visitado">Visitado</string>
     <string name="togglebutton">ToggleButton</string>
     <string name="rating">Calificación</string>
+    <string name="comentarios">Comentarios</string>
+    <string name="comment_user">Tu comentario acerca del precio</string>
+    <string name="user_opinion">Tu opinión</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>

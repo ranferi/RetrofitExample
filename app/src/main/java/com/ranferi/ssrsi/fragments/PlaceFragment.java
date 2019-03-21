@@ -99,7 +99,6 @@ public class PlaceFragment extends Fragment {
             e.printStackTrace();
         }
 
-
         RealmQuery<Place> query = realm.where(Place.class);
         Place place = query.equalTo("id", placeId).findFirst();
         List<Nombre> nombresSitio = place.getNombres();
