@@ -16,6 +16,7 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +45,10 @@ import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Imagene;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.User;
 import com.rd.PageIndicatorView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -280,9 +283,11 @@ public class PlaceFragment extends Fragment {
                 24, getResources().getDisplayMetrics());
 
         addTextViewsToCollection(nombresSitio, nombresTextViews, getActivity().getApplicationContext(), false);
+
         addTextViewsToCollection(categoriasSitio, categoriasGooglePlacesTextViews, getActivity().getApplicationContext(), true);
         addTextViewsToCollection(categoriasSitio, categoriasTextViews, getActivity().getApplicationContext(), false);
         addTextViewsToCollection(comentariosSitio, comentariosTextViews, getActivity().getApplicationContext(), false);
+
         addTextViewsToCollection(calificacionesSitio, calificacionesTextViews, getActivity().getApplicationContext(), false);
 
         set.clone(layout);
@@ -340,6 +345,20 @@ public class PlaceFragment extends Fragment {
         return builder;
     }
 
+    public SpannableStringBuilder buildStringWithUser(Context context, CharSequence text, User user) {
+        String usuario = "";
+        if (user != null) {
+            usuario = user.getUser();
+            if (usuario == null || usuario.isEmpty()) {
+                usuario = user.getEmail();
+            }
+        }
+        SpannableStringBuilder builder = new SpannableStringBuilder();
+        builder.append(text).append(" ").append(usuario);
+        builder.append(")");
+        return builder;
+    }
+
     public float sizeOfText(int dimension) {
         float desiredSp = getResources().getDimension(dimension);
         float density = getResources().getDisplayMetrics().density;
@@ -378,10 +397,26 @@ public class PlaceFragment extends Fragment {
             TextView textView = new TextView(getActivity());
             textView.setId(generateId());
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
+            User user = null;
+            boolean existUser = false;
+            if(t instanceof Comentario) {
+                try {
+                    Field field = t.getClass().getField("user");
+                    if (field.getType().equals(User.class)) {
+                        user = getUser((Comentario) t);
+                        if (user != null) existUser = true;
+                    }
+                } catch (NoSuchFieldException ex) {
+                }
+            }
+
             if (soloNombres) {
                 text = setTextForView(t);
             } else {
-                text = buildStringWithIcon(context, setTextForView(t) + " (de ", getIconResource(getDBForIcon(t)));
+                if (existUser)
+                    text = buildStringWithUser(context, setTextForView(t) + " (de usuario:", user);
+                else
+                    text = buildStringWithIcon(context, setTextForView(t) + " (de ", getIconResource(getDBForIcon(t)));
             }
             textView.setText(text);
             textView.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
@@ -391,23 +426,27 @@ public class PlaceFragment extends Fragment {
         }
     }
 
+    public User getUser(Comentario comentario) {
+        return comentario.getUser();
+    }
+
     public <T> void setConstraintsViews(Collection<T> c, int topFieldId, int bottomFieldId) {
         int currentId;
-        for (Iterator<TextView> it = (Iterator<TextView>) c.iterator(); it.hasNext();) {
-             currentId = it.next().getId();
-            set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
-            set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
-            set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
-            if (!it.hasNext()) {
-                if (bottomFieldId == 0) {
-                    set.connect(currentId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, bottomMargin);
+            for (Iterator<TextView> it = (Iterator<TextView>) c.iterator(); it.hasNext();) {
+                 currentId = it.next().getId();
+                set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
+                set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
+                set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
+                if (!it.hasNext()) {
+                    if (bottomFieldId == 0) {
+                        set.connect(currentId, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, bottomMargin);
+                    } else {
+                        set.connect(bottomFieldId, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                    }
                 } else {
-                    set.connect(bottomFieldId, ConstraintSet.TOP, currentId, ConstraintSet.BOTTOM, topMargin);
+                    topFieldId = currentId;
                 }
-            } else {
-                topFieldId = currentId;
             }
-        }
     }
 
     private <T> String setTextForView(T o) {

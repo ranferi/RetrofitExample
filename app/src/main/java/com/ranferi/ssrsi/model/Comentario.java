@@ -15,7 +15,7 @@ public class Comentario extends RealmObject {
     @Expose
     private String proviene;
     @SerializedName("user")
-    private User user;
+    public User user;
 
     /**
      * No args constructor for use in serialization
@@ -72,5 +72,4 @@ public class Comentario extends RealmObject {
     public void setUser(User user) {
         this.user = user;
     }
-
 }
