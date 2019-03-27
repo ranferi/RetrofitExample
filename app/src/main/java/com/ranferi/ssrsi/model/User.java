@@ -16,7 +16,6 @@ public class User extends RealmObject {
     @SerializedName("id")
     @Expose
     @PrimaryKey
-    @Index
     private int id;
     @SerializedName("name")
     @Expose
@@ -186,7 +185,7 @@ public class User extends RealmObject {
         this.visito = visito;
     }
 
-    @NonNull
+    /*@NonNull
     @Override
     public String toString() {
         return "User{" +
@@ -197,6 +196,6 @@ public class User extends RealmObject {
                 ", user='" + user + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
+    }*/
 
 }

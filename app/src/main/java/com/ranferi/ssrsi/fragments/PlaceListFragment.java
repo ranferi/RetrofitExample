@@ -24,6 +24,7 @@ import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.Users;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
@@ -76,6 +77,7 @@ public class PlaceListFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getVisited(user);
+        //Call<Places> call = service.getPlaces();
 
         /*call.enqueue(new Callback<Places>() {
             @Override
@@ -85,6 +87,7 @@ public class PlaceListFragment extends Fragment {
                     RealmList<Place> places = response.body().getPlaces();
 
                     if (places != null) {
+                        Log.d("ActividadPT", "---" + places.toString());
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);
                         realm.beginTransaction();
@@ -122,7 +125,7 @@ public class PlaceListFragment extends Fragment {
 
                         RealmQuery<Place> query = realm.where(Place.class).equalTo("visitaron.visitantes.id", user);
                         List<Place> places = query.findAll();
-                        Log.d("ActividadPT", query.getDescription());
+                        Log.d("ActividadPT", "---" + users.first().getVisito().first().getSitio().first().getMedi());
 
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);

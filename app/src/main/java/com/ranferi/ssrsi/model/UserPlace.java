@@ -11,12 +11,6 @@ import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 public class UserPlace extends RealmObject {
-
-    @SerializedName("id")
-    @Expose
-    @PrimaryKey
-    @Index
-    private int UserIdAndPlaceId;
     @SerializedName("sitio_src")
     @Expose
     private String sitioSrc;
@@ -99,14 +93,6 @@ public class UserPlace extends RealmObject {
 
     public void setSitio(RealmList<Place> sitio) {
         this.sitio = sitio;
-    }
-
-    public int getUserIdAndPlaceId() {
-        return UserIdAndPlaceId;
-    }
-
-    public void setUserIdAndPlaceId(int userIdAndPlaceId) {
-        UserIdAndPlaceId = userIdAndPlaceId;
     }
 
     public RealmResults<User> getVisitantes() {
