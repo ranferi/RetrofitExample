@@ -5,11 +5,18 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
+import io.realm.annotations.PrimaryKey;
 
 public class User extends RealmObject {
     @SerializedName("id")
     @Expose
+    @PrimaryKey
+    @Index
     private int id;
     @SerializedName("name")
     @Expose
@@ -22,11 +29,16 @@ public class User extends RealmObject {
     private String mothersMaidenName;
     @SerializedName("usuario")
     @Expose
+    @Index
     private String user;
     @SerializedName("email")
     @Expose
+    @Index
     private String email;
     private String password;
+    @SerializedName("visito")
+    @Expose
+    private RealmList<UserPlace> visito = new RealmList<>();
 
     public User() {}
 
@@ -39,6 +51,23 @@ public class User extends RealmObject {
         this.user = user;
         this.email = email;
         this.password = password;
+    }
+
+    /**
+     *
+     * @param name
+     * @param id
+     * @param visito
+     * @param email
+     * @param user
+     */
+    public User(int id, String name, String user, String email, RealmList<UserPlace> visito) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.user = user;
+        this.email = email;
+        this.visito = visito;
     }
 
     // NUEVA En ProfileFragment.java, para ver y actualizar información
@@ -148,6 +177,15 @@ public class User extends RealmObject {
         this.password = password;
     }
 
+
+    public RealmList<UserPlace> getVisito() {
+        return visito;
+    }
+
+    public void setVisito(RealmList<UserPlace> visito) {
+        this.visito = visito;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -160,4 +198,5 @@ public class User extends RealmObject {
                 ", email='" + email + '\'' +
                 '}';
     }
+
 }

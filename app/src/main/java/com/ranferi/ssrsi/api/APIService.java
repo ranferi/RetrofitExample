@@ -3,6 +3,7 @@ package com.ranferi.ssrsi.api;
 import com.ranferi.ssrsi.model.MessageResponse;
 import com.ranferi.ssrsi.model.Messages;
 import com.ranferi.ssrsi.model.Places;
+import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
 
@@ -71,4 +72,7 @@ public interface APIService {
 
     @GET("prueba")
     Call<Places> getPlaces();
+
+    @GET("visited/{id}")
+    Call<Users> getVisited(@Path("id") int id);
 }

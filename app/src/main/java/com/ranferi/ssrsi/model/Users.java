@@ -1,18 +1,20 @@
 package com.ranferi.ssrsi.model;
 
-import java.util.ArrayList;
 
-public class Users {
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
-    private ArrayList<User> users;
+public class Users extends RealmObject {
+
+    private RealmList<User> users;
 
     public Users() { }
 
-    public ArrayList<User> getUsers() {
+    public RealmList<User> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<User> users) {
+    public void setUsers(RealmList<User> users) {
         this.users = users;
     }
 

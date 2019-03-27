@@ -406,8 +406,7 @@ public class PlaceFragment extends Fragment {
                         user = getUser((Comentario) t);
                         if (user != null) existUser = true;
                     }
-                } catch (NoSuchFieldException ex) {
-                }
+                } catch (NoSuchFieldException ex) { }
             }
 
             if (soloNombres) {
@@ -431,9 +430,12 @@ public class PlaceFragment extends Fragment {
     }
 
     public <T> void setConstraintsViews(Collection<T> c, int topFieldId, int bottomFieldId) {
+        T currentTextView;
         int currentId;
-            for (Iterator<TextView> it = (Iterator<TextView>) c.iterator(); it.hasNext();) {
-                 currentId = it.next().getId();
+        for (Iterator<T> it = c.iterator(); it.hasNext();) {
+            currentTextView = it.next();
+            if (currentTextView instanceof TextView) {
+                currentId = ((TextView) currentTextView).getId();
                 set.connect(currentId, ConstraintSet.TOP, topFieldId, ConstraintSet.BOTTOM, topMargin);
                 set.connect(currentId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, sideMargin);
                 set.connect(currentId, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, sideMargin);
@@ -447,6 +449,7 @@ public class PlaceFragment extends Fragment {
                     topFieldId = currentId;
                 }
             }
+        }
     }
 
     private <T> String setTextForView(T o) {

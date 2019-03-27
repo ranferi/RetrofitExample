@@ -9,6 +9,7 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 public class Place extends RealmObject {
@@ -16,9 +17,11 @@ public class Place extends RealmObject {
     @SerializedName("id")
     @Expose
     @PrimaryKey
+    @Index
     private int id;
     @SerializedName("medi")
     @Expose
+    @Index
     private String medi;
     @SerializedName("latitud")
     @Expose
@@ -34,22 +37,23 @@ public class Place extends RealmObject {
     private boolean musica;
     @SerializedName("nombres")
     @Expose
-    private RealmList<Nombre> mNombres = new RealmList<Nombre>();
+    private RealmList<Nombre> mNombres = new RealmList<>();
     @SerializedName("calificaciones")
     @Expose
-    private RealmList<Calificacione> mCalificaciones = new RealmList<Calificacione>();
+    private RealmList<Calificacione> mCalificaciones = new RealmList<>();
     @SerializedName("total")
     @Expose
     private double total;
     @SerializedName("categorias")
     @Expose
-    private RealmList<Categoria> categorias = new RealmList<Categoria>();
+    private RealmList<Categoria> categorias = new RealmList<>();
     @SerializedName("imagenes")
     @Expose
-    private RealmList<Imagene> mImagenes = new RealmList<Imagene>();
+    private RealmList<Imagene> mImagenes = new RealmList<>();
     @SerializedName("comentarios")
     @Expose
-    private RealmList<Comentario> comentarios = new RealmList<Comentario>();
+    private RealmList<Comentario> comentarios = new RealmList<>();
+    private RealmList<UserPlace> visitaron = new RealmList<>();
 
     /**
      * No args constructor for use in serialization
@@ -175,4 +179,11 @@ public class Place extends RealmObject {
         this.comentarios = comentarios;
     }
 
+    public RealmList<UserPlace> getVisitaron() {
+        return visitaron;
+    }
+
+    public void setVisitaron(RealmList<UserPlace> visitaron) {
+        this.visitaron = visitaron;
+    }
 }

@@ -69,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
+                //.deleteRealmIfMigrationNeeded()
                 .name("ssrsi.realm")
                 .build();
         Realm.setDefaultConfiguration(config);
