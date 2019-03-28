@@ -58,6 +58,12 @@ public class PlaceListFragment extends Fragment {
         if (getActivity() != null) getActivity().setTitle("Sitios");
 
         realm = Realm.getDefaultInstance();
+        /*realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.deleteAll();
+            }
+        });*/
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);

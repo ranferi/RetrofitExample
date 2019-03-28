@@ -9,7 +9,9 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Index;
+import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 public class Place extends RealmObject {
@@ -53,14 +55,11 @@ public class Place extends RealmObject {
     @SerializedName("comentarios")
     @Expose
     private RealmList<Comentario> comentarios = new RealmList<>();
-    private RealmList<UserPlace> visitaron = new RealmList<>();
+    @LinkingObjects("sitio")
+    private final RealmResults<UserPlace> visitaron = null;
 
-    /**
-     * No args constructor for use in serialization
-     */
     public Place() {
     }
-
 
     public Place(int id, String medi, String latitud, String longitud, String direccion,
                  boolean musica, RealmList<Nombre> nombres, RealmList<Calificacione> calificaciones,
@@ -109,11 +108,9 @@ public class Place extends RealmObject {
         return longitud;
     }
 
-
     public void setLongitud(String longitud) {
         this.longitud = longitud;
     }
-
 
     public String getDireccion() {
         return direccion;
@@ -179,11 +176,4 @@ public class Place extends RealmObject {
         this.comentarios = comentarios;
     }
 
-    public RealmList<UserPlace> getVisitaron() {
-        return visitaron;
-    }
-
-    public void setVisitaron(RealmList<UserPlace> visitaron) {
-        this.visitaron = visitaron;
-    }
 }

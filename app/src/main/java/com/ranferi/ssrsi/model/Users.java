@@ -4,7 +4,7 @@ package com.ranferi.ssrsi.model;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class Users extends RealmObject {
+public class Users {
 
     private RealmList<User> users;
 

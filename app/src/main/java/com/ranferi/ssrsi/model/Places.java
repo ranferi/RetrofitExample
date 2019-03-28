@@ -8,7 +8,7 @@ import java.util.List;
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-public class Places extends RealmObject {
+public class Places {
 
     @SerializedName("places")
     @Expose

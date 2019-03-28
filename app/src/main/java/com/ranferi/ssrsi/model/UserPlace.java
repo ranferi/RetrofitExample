@@ -25,22 +25,16 @@ public class UserPlace extends RealmObject {
     private String comentario;
     @SerializedName("sitio")
     @Expose
-    private RealmList<Place> sitio = null;
+    private RealmList<Place> sitio = new RealmList<>();
     @LinkingObjects("visito")
     private final RealmResults<User> visitantes = null;
-    @LinkingObjects("visitaron")
-    private final RealmResults<Place> sitiosVisitados = null;
 
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
     public UserPlace() {
     }
 
     /**
-     *  @param sitioSrc
+     * @param sitioSrc
      * @param precio
      * @param gusto
      * @param comentario
@@ -95,19 +89,4 @@ public class UserPlace extends RealmObject {
         this.sitio = sitio;
     }
 
-    public RealmResults<User> getVisitantes() {
-        return visitantes;
-    }
-
-    /*public void setVisitantes(RealmResults<User> visitantes) {
-        this.visitantes = visitantes;
-    }*/
-
-    public RealmResults<Place> getSitiosVisitados() {
-        return sitiosVisitados;
-    }
-
-    /*public void setSitiosVisitados(RealmResults<Place> sitiosVisitados) {
-        this.sitiosVisitados = sitiosVisitados;
-    }*/
 }
