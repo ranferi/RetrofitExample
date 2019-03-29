@@ -9,6 +9,9 @@
             android:id="@+id/nav_profile"
             android:title="Perfil" />
         <item
+            android:id="@+id/nav_visited"
+            android:title="Visitados" />
+        <item
             android:id="@+id/nav_places"
             android:title="Sitios" />
         <item

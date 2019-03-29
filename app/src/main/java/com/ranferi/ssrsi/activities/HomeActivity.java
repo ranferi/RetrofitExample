@@ -23,7 +23,9 @@ import com.ranferi.ssrsi.fragments.HomeFragment;
 import com.ranferi.ssrsi.fragments.PlaceListFragment;
 import com.ranferi.ssrsi.fragments.ProfileFragment;
 import com.ranferi.ssrsi.fragments.SearchFragment;
+import com.ranferi.ssrsi.fragments.VisitedFragment;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.User;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -49,6 +51,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG_PROFILE = "perfil";
     private static final String TAG_SEARCH = "busqueda";
     private static final String TAG_PLACES = "sitios";
+    private static final String TAG_VISITED = "visitados";
     public static String CURRENT_TAG = TAG_HOME;
 
     // títulos de cada item en el menu nav.
@@ -85,8 +88,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View headerView = navigationView.getHeaderView(0);
         mTextViewName = (TextView) headerView.findViewById(R.id.textViewNameHeader);
-        mTextViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
-
+        User user = SharedPrefManager.getInstance(this).getUser();
+        if (user.getName() != null && user.getName() .isEmpty())
+            mTextViewName.setText(user.getName());
+        else if (user.getUser() != null && !user.getUser().isEmpty())
+            mTextViewName.setText(user.getUser());
+        else
+            mTextViewName.setText("usuario");
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         setUpNavigationView();
@@ -147,12 +155,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         navItemIndex = 1;
                         CURRENT_TAG = TAG_PROFILE;
                         break;
-                    case R.id.nav_places:
+                    case R.id.nav_visited:
                         navItemIndex = 2;
+                        CURRENT_TAG = TAG_VISITED;
+                        break;
+                    case R.id.nav_places:
+                        navItemIndex = 3;
                         CURRENT_TAG = TAG_PLACES;
                         break;
                     case R.id.nav_search:
-                        navItemIndex = 3;
+                        navItemIndex = 4;
                         CURRENT_TAG = TAG_SEARCH;
                         break;
                     case R.id.nav_logout:
@@ -184,8 +196,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case 1:
                 return new ProfileFragment();
             case 2:
-                return new HomeFragment();
+                return new VisitedFragment();
             case 3:
+                return new HomeFragment();
+            case 4:
                 return new SearchFragment();
             default:
                 return new HomeFragment();

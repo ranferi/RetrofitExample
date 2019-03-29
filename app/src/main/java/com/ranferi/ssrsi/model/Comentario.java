@@ -5,6 +5,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.annotations.LinkingObjects;
 
 public class Comentario extends RealmObject {
 
@@ -16,6 +18,8 @@ public class Comentario extends RealmObject {
     private String proviene;
     @SerializedName("user")
     public User user;
+    @LinkingObjects("comentarios")
+    private final RealmResults<Place> comentariosSitio = null;
 
     /**
      * No args constructor for use in serialization

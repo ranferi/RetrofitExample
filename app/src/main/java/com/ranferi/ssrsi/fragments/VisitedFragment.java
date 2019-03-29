@@ -39,12 +39,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PlaceListFragment extends Fragment {
+public class VisitedFragment extends Fragment {
     private Realm realm;
     private RecyclerView mPlaceRecyclerView;
     private RecyclerView.Adapter mAdapter;
 
-    public PlaceListFragment() { }
+    public VisitedFragment() { }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class PlaceListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (getActivity() != null) getActivity().setTitle("Sitios");
+        if (getActivity() != null) getActivity().setTitle("Visitados");
 
         realm = Realm.getDefaultInstance();
         /*realm.executeTransaction(new Realm.Transaction() {
@@ -82,10 +82,10 @@ public class PlaceListFragment extends Fragment {
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
         APIService service = retrofit.create(APIService.class);
-        // Call<Users> call = service.getVisited(user);
-        Call<Places> call = service.getPlaces();
+        Call<Users> call = service.getVisited(user);
+        //Call<Places> call = service.getPlaces();
 
-        call.enqueue(new Callback<Places>() {
+        /*call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
@@ -113,9 +113,9 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });
+        });*/
 
-        /*call.enqueue(new Callback<Users>() {
+        call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
                 if (response.isSuccessful()) {
@@ -138,11 +138,11 @@ public class PlaceListFragment extends Fragment {
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);
                     } else {
-                        Log.d("ActividadPT", "PlaceListFragment: List<> empty ");
+                        Log.d("ActividadPT", "VisitedFragmentFragment: List<> empty ");
                     }
                 } else {
                     int statusCode = response.code();
-                    Log.d("ActividadTT", "PlaceListFragment onResponse(): Error code = " + statusCode);
+                    Log.d("ActividadTT", "VisitedFragmentFragment onResponse(): Error code = " + statusCode);
                 }
             }
 
@@ -150,7 +150,7 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });*/
+        });
     }
 
     @Override
