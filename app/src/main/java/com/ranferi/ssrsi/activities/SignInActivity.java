@@ -3,6 +3,7 @@ package com.ranferi.ssrsi.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -27,7 +28,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private EditText mEditTextEmail, mEditTextPassword;
     private Button mButtonSignIn;
-    private Button mButtonRegisterLink;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,8 +45,8 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         mButtonSignIn = (Button) findViewById(R.id.login_button);
         mButtonSignIn.setOnClickListener(this);
 
-        mButtonRegisterLink = (Button) findViewById(R.id.register_button_link);
-        mButtonRegisterLink.setOnClickListener(new View.OnClickListener() {
+        Button buttonRegisterLink = (Button) findViewById(R.id.register_button_link);
+        buttonRegisterLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
@@ -90,7 +90,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
         call.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
 
                 progressDialog.dismiss();
                 //TODO: me muestra java.lang.NullPointerException: Attempt to invoke virtual method
@@ -110,7 +110,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            public void onFailure(Call<UserResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }

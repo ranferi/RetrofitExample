@@ -36,7 +36,7 @@ public class SharedPrefManager {
         return instance;
     }
 
-    public boolean userLogin(User user) {
+    public void userLogin(User user) {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_ID, user.getId());
@@ -46,14 +46,11 @@ public class SharedPrefManager {
         editor.putString(KEY_USER_USER, user.getUser());
         editor.putString(KEY_USER_EMAIL, user.getEmail());
         editor.apply();
-        return true;
     }
 
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if (sharedPreferences.getString(KEY_USER_EMAIL, null) != null)
-            return true;
-        return false;
+        return sharedPreferences.getString(KEY_USER_EMAIL, null) != null;
     }
 
     public User getUser() {
@@ -74,12 +71,11 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_USER_GENDER, null)*/
     }
 
-    public boolean logout() {
+    public void logout() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        return true;
     }
 
     public void setPassword(String password) {

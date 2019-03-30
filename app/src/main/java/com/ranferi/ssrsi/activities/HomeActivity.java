@@ -265,7 +265,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         private Runnable runnable;
 
-        public SmoothActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes) {
+        SmoothActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar, int openDrawerContentDescRes, int closeDrawerContentDescRes) {
             super(activity, drawerLayout, toolbar, openDrawerContentDescRes, closeDrawerContentDescRes);
         }
 
@@ -288,7 +288,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         }
 
-        public void runWhenIdle(Runnable runnable) {
+        void runWhenIdle(Runnable runnable) {
             this.runnable = runnable;
         }
     }

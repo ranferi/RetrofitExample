@@ -17,6 +17,7 @@ import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.PlacessAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.Categoria;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.User;
@@ -25,6 +26,7 @@ import com.ranferi.ssrsi.model.Users;
 
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -122,8 +124,31 @@ public class VisitedFragment extends Fragment {
 
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
+                    RealmResults<UserPlace> userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findAll();
+                    RealmResults<Categoria> userCategorias = realm.where(Categoria.class).findAll();
 
-                    if (visitados != null) {
+                    Iterator<UserPlace> visited = visitados.iterator();
+
+                    while (visited.hasNext()) {
+                        UserPlace userPlace = visited.next();
+                        for (UserPlace sitio : userPlaces) {
+                            if (userPlace.getSitioSrc().equals(sitio.getSitioSrc())) {
+                                visited.remove();
+                            } else {
+                                if (!userCategorias.isEmpty()) {
+                                    RealmList<Place> p = sitio.getSitio();
+                                    for (Place ps : p) {
+                                        RealmList<Categoria> temp = ps.getCategorias();
+                                        Iterator<Categoria> it = temp.iterator();
+                                        while ()
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+
+                    if (visitados != null && !visitados.isEmpty()) {
 
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
