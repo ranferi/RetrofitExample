@@ -7,11 +7,13 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
+import io.realm.annotations.PrimaryKey;
 
 public class Imagene extends RealmObject {
 
     @SerializedName("imagen")
     @Expose
+    @PrimaryKey
     private String imagen;
     @LinkingObjects("mImagenes")
     private final RealmResults<Place> imagenesSitio = null;

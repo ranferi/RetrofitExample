@@ -59,6 +59,8 @@ public class VisitedFragment extends Fragment {
 
         if (getActivity() != null) getActivity().setTitle("Visitados");
 
+        final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+
         realm = Realm.getDefaultInstance();
         /*realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -66,6 +68,7 @@ public class VisitedFragment extends Fragment {
                 bgRealm.deleteAll();
             }
         });*/
+        RealmResults<UserPlace> userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findAll();
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
@@ -81,7 +84,7 @@ public class VisitedFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+
 
         APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getVisited(user);
@@ -124,7 +127,7 @@ public class VisitedFragment extends Fragment {
 
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
-                    RealmResults<UserPlace> userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findAll();
+
                     RealmResults<Categoria> userCategorias = realm.where(Categoria.class).findAll();
 
                     Iterator<UserPlace> visited = visitados.iterator();
@@ -134,15 +137,6 @@ public class VisitedFragment extends Fragment {
                         for (UserPlace sitio : userPlaces) {
                             if (userPlace.getSitioSrc().equals(sitio.getSitioSrc())) {
                                 visited.remove();
-                            } else {
-                                if (!userCategorias.isEmpty()) {
-                                    RealmList<Place> p = sitio.getSitio();
-                                    for (Place ps : p) {
-                                        RealmList<Categoria> temp = ps.getCategorias();
-                                        Iterator<Categoria> it = temp.iterator();
-                                        while ()
-                                    }
-                                }
                             }
                         }
 

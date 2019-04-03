@@ -7,9 +7,14 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
+import io.realm.annotations.PrimaryKey;
 
 public class Comentario extends RealmObject {
 
+    @SerializedName("id")
+    @Expose
+    @PrimaryKey
+    private int id;
     @SerializedName("comentario")
     @Expose
     private String comentario;
@@ -30,8 +35,8 @@ public class Comentario extends RealmObject {
 
     /**
      *
-     * @param comentario
-     * @param proviene
+     * @param comentario del usuario
+     * @param proviene en cual BD se encuentra
      */
     public Comentario(String comentario, String proviene) {
         super();
@@ -42,9 +47,9 @@ public class Comentario extends RealmObject {
 
     /**
      *
-     * @param comentario
-     * @param proviene
-     * @param user
+     * @param comentario del usuario
+     * @param proviene de que BD
+     * @param user de que usuario
      */
     public Comentario(String comentario, String proviene, User user) {
         super();
@@ -75,5 +80,13 @@ public class Comentario extends RealmObject {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

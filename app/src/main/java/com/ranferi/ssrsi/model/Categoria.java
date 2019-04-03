@@ -7,11 +7,15 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
+import io.realm.annotations.PrimaryKey;
 
 public class Categoria extends RealmObject {
 
+
+
     @SerializedName("categoria")
     @Expose
+    @PrimaryKey
     private String categoria;
     @SerializedName("proviene")
     @Expose

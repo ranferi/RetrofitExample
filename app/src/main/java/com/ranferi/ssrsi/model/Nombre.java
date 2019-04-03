@@ -7,11 +7,13 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
+import io.realm.annotations.PrimaryKey;
 
 public class Nombre extends RealmObject {
 
     @SerializedName("nombre_sitio")
     @Expose
+    @PrimaryKey
     private String nombreSitio;
     @SerializedName("proviene")
     @Expose
