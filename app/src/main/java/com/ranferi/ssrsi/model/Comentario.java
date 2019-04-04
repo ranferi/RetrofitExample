@@ -25,11 +25,9 @@ public class Comentario extends RealmObject {
     public User user;
     @LinkingObjects("comentarios")
     private final RealmResults<Place> comentariosSitio = null;
+    @LinkingObjects("comentarioUsuario")
+    private final RealmResults<UserPlace> comentariosUsuario = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Comentario() {
     }
 
@@ -43,7 +41,6 @@ public class Comentario extends RealmObject {
         this.comentario = comentario;
         this.proviene = proviene;
     }
-
 
     /**
      *

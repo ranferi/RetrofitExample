@@ -85,7 +85,7 @@ public class PlaceListFragment extends Fragment {
         // Call<Users> call = service.getVisited(user);
         Call<Places> call = service.getPlaces();
 
-        call.enqueue(new Callback<Places>() {
+        /*call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
@@ -96,10 +96,13 @@ public class PlaceListFragment extends Fragment {
                         Log.d("ActividadPT", "---" + places.toString());
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);
-                        realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(places);
-                        realm.commitTransaction();
-                        realm.close();
+
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(@NonNull Realm bgRealm) {
+                                realm.copyToRealmOrUpdate(places);
+                            }
+                        });
                     } else {
                         Log.d("ActividadPT", "PlaceListFragment: List<> empty ");
                     }
@@ -113,7 +116,7 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });
+        });*/
 
         /*call.enqueue(new Callback<Users>() {
             @Override

@@ -11,6 +11,10 @@ import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
 public class UserPlace extends RealmObject {
+    @SerializedName("id")
+    @Expose
+    @PrimaryKey
+    private int id;
     @SerializedName("sitio_src")
     @Expose
     private String sitioSrc;
@@ -22,7 +26,7 @@ public class UserPlace extends RealmObject {
     private boolean gusto;
     @SerializedName("comentario")
     @Expose
-    private String comentario;
+    private Comentario comentarioUsuario;
     @SerializedName("sitio")
     @Expose
     private RealmList<Place> sitio = new RealmList<>();
@@ -34,18 +38,18 @@ public class UserPlace extends RealmObject {
     }
 
     /**
-     * @param sitioSrc
-     * @param precio
-     * @param gusto
-     * @param comentario
-     * @param sitio
+     * @param sitioSrc 'source' en ontologia
+     * @param precio el precio que el usuario dio
+     * @param gusto si le gusto o no el sitio
+     * @param sitio el sitio
      */
-    public UserPlace(String sitioSrc, String precio, boolean gusto, String comentario, RealmList<Place> sitio) {
+    public UserPlace(int id, String sitioSrc, String precio, boolean gusto, RealmList<Place> sitio) {
         super();
+        this.id = id;
         this.sitioSrc = sitioSrc;
         this.precio = precio;
         this.gusto = gusto;
-        this.comentario = comentario;
+
         this.sitio = sitio;
     }
 
@@ -73,14 +77,6 @@ public class UserPlace extends RealmObject {
         this.gusto = gusto;
     }
 
-    public String getComentario() {
-        return comentario;
-    }
-
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
-    }
-
     public RealmList<Place> getSitio() {
         return sitio;
     }
@@ -89,4 +85,19 @@ public class UserPlace extends RealmObject {
         this.sitio = sitio;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Comentario getComentarioUsuario() {
+        return comentarioUsuario;
+    }
+
+    public void setComentarioUsuario(Comentario comentarioUsuario) {
+        this.comentarioUsuario = comentarioUsuario;
+    }
 }
