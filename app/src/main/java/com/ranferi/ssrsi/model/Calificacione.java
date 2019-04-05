@@ -7,9 +7,14 @@ import com.google.gson.annotations.SerializedName;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
+import io.realm.annotations.PrimaryKey;
 
 public class Calificacione extends RealmObject {
 
+    @SerializedName("id")
+    @Expose
+    @PrimaryKey
+    private int id;
     @SerializedName("calificacion")
     @Expose
     private String calificacion;

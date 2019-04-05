@@ -85,7 +85,7 @@ public class PlaceListFragment extends Fragment {
         // Call<Users> call = service.getVisited(user);
         Call<Places> call = service.getPlaces();
 
-        /*call.enqueue(new Callback<Places>() {
+        call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
@@ -116,44 +116,8 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });*/
+        });
 
-        /*call.enqueue(new Callback<Users>() {
-            @Override
-            public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
-                if (response.isSuccessful()) {
-
-                    RealmList<User> users = response.body().getUsers();
-                    RealmList<UserPlace> visitados = users.first().getVisito();
-
-                    if (visitados != null) {
-
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(@NonNull Realm bgRealm) {
-                                bgRealm.copyToRealmOrUpdate(users);
-                            }
-                        });
-
-                        RealmQuery<Place> query = realm.where(Place.class).equalTo("visitaron.visitantes.id", user);
-                        List<Place> places = query.findAll();
-
-                        mAdapter = new PlacessAdapter(places, getActivity());
-                        mPlaceRecyclerView.setAdapter(mAdapter);
-                    } else {
-                        Log.d("ActividadPT", "PlaceListFragment: List<> empty ");
-                    }
-                } else {
-                    int statusCode = response.code();
-                    Log.d("ActividadTT", "PlaceListFragment onResponse(): Error code = " + statusCode);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
-                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
-            }
-        });*/
     }
 
     @Override
