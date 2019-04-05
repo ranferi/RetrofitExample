@@ -110,6 +110,12 @@ public class PlaceFragment extends Fragment {
         List<Comentario> comentariosSitio = place.getComentarios();
         List<Imagene> imagenesSitio = place.getImagenes();
 
+
+        for (Comentario aComentariosSitio : comentariosSitio) {
+            Log.d("ActividadPT", aComentariosSitio.getComentario() + " " + aComentariosSitio.getUser());
+        }
+
+
         List<TextView> nombresTextViews = new ArrayList<>();
         List<TextView> categoriasTextViews = new ArrayList<>();
         List<TextView> categoriasGooglePlacesTextViews = new ArrayList<>();
