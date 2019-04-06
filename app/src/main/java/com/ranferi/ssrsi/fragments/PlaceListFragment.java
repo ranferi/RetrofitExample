@@ -65,27 +65,26 @@ public class PlaceListFragment extends Fragment {
             }
         });*/
 
+        final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+
+        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
+        Log.d("ActividadPT", String.valueOf(user));
+        Log.d("ActividadPT", String.valueOf(userPlaces));
+
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
+                //.client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
-
         APIService service = retrofit.create(APIService.class);
-        // Call<Users> call = service.getVisited(user);
         Call<Places> call = service.getPlaces();
 
-        call.enqueue(new Callback<Places>() {
+        /*call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
@@ -97,12 +96,7 @@ public class PlaceListFragment extends Fragment {
                         mAdapter = new PlacessAdapter(places, getActivity());
                         mPlaceRecyclerView.setAdapter(mAdapter);
 
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(@NonNull Realm bgRealm) {
-                                realm.copyToRealmOrUpdate(places);
-                            }
-                        });
+                        realm.executeTransaction(bgRealm -> realm.copyToRealmOrUpdate(places));
                     } else {
                         Log.d("ActividadPT", "PlaceListFragment: List<> empty ");
                     }
@@ -116,7 +110,7 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });
+        });*/
 
     }
 

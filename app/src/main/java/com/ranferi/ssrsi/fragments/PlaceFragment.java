@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIUrl;
+import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
 import com.ranferi.ssrsi.model.Calificacione;
 import com.ranferi.ssrsi.model.Categoria;
@@ -46,6 +48,7 @@ import com.ranferi.ssrsi.model.Imagene;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.User;
+import com.ranferi.ssrsi.model.UserPlace;
 import com.rd.PageIndicatorView;
 
 import java.lang.reflect.Field;
@@ -57,6 +60,7 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 
 public class PlaceFragment extends Fragment {
@@ -71,6 +75,7 @@ public class PlaceFragment extends Fragment {
     private int topMargin;
     private int sideMargin;
     private int bottomMargin;
+    private int idUser;
 
     public PlaceFragment() {
     }
@@ -110,11 +115,12 @@ public class PlaceFragment extends Fragment {
         List<Comentario> comentariosSitio = place.getComentarios();
         List<Imagene> imagenesSitio = place.getImagenes();
 
+        idUser  = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", idUser).findAll()
+                .where().equalTo("sitio.id", placeId).findFirst();
 
-        for (Comentario aComentariosSitio : comentariosSitio) {
-            Log.d("ActividadPT", aComentariosSitio.getComentario() + " " + aComentariosSitio.getUser());
-        }
-
+        Log.d("ActividadPT", String.valueOf(idUser));
+        Log.d("ActividadPT", "Usuario " + idUser + " visito " + String.valueOf(userPlaces));
 
         List<TextView> nombresTextViews = new ArrayList<>();
         List<TextView> categoriasTextViews = new ArrayList<>();
@@ -129,6 +135,7 @@ public class PlaceFragment extends Fragment {
         final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setCount(viewPagerAdapter.getCount()); // especifica el total de indicadores
 
+        // Fotos de Sitio
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -145,8 +152,7 @@ public class PlaceFragment extends Fragment {
         });
 
         final Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
-
-        String[] plants = new String[]{
+        String[] stringPrice = new String[]{
                 "elige una calificación (precio)...",
                 "Barato",
                 "Moderado",
@@ -154,10 +160,10 @@ public class PlaceFragment extends Fragment {
                 "MuyCaro"
         };
 
-        final List<String> plantsList = new ArrayList<>(Arrays.asList(plants));
+        final List<String> priceList = new ArrayList<>(Arrays.asList(stringPrice));
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinner_item,plantsList){
+                getActivity(),R.layout.spinner_item,priceList){
             @Override
             public boolean isEnabled(int position){
                 // Se inutiliza el primer item
@@ -169,7 +175,7 @@ public class PlaceFragment extends Fragment {
                                         @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if(position == 0){
+                if (position == 0){
                     tv.setTextColor(Color.GRAY);
                 }
                 else {
@@ -180,7 +186,6 @@ public class PlaceFragment extends Fragment {
         };
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinner.setAdapter(spinnerArrayAdapter);
-
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -198,6 +203,9 @@ public class PlaceFragment extends Fragment {
 
             }
         });
+
+
+        EditText editTextComment = v.findViewById(R.id.editTextComment);
 
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
@@ -255,14 +263,20 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-        ToggleButton toggle = v.findViewById(R.id.toggleButton);
-        toggle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // The toggle is enabled
-            } else {
-                // The toggle is disabled
-            }
-        });
+        ToggleButton toggleVisited = v.findViewById(R.id.toggleButton);
+
+        if (userPlaces != null) {
+            Log.d("ActividadPT", String.valueOf(spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3))) + " " + userPlaces.getPrecio().substring(3));
+            int i = spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3));
+            spinner.post(new Runnable() {
+                public void run() {
+                    spinner.setSelection(i, true);
+                }
+            });
+            editTextComment.setText(userPlaces.getComentarioUsuario().getComentario());
+            toggleVisited.setChecked(true);
+            likedCheckBox.setChecked(userPlaces.isGusto());
+        }
 
         layout = v.findViewById(R.id.linearLayout);
         set = new ConstraintSet();
@@ -292,6 +306,8 @@ public class PlaceFragment extends Fragment {
         setConstraintsViews(comentariosTextViews, R.id.comments, 0);
 
         set.applyTo(layout);
+
+
 
         return v;
     }
@@ -401,12 +417,14 @@ public class PlaceFragment extends Fragment {
                     }
                 } catch (NoSuchFieldException ignored) { }
             }
-
             if (soloNombres) {
                 text = setTextForView(t);
             } else {
                 if (existUser)
-                    text = buildStringWithUser(context, setTextForView(t) + " (de usuario:", user);
+                    if (user.getId() != idUser)
+                        text = buildStringWithUser(context, setTextForView(t) + " (de usuario:", user);
+                    else
+                        continue;
                 else
                     text = buildStringWithIcon(context, setTextForView(t) + " (de ", getIconResource(getDBForIcon(t)));
             }

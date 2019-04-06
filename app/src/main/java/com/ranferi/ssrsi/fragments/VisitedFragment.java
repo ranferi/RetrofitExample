@@ -68,23 +68,19 @@ public class VisitedFragment extends Fragment {
                 bgRealm.deleteAll();
             }
         });*/
-        RealmResults<UserPlace> userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findAll();
+        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
+        Log.d("ActividadPT", String.valueOf(user));
+        Log.d("ActividadPT", String.valueOf(userPlaces));
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
+                //.client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
 
         APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getVisited(user);
@@ -96,14 +92,11 @@ public class VisitedFragment extends Fragment {
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
 
-                    Iterator<UserPlace> visited = visitados.iterator();
+                    /*Iterator<UserPlace> visited = visitados.iterator();
                     while (visited.hasNext()) {
                         UserPlace userPlace = visited.next();
-                        for (UserPlace sitio : userPlaces) {
-                            if (userPlace.getSitioSrc().equals(sitio.getSitioSrc())) visited.remove();
-
-                        }
-                    }
+                        if (userPlace.getSitioSrc().equals(userPlaces.getSitioSrc())) visited.remove();
+                    }*/
                     if (!visitados.isEmpty()) {
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override

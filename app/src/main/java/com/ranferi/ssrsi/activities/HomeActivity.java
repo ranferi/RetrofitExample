@@ -3,7 +3,6 @@ package com.ranferi.ssrsi.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -35,11 +33,7 @@ import io.realm.RealmConfiguration;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private static final int NAVDRAWER_LAUNCH_DELAY = 250;
-
-    private TextView mTextViewName;
     private DrawerLayout drawer;
-    private Handler mHandler;
     private Toolbar toolbar;
     NavigationView navigationView;
 
@@ -79,22 +73,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        mHandler = new Handler();
+        toolbar = findViewById(R.id.toolbar);
+        drawer = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
 
         View headerView = navigationView.getHeaderView(0);
-        mTextViewName = (TextView) headerView.findViewById(R.id.textViewNameHeader);
+        TextView textViewName = headerView.findViewById(R.id.textViewNameHeader);
         User user = SharedPrefManager.getInstance(this).getUser();
         if (user.getName() != null && user.getName() .isEmpty())
-            mTextViewName.setText(user.getName());
+            textViewName.setText(user.getName());
         else if (user.getUser() != null && !user.getUser().isEmpty())
-            mTextViewName.setText(user.getUser());
+            textViewName.setText(user.getUser());
         else
-            mTextViewName.setText("usuario");
+            textViewName.setText("usuario");
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         setUpNavigationView();
@@ -137,54 +130,45 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 
-        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            // This method will trigger on item Click of navigation menu
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-
-                //Check to see which item was being clicked and perform appropriate action
-                switch (menuItem.getItemId()) {
-                    //Replacing the main content with ContentFragment Which is our Inbox View;
-                    case R.id.nav_home:
-                        navItemIndex = 0;
-                        CURRENT_TAG = TAG_HOME;
-                        break;
-                    case R.id.nav_profile:
-                        navItemIndex = 1;
-                        CURRENT_TAG = TAG_PROFILE;
-                        break;
-                    case R.id.nav_visited:
-                        navItemIndex = 2;
-                        CURRENT_TAG = TAG_VISITED;
-                        break;
-                    case R.id.nav_places:
-                        navItemIndex = 3;
-                        CURRENT_TAG = TAG_PLACES;
-                        break;
-                    case R.id.nav_search:
-                        navItemIndex = 4;
-                        CURRENT_TAG = TAG_SEARCH;
-                        break;
-                    case R.id.nav_logout:
-                        logout();
-                        break;
-                    default:
-                        navItemIndex = 0;
-                }
-
-                if (menuItem.isChecked()) {
-                    menuItem.setChecked(false);
-                } else {
-                    menuItem.setChecked(true);
-                }
-                menuItem.setChecked(true);
-                actionBarDrawerToggle.runWhenIdle(loadFragment());
-
-                drawer.closeDrawer(GravityCompat.START);
-                return true;
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.nav_home:
+                    navItemIndex = 0;
+                    CURRENT_TAG = TAG_HOME;
+                    break;
+                case R.id.nav_profile:
+                    navItemIndex = 1;
+                    CURRENT_TAG = TAG_PROFILE;
+                    break;
+                case R.id.nav_visited:
+                    navItemIndex = 2;
+                    CURRENT_TAG = TAG_VISITED;
+                    break;
+                case R.id.nav_places:
+                    navItemIndex = 3;
+                    CURRENT_TAG = TAG_PLACES;
+                    break;
+                case R.id.nav_search:
+                    navItemIndex = 4;
+                    CURRENT_TAG = TAG_SEARCH;
+                    break;
+                case R.id.nav_logout:
+                    logout();
+                    break;
+                default:
+                    navItemIndex = 0;
             }
+
+            if (menuItem.isChecked()) {
+                menuItem.setChecked(false);
+            } else {
+                menuItem.setChecked(true);
+            }
+            menuItem.setChecked(true);
+            actionBarDrawerToggle.runWhenIdle(loadFragment());
+
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
         });
 
     }
@@ -220,19 +204,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             return;
         }*/
 
-        Runnable mPendingRunnable = new Runnable() {
-            @Override
-            public void run() {
-                // Se actualiza el contenido principal
-                Fragment fragment = getFragment();
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                // fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
-                fragmentTransaction
-                        .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-                fragmentTransaction.replace(R.id.content_frame, fragment, CURRENT_TAG);
-                fragmentTransaction.commitAllowingStateLoss();
+        Runnable mPendingRunnable = () -> {
+            // Se actualiza el contenido principal
+            Fragment fragment = getFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            // fragmentTransaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
+            fragmentTransaction
+                    .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+            fragmentTransaction.replace(R.id.content_frame, fragment, CURRENT_TAG);
+            fragmentTransaction.commitAllowingStateLoss();
 
-            }
         };
 /*        if (mPendingRunnable != null) {
             mHandler.post(mPendingRunnable);
@@ -250,10 +231,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         SharedPrefManager.getInstance(this).logout();
         finish();
         startActivity(new Intent(this, SignInActivity.class));
-    }
-
-    protected boolean isDrawerOpen() {
-        return drawer != null && drawer.isDrawerOpen(GravityCompat.START);
     }
 
     @Override
