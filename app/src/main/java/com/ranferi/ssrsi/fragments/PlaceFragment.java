@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -51,16 +52,18 @@ import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.rd.PageIndicatorView;
 
+import org.apache.commons.text.WordUtils;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 
 public class PlaceFragment extends Fragment {
@@ -94,19 +97,18 @@ public class PlaceFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_place, container, false);
         int placeId = (int) getArguments().getSerializable(ARG_PLACE_ID);
+        final String SEPARATOR = ",";
+        final Spinner spinner = v.findViewById(R.id.spinner);
+        String[] stringPrice = new String[]{
+                "elige una calificación (precio)...",
+                "Barato",
+                "Moderado",
+                "Caro",
+                "MuyCaro"
+        };
+        final List<String> priceList = new ArrayList<>(Arrays.asList(stringPrice));
+
         realm = Realm.getDefaultInstance();
-
-        mMapView = v.findViewById(R.id.mapView);
-        mMapView.onCreate(savedInstanceState);
-
-        mMapView.onResume();
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         RealmQuery<Place> query = realm.where(Place.class);
         Place place = query.equalTo("id", placeId).findFirst();
         List<Nombre> nombresSitio = place.getNombres();
@@ -119,12 +121,8 @@ public class PlaceFragment extends Fragment {
         UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", idUser).findAll()
                 .where().equalTo("sitio.id", placeId).findFirst();
 
-        Log.d("ActividadPT", String.valueOf(idUser));
-        Log.d("ActividadPT", "Usuario " + idUser + " visito " + String.valueOf(userPlaces));
-
         List<TextView> nombresTextViews = new ArrayList<>();
         List<TextView> categoriasTextViews = new ArrayList<>();
-        List<TextView> categoriasGooglePlacesTextViews = new ArrayList<>();
         List<TextView> calificacionesTextViews = new ArrayList<>();
         List<TextView> comentariosTextViews = new ArrayList<>();
 
@@ -134,12 +132,9 @@ public class PlaceFragment extends Fragment {
 
         final PageIndicatorView pageIndicatorView = v.findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setCount(viewPagerAdapter.getCount()); // especifica el total de indicadores
-
-        // Fotos de Sitio
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i1) {
-            }
+            public void onPageScrolled(int i, float v, int i1) { }
 
             @Override
             public void onPageSelected(int i) {
@@ -151,62 +146,6 @@ public class PlaceFragment extends Fragment {
             }
         });
 
-        final Spinner spinner = (Spinner) v.findViewById(R.id.spinner);
-        String[] stringPrice = new String[]{
-                "elige una calificación (precio)...",
-                "Barato",
-                "Moderado",
-                "Caro",
-                "MuyCaro"
-        };
-
-        final List<String> priceList = new ArrayList<>(Arrays.asList(stringPrice));
-
-        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinner_item,priceList){
-            @Override
-            public boolean isEnabled(int position){
-                // Se inutiliza el primer item
-                // Se utiliza para hint
-                return position != 0;
-            }
-            @Override
-            public View getDropDownView(int position, View convertView,
-                                        @NonNull ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView, parent);
-                TextView tv = (TextView) view;
-                if (position == 0){
-                    tv.setTextColor(Color.GRAY);
-                }
-                else {
-                    tv.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(spinnerArrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemText = (String) parent.getItemAtPosition(position);
-                // Si el usuario cambia el default
-                if(position > 0){
-                    Toast.makeText
-                            (getActivity(), "Se selecciono : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
-        EditText editTextComment = v.findViewById(R.id.editTextComment);
-
         TextView nameField = v.findViewById(R.id.place_name);
         nameField.setText(nombresSitio.get(0).getNombreSitio());
 
@@ -217,9 +156,34 @@ public class PlaceFragment extends Fragment {
         String sourceString = "Calificación (promedio):    " +  "<b>" + String.valueOf(place.getTotal()) + "</b> ";
         ratingField.setText(Html.fromHtml(sourceString));
 
+        TextView categoriesField = v.findViewById(R.id.place_categories);
+        List<String> categoriesClean = cleanCategoriesCollection(categoriasSitio);
+        StringBuilder csvBuilder = new StringBuilder();
+        for (int i = 0; i < categoriesClean.size(); i++) {
+            if (i >= 3) { break; }
+            else {
+                csvBuilder.append(categoriesClean.get(i));
+                csvBuilder.append(SEPARATOR);
+            }
+        }
+        String csv = csvBuilder.toString();
+        csv = csv.substring(0, csv.length() - SEPARATOR.length());
+        String categoryString = "Categorías :    " +  "<b>" + csv + "</b> ";
+        categoriesField.setText(Html.fromHtml(categoryString));
+
         CheckBox musicCheckBox = v.findViewById(R.id.place_music);
         musicCheckBox.setChecked(place.isMusica());
 
+        ToggleButton toggleVisited = v.findViewById(R.id.toggleButton);
+
+        mMapView = v.findViewById(R.id.mapView);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.onResume();
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mMapView.getMapAsync(mMap -> {
             googleMap = mMap;
             LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
@@ -254,29 +218,70 @@ public class PlaceFragment extends Fragment {
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         });
 
-        CheckBox likedCheckBox = v.findViewById(R.id.place_like);
-        likedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // The toggle is enabled
-            } else {
-                // The toggle is disabled
+        final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                getActivity(),R.layout.spinner_item,priceList){
+            @Override
+            public boolean isEnabled(int position){
+                // Se inutiliza el primer item
+                // Se utiliza para hint
+                return position != 0;
             }
-        });
-
-        ToggleButton toggleVisited = v.findViewById(R.id.toggleButton);
+            @Override
+            public View getDropDownView(int position, View convertView,
+                                        @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0){
+                    tv.setTextColor(Color.GRAY);
+                }
+                else {
+                    tv.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+        CheckBox likedCheckBox = v.findViewById(R.id.place_like);
+        EditText editTextComment = v.findViewById(R.id.editTextComment);
 
         if (userPlaces != null) {
             Log.d("ActividadPT", String.valueOf(spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3))) + " " + userPlaces.getPrecio().substring(3));
             int i = spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3));
-            spinner.post(new Runnable() {
-                public void run() {
-                    spinner.setSelection(i, true);
-                }
-            });
+            spinner.post(() -> spinner.setSelection(i, true));
             editTextComment.setText(userPlaces.getComentarioUsuario().getComentario());
             toggleVisited.setChecked(true);
             likedCheckBox.setChecked(userPlaces.isGusto());
         }
+
+        /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItemText = (String) parent.getItemAtPosition(position);
+                // Si el usuario cambia el default
+                if(position > 0){
+                    Toast.makeText
+                            (getActivity(), "Se selecciono : " + selectedItemText, Toast.LENGTH_SHORT)
+                            .show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
+
+        Button opinionButton = v.findViewById(R.id.opinionBtn);
+        opinionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String a = editTextComment.getText().toString();
+                String b = spinner.getSelectedItem().toString();
+                boolean c = likedCheckBox.isChecked();
+                showToastMsg(a + " " + b + " " + c);
+            }
+        });
 
         layout = v.findViewById(R.id.linearLayout);
         set = new ConstraintSet();
@@ -290,26 +295,46 @@ public class PlaceFragment extends Fragment {
                 24, getResources().getDisplayMetrics());
 
         addTextViewsToCollection(nombresSitio, nombresTextViews, getActivity().getApplicationContext(), false);
-
-        addTextViewsToCollection(categoriasSitio, categoriasGooglePlacesTextViews, getActivity().getApplicationContext(), true);
         addTextViewsToCollection(categoriasSitio, categoriasTextViews, getActivity().getApplicationContext(), false);
         addTextViewsToCollection(comentariosSitio, comentariosTextViews, getActivity().getApplicationContext(), false);
-
         addTextViewsToCollection(calificacionesSitio, calificacionesTextViews, getActivity().getApplicationContext(), false);
 
         set.clone(layout);
-
         setConstraintsViews(nombresTextViews, R.id.namesInfo, R.id.moreCategories);
-        setConstraintsViews(categoriasGooglePlacesTextViews, R.id.place_categories, R.id.place_music);
         setConstraintsViews(categoriasTextViews, R.id.moreCategories, R.id.moreRatings);
         setConstraintsViews(calificacionesTextViews, R.id.moreRatings, R.id.comments);
         setConstraintsViews(comentariosTextViews, R.id.comments, 0);
-
         set.applyTo(layout);
 
-
-
         return v;
+    }
+
+    public <T> List<String> cleanCategoriesCollection(Collection<T> c) {
+        List<String> normalize = new ArrayList<>();
+        for (T t : c) {
+            if(t instanceof Categoria)
+                normalize.add(((Categoria) t).getCategoria());
+        }
+        ListIterator<String> iterator = normalize.listIterator();
+        while (iterator.hasNext()){
+            String s = iterator.next();
+            iterator.set(s.replace("_", " "));
+        }
+        for (final ListIterator<String> i = normalize.listIterator(); i.hasNext();) {
+            final String element = i.next();
+            i.set(WordUtils.capitalizeFully(element));
+        }
+        return removeDuplicates(normalize);
+    }
+
+    public <T> List<T> removeDuplicates(List<T> list) {
+        List<T> newList = new ArrayList<T>();
+
+        for (T element : list) {
+            if (!newList.contains(element))
+                newList.add(element);
+        }
+        return newList;
     }
 
     @Override
