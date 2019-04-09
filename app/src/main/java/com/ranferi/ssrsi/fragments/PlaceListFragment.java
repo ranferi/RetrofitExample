@@ -76,7 +76,6 @@ public class PlaceListFragment extends Fragment {
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Retrofit retrofit = new Retrofit.Builder()
-                //.client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -84,7 +83,7 @@ public class PlaceListFragment extends Fragment {
         APIService service = retrofit.create(APIService.class);
         Call<Places> call = service.getPlaces();
 
-        /*call.enqueue(new Callback<Places>() {
+        call.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
                 if (response.isSuccessful()) {
@@ -110,8 +109,7 @@ public class PlaceListFragment extends Fragment {
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });*/
-
+        });
     }
 
     @Override

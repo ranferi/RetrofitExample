@@ -1,7 +1,9 @@
 package com.ranferi.ssrsi.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +41,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ranferi.ssrsi.R;
+import com.ranferi.ssrsi.activities.HomeActivity;
+import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
@@ -50,6 +54,7 @@ import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
+import com.ranferi.ssrsi.model.UserResponse;
 import com.rd.PageIndicatorView;
 
 import org.apache.commons.text.WordUtils;
@@ -64,6 +69,13 @@ import java.util.ListIterator;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class PlaceFragment extends Fragment {
@@ -279,7 +291,8 @@ public class PlaceFragment extends Fragment {
                 String a = editTextComment.getText().toString();
                 String b = spinner.getSelectedItem().toString();
                 boolean c = likedCheckBox.isChecked();
-                showToastMsg(a + " " + b + " " + c);
+                showToastMsg(placeId + " " + idUser + " " + a + " " + b + " " + c);
+                sendOpinion(getActivity(), idUser, placeId, c, b, a);
             }
         });
 
@@ -307,6 +320,47 @@ public class PlaceFragment extends Fragment {
         set.applyTo(layout);
 
         return v;
+    }
+
+
+    private void sendOpinion(Context context, int idUser, int idPlace, boolean liked, String price, String comment) {
+        final ProgressDialog progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Enviando opinión...");
+        progressDialog.show();
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
+                .baseUrl(APIUrl.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        APIService service = retrofit.create(APIService.class);
+
+        Call<UserResponse> call = service.updateUserSite(idUser, idPlace, liked, price, comment);
+
+        call.enqueue(new Callback<UserResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
+                progressDialog.dismiss();
+
+                if (!response.body().getError()) {
+                    Toast.makeText(context, "Gracias por tu opinión", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
+                progressDialog.dismiss();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public <T> List<String> cleanCategoriesCollection(Collection<T> c) {

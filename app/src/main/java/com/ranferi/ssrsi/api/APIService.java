@@ -58,7 +58,7 @@ public interface APIService {
     );
 
     @FormUrlEncoded
-    @POST("query/{id}")
+    @POST("opinion/{id}")
     Call<UserResponse> updateUserSite(
             @Path("id") int id,
             @Field("id_sitio") int last,

@@ -67,7 +67,7 @@
     <string name="comentarios">Comentarios</string>
     <string name="comment_user">Tu comentario acerca del precio</string>
     <string name="user_opinion">Tu opinión</string>
-    <string name="opinion_button">\"Enviar opinión</string>
+    <string name="opinion_button">Enviar opinión</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Home</item>
