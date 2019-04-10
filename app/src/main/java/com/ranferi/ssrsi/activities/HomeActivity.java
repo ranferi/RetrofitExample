@@ -182,7 +182,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case 2:
                 return new VisitedFragment();
             case 3:
-                return new HomeFragment();
+                return new VisitedFragment();
             case 4:
                 return new SearchFragment();
             default:

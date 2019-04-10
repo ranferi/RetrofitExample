@@ -3,6 +3,7 @@ package com.ranferi.ssrsi.api;
 import com.ranferi.ssrsi.model.MessageResponse;
 import com.ranferi.ssrsi.model.Messages;
 import com.ranferi.ssrsi.model.Places;
+import com.ranferi.ssrsi.model.PlacesResponse;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
@@ -59,12 +60,22 @@ public interface APIService {
 
     @FormUrlEncoded
     @POST("opinion/{id}")
-    Call<UserResponse> updateUserSite(
+    Call<UserResponse> updateUserPlace(
             @Path("id") int id,
             @Field("id_sitio") int last,
             @Field("gusto") boolean liked,
             @Field("precio") String price,
             @Field("comentario") String comment
+    );
+
+    @FormUrlEncoded
+    @GET("search")
+    Call<PlacesResponse> searchPlaces(
+            @Field("id") int id,
+            @Field("tipo") String typePlace,
+            @Field("precio") String price,
+            @Field("distancia") String distance,
+            @Field("musica") boolean music
     );
 
     @GET("messages/{id}")

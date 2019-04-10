@@ -1,14 +1,28 @@
 package com.ranferi.ssrsi.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import io.realm.RealmList;
+
 public class PlacesResponse {
-    private boolean error;
+    @SerializedName("error")
+    @Expose
+    private Boolean error;
+
+    @SerializedName("message")
+    @Expose
     private String message;
+
+    @SerializedName("sitio")
+    @Expose
+    private RealmList<Place> sitio = new RealmList<>();
 
     public PlacesResponse() {
 
     }
 
-    public boolean isError() {
+    public boolean getError() {
         return error;
     }
 
@@ -22,5 +36,13 @@ public class PlacesResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public RealmList<Place> getSitio() {
+        return sitio;
+    }
+
+    public void setSitio(RealmList<Place> sitio) {
+        this.sitio = sitio;
     }
 }

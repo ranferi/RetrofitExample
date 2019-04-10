@@ -3,7 +3,6 @@ package com.ranferi.ssrsi.fragments;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -41,7 +39,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.activities.HomeActivity;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
@@ -341,7 +338,7 @@ public class PlaceFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<UserResponse> call = service.updateUserSite(idUser, idPlace, liked, price, comment);
+        Call<UserResponse> call = service.updateUserPlace(idUser, idPlace, liked, price, comment);
 
         call.enqueue(new Callback<UserResponse>() {
             @Override
