@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,27 +17,34 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.activities.PlacePagerActivity;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.UserPlace;
 
 import java.util.List;
 
-public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHolder> {
+import io.realm.Realm;
+
+public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapter.PlaceHolder> {
     private List<Place> mPlaces;
     private Context sContext;
+    private int id;
 
-    public PlacessAdapter(List<Place> places, Context context) {
+
+
+    public PlaceVisitedAdapter(List<Place> places, Context context, int id) {
         this.mPlaces = places;
         this.sContext = context;
+        this.id = id;
     }
 
     @NonNull
     @Override
-    public PlacessAdapter.PlacesHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public PlaceHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
-        return new PlacessAdapter.PlacesHolder(layoutInflater, viewGroup);
+        return new PlaceHolder(layoutInflater, viewGroup);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PlacessAdapter.PlacesHolder placeHolder, int i) {
+    public void onBindViewHolder(@NonNull PlaceHolder placeHolder, int i) {
         Place place = mPlaces.get(i);
         placeHolder.bind(place);
     }
@@ -46,25 +54,35 @@ public class PlacessAdapter extends RecyclerView.Adapter<PlacessAdapter.PlacesHo
         return mPlaces.size();
     }
 
-    public class PlacesHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class PlaceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mNameTextView;
         private TextView mAddressTextView;
         private Place mPlace;
         private ImageView mSolvedImageView;
+        private CheckBox visited;
+        private CheckBox liked;
+        private Realm realm;
+        UserPlace userPlaces;
 
-        public PlacesHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_place, parent, false));
+        public PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
+            super(inflater.inflate(R.layout.list_item_place_visited, parent, false));
             itemView.setOnClickListener(this);
-            mNameTextView = (TextView) itemView.findViewById(R.id.place_name);
-            mAddressTextView = (TextView) itemView.findViewById(R.id.place_address);
-            mSolvedImageView = (ImageView) itemView.findViewById(R.id.place_solved);
+            mNameTextView = itemView.findViewById(R.id.place_name);
+            mAddressTextView = itemView.findViewById(R.id.place_address);
+            mSolvedImageView = itemView.findViewById(R.id.place_solved);
+            visited = itemView.findViewById(R.id.visited);
+            liked = itemView.findViewById(R.id.liked);
+            realm = Realm.getDefaultInstance();
         }
 
         public void bind(Place place) {
+            userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findFirst();
+            Log.d("ActividadPT", String.valueOf(id));
+            Log.d("ActividadPT", String.valueOf(userPlaces));
             mPlace = place;
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
-               mNameTextView.setText(nombre1.getNombreSitio());
+                mNameTextView.setText(nombre1.getNombreSitio());
             }
             mAddressTextView.setText(mPlace.getDireccion());
             mSolvedImageView.setVisibility( View.VISIBLE);

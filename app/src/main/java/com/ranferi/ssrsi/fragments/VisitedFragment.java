@@ -10,31 +10,24 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
-import com.ranferi.ssrsi.helper.PlacessAdapter;
+import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
+import com.ranferi.ssrsi.helper.PlacesAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Categoria;
 import com.ranferi.ssrsi.model.Place;
-import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.Users;
 
 
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmQuery;
-import io.realm.RealmResults;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,9 +61,7 @@ public class VisitedFragment extends Fragment {
                 bgRealm.deleteAll();
             }
         });*/
-        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
-        Log.d("ActividadPT", String.valueOf(user));
-        Log.d("ActividadPT", String.valueOf(userPlaces));
+
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
@@ -110,7 +101,7 @@ public class VisitedFragment extends Fragment {
                     RealmQuery<Place> query = realm.where(Place.class).equalTo("visitaron.visitantes.id", user);
                     List<Place> places = query.findAll();
 
-                    mAdapter = new PlacessAdapter(places, getActivity());
+                    mAdapter = new PlacesAdapter(places, getActivity());
                     mPlaceRecyclerView.setAdapter(mAdapter);
                 } else {
                     int statusCode = response.code();

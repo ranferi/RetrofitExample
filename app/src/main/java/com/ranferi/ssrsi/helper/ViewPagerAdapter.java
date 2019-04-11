@@ -1,5 +1,6 @@
 package com.ranferi.ssrsi.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.Image;
 import android.support.annotation.NonNull;
@@ -53,8 +54,8 @@ public class ViewPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = mLayoutInflater.inflate(R.layout.custom_layout, null);
-        ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+        @SuppressLint("InflateParams") View view = mLayoutInflater.inflate(R.layout.custom_layout, null);
+        ImageView imageView = view.findViewById(R.id.imageView);
         String[] imagesURL = new String[10];
         if ((mImagenes == null || mImagenes.isEmpty())) {
             imageView.setImageResource(images[position]);

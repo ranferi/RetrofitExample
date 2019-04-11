@@ -10,27 +10,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
-import com.ranferi.ssrsi.helper.PlacessAdapter;
+import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
+import com.ranferi.ssrsi.helper.PlacesAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
-import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
-import com.ranferi.ssrsi.model.Users;
 
-
-import java.util.Arrays;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -75,7 +68,12 @@ public class PlaceListFragment extends Fragment {
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+
         Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -92,7 +90,7 @@ public class PlaceListFragment extends Fragment {
 
                     if (places != null) {
                         Log.d("ActividadPT", "---" + places.toString());
-                        mAdapter = new PlacessAdapter(places, getActivity());
+                        mAdapter = new PlaceVisitedAdapter(places, getActivity(), user);
                         mPlaceRecyclerView.setAdapter(mAdapter);
 
                         realm.executeTransaction(bgRealm -> realm.copyToRealmOrUpdate(places));
@@ -101,7 +99,7 @@ public class PlaceListFragment extends Fragment {
                     }
                 } else {
                     int statusCode = response.code();
-                    Log.d("ActividadTT", "PlaceListFragment onResponse(): Error code = " + statusCode);
+                    Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + statusCode);
                 }
             }
 

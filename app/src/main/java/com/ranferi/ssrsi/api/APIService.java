@@ -36,16 +36,7 @@ public interface APIService {
 
     @GET("users")
     Call<Users> getUsers();
-
-    @FormUrlEncoded
-    @POST("sendmessage")
-    Call<MessageResponse> sendMessage(
-            @Field("from") int from,
-            @Field("to") int to,
-            @Field("title") String title,
-            @Field("message") String message
-    );
-
+    
     @FormUrlEncoded
     @POST("update/{id}")
     Call<UserResponse> updateUser(

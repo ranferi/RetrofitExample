@@ -12,12 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.fragments.PlaceFragment;
-import com.ranferi.ssrsi.helper.PlaceLab;
 import com.ranferi.ssrsi.model.Place;
-import com.ranferi.ssrsi.model.Place1;
-
-import java.util.List;
-import java.util.UUID;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;

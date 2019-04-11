@@ -119,7 +119,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<MessageResponse> call = service.sendMessage(
+/*        Call<MessageResponse> call = service.sendMessage(
                 SharedPrefManager.getInstance(sContext).getUser().getId(),
                 id, title, message
         );
@@ -136,7 +136,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 progressDialog.dismiss();
                 Toast.makeText(sContext, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
 }

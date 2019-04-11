@@ -33,7 +33,6 @@ public class UserPlace extends RealmObject {
     @LinkingObjects("visito")
     private final RealmResults<User> visitantes = null;
 
-
     public UserPlace() {
     }
 
