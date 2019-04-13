@@ -105,7 +105,7 @@ public class VisitedFragment extends Fragment {
                     mPlaceRecyclerView.setAdapter(mAdapter);
                 } else {
                     int statusCode = response.code();
-                    Log.d("ActividadTT", "VisitedFragmentFragment onResponse(): Error code = " + statusCode);
+                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + statusCode);
                 }
             }
 

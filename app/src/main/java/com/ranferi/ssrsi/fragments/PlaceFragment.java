@@ -126,7 +126,7 @@ public class PlaceFragment extends Fragment {
         List<Comentario> comentariosSitio = place.getComentarios();
         List<Imagene> imagenesSitio = place.getImagenes();
 
-        idUser  = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+        idUser = SharedPrefManager.getInstance(getActivity()).getUser().getId();
         UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", idUser).findAll()
                 .where().equalTo("sitio.id", placeId).findFirst();
 

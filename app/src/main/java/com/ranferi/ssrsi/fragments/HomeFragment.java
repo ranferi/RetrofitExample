@@ -112,7 +112,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
                 mProgressBar.setVisibility(View.GONE);
-
                 Toast.makeText(mActivity, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -15,13 +15,16 @@ import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.activities.PlacePagerActivity;
+import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Nombre;
 import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
 
 public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapter.PlaceHolder> {
     private List<Place> mPlaces;
@@ -76,13 +79,28 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         }
 
         public void bind(Place place) {
-            userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findFirst();
+            mPlace = place;
+            userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
+                    .where().equalTo("sitio.id", mPlace.getId()).findFirst();
             Log.d("ActividadPT", String.valueOf(id));
             Log.d("ActividadPT", String.valueOf(userPlaces));
-            mPlace = place;
+
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
                 mNameTextView.setText(nombre1.getNombreSitio());
+            }
+
+            if (!mPlace.getComentarios().isEmpty()) {
+                RealmList<Comentario> comentarios = mPlace.getComentarios();
+                for (Comentario comentario : comentarios) {
+                    if (comentario.getUser() != null) {
+                        User user = comentario.getUser();
+                        int userId = user.getId();
+                        if (userId == id) {
+                            Log.d("ActividadPT", comentario.getComentario());
+                        }
+                    }
+                }
             }
             mAddressTextView.setText(mPlace.getDireccion());
             mSolvedImageView.setVisibility( View.VISIBLE);
