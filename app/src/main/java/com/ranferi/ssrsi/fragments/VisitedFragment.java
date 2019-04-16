@@ -49,6 +49,7 @@ public class VisitedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("ActividadPT", "------------ VisitedFragment --- ");
 
         if (getActivity() != null) getActivity().setTitle("Visitados");
 
@@ -83,18 +84,18 @@ public class VisitedFragment extends Fragment {
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
 
+                    for (UserPlace vis : visitados) {
+                        Log.d("ActividadPT", String.valueOf(vis.getId()));
+                    }
+
+                    Log.d("ActividadPT", String.valueOf(users));
                     /*Iterator<UserPlace> visited = visitados.iterator();
                     while (visited.hasNext()) {
                         UserPlace userPlace = visited.next();
                         if (userPlace.getSitioSrc().equals(userPlaces.getSitioSrc())) visited.remove();
                     }*/
                     if (!visitados.isEmpty()) {
-                        realm.executeTransaction(new Realm.Transaction() {
-                            @Override
-                            public void execute(@NonNull Realm bgRealm) {
-                                bgRealm.copyToRealmOrUpdate(users);
-                            }
-                        });
+                        realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                     } else {
                         Log.d("ActividadPT", "VisitedFragmentFragment: List<> empty ");
                     }

@@ -25,9 +25,6 @@ import com.ranferi.ssrsi.fragments.VisitedFragment;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.User;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -50,9 +47,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     // títulos de cada item en el menu nav.
     private String[] activityTitles;
-
-    public final ScheduledExecutorService worker =
-            Executors.newSingleThreadScheduledExecutor();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,11 +170,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragment() {
         switch (navItemIndex) {
             case 0:
-                return new PlaceListFragment();
+                return new VisitedFragment();
             case 1:
                 return new ProfileFragment();
             case 2:
-                return new VisitedFragment();
+                return new PlaceListFragment();
             case 3:
                 return new VisitedFragment();
             case 4:

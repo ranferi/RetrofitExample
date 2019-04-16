@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button mButtonSignUp;
-    private Button mButtonLoginLink;
     private EditText mEditTextUser, mEditTextName, mEditTextLastName, mEditTextMaidenName, mEditTextEmail, mEditTextPassword, mReEnterPasswordText;
 
     @Override
@@ -37,26 +36,23 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        mEditTextUser = (EditText) findViewById(R.id.editTextUser);
-        mEditTextName = (EditText) findViewById(R.id.editTextName);
-        mEditTextLastName = (EditText) findViewById(R.id.editTextLastName);
-        mEditTextMaidenName = (EditText) findViewById(R.id.editTextMaidenName);
-        mEditTextEmail = (EditText) findViewById(R.id.editTextEmail);
-        mEditTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        mReEnterPasswordText = (EditText) findViewById(R.id.editTextRePassword);
+        mEditTextUser = findViewById(R.id.editTextUser);
+        mEditTextName = findViewById(R.id.editTextName);
+        mEditTextLastName = findViewById(R.id.editTextLastName);
+        mEditTextMaidenName = findViewById(R.id.editTextMaidenName);
+        mEditTextEmail = findViewById(R.id.editTextEmail);
+        mEditTextPassword = findViewById(R.id.editTextPassword);
+        mReEnterPasswordText = findViewById(R.id.editTextRePassword);
 
-        mButtonSignUp = (Button) findViewById(R.id.buttonSignUpNow);
+        mButtonSignUp = findViewById(R.id.buttonSignUpNow);
         mButtonSignUp.setOnClickListener(this);
 
-        mButtonLoginLink = (Button) findViewById(R.id.login_button_link);
-        mButtonLoginLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
-                startActivity(intent);
-                finish();
-                SignUpActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
+        Button buttonLoginLink = findViewById(R.id.login_button_link);
+        buttonLoginLink.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SignInActivity.class);
+            startActivity(intent);
+            finish();
+            SignUpActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         });
     }
 

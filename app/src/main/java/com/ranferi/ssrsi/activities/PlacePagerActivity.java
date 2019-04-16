@@ -45,7 +45,7 @@ public class PlacePagerActivity extends AppCompatActivity {
         RealmQuery<Place> placesList = realm.where(Place.class);
         RealmResults<Place> places = placesList.findAll();
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.place_view_pager);
+        ViewPager viewPager = findViewById(R.id.place_view_pager);
         viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int position) {

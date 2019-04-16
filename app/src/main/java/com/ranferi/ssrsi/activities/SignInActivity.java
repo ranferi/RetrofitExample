@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,21 +38,18 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(new Intent(this, HomeActivity.class));
         }
 
-        mEditTextEmail = (EditText) findViewById(R.id.email_edit_text);
-        mEditTextPassword = (EditText) findViewById(R.id.password_edit_text);
+        mEditTextEmail = findViewById(R.id.email_edit_text);
+        mEditTextPassword = findViewById(R.id.password_edit_text);
 
-        mButtonSignIn = (Button) findViewById(R.id.login_button);
+        mButtonSignIn = findViewById(R.id.login_button);
         mButtonSignIn.setOnClickListener(this);
 
-        Button buttonRegisterLink = (Button) findViewById(R.id.register_button_link);
-        buttonRegisterLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
-                startActivity(intent);
-                finish();
-                SignInActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
-            }
+        Button buttonRegisterLink = findViewById(R.id.register_button_link);
+        buttonRegisterLink.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+            startActivity(intent);
+            finish();
+            SignInActivity.this.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         });
     }
 

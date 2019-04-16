@@ -104,7 +104,7 @@ public class HomeFragment extends Fragment {
                     adapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
-                    Log.e(LOG_TAG, "onResponse(): Error code = " + statusCode);
+                    Log.d(LOG_TAG, "onResponse(): Error code = " + statusCode);
                 }
                 mProgressBar.setVisibility(View.GONE);
             }

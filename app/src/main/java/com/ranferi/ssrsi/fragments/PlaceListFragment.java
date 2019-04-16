@@ -17,13 +17,20 @@ import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
 import com.ranferi.ssrsi.helper.PlacesAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
+import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 
 
+import java.util.Iterator;
+import java.util.List;
+
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -47,6 +54,7 @@ public class PlaceListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("ActividadPT", "------------ PlaceListFragment, onViewCreated --- ");
 
         if (getActivity() != null) getActivity().setTitle("Sitios");
 
@@ -87,15 +95,35 @@ public class PlaceListFragment extends Fragment {
                 if (response.isSuccessful()) {
                     RealmList<Place> places = response.body().getPlaces();
 
-                    if (places != null) {
-                        Log.d("ActividadPT", "---" + places.toString());
-                        mAdapter = new PlaceVisitedAdapter(places, getActivity(), user);
-                        mPlaceRecyclerView.setAdapter(mAdapter);
-
+                    /*Place p = realm.where(Place.class).findFirst();
+                    if (p == null) {
                         realm.executeTransaction(bgRealm -> realm.copyToRealmOrUpdate(places));
-                    } else {
-                        Log.d("ActividadPT", "PlaceListFragment: List<> empty ");
+                    }*/
+
+                    for (Place userPlace : places) {
+                        Place place = realm.where(Place.class).equalTo("id", userPlace.getId()).findFirst();
+                        if (place == null) {
+                            realm.executeTransaction(realm1 -> {
+                                realm.copyToRealmOrUpdate(userPlace);
+                            });
+                        } else if (userPlace.getComentarios() != null) {
+                            RealmList<Comentario> comentarios = userPlace.getComentarios();
+                            for (Comentario comentario : comentarios) {
+                                if (comentario.getUser() != null && comentario.getUser().getId() == user) {
+                                    Comentario comment = realm.where(Comentario.class).equalTo("id", comentario.getId()).findFirst();
+                                    if (comment != null) {
+                                        realm.executeTransaction(realm1 -> {
+                                            realm.copyToRealm(comment);
+                                        });
+                                    }
+                                }
+                            }
+                        }
                     }
+                    RealmResults<Place> places1 = realm.where(Place.class).findAll().sort("id");
+                    mAdapter = new PlaceVisitedAdapter(places1, getActivity(), user);
+                    mPlaceRecyclerView.setAdapter(mAdapter);
+
                 } else {
                     int statusCode = response.code();
                     Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + statusCode);

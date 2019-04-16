@@ -7,15 +7,13 @@ import android.util.Log;
 import com.ranferi.ssrsi.model.User;
 
 public class SharedPrefManager {
-
-    // Shared preferences file name
     private static final String PREF_NAME = "MY_TAG";
     private static final String PASS_TAG= "my_pass_tag";
 
     private static SharedPrefManager instance;
     private static Context sContext;
 
-    private static final String SHARED_PREF_NAME = "simplifiedcodingsharedprefretrofit";
+    private static final String SHARED_PREF_NAME = "ranferissrsi";
 
     private static final String KEY_USER_ID = "keyuserid";
     private static final String KEY_USER_NAME = "keyusername";
@@ -29,7 +27,6 @@ public class SharedPrefManager {
     }
 
     public static synchronized SharedPrefManager getInstance(Context context) {
-        Log.d("ActividadPT", "------------contexto " + "--- " + context);
         if (instance == null) {
             instance = new SharedPrefManager(context);
         }

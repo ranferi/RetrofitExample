@@ -79,11 +79,12 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         }
 
         public void bind(Place place) {
+            Log.d("ActividadPT", "------------ PlaceVisitedAdapter, PlaceHolder, bind --- ");
             mPlace = place;
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
                     .where().equalTo("sitio.id", mPlace.getId()).findFirst();
-            Log.d("ActividadPT", String.valueOf(id));
-            Log.d("ActividadPT", String.valueOf(userPlaces));
+            //Log.d("ActividadPT", String.valueOf(id));
+            //Log.d("ActividadPT", String.valueOf(userPlaces));
 
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
@@ -103,7 +104,12 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
                 }
             }
             mAddressTextView.setText(mPlace.getDireccion());
-            mSolvedImageView.setVisibility( View.VISIBLE);
+            mSolvedImageView.setVisibility(View.VISIBLE);
+            if (userPlaces != null) {
+                visited.setChecked(userPlaces.isGusto());
+                liked.setChecked(userPlaces.isGusto());
+            }
+
         }
 
         @Override
