@@ -32,6 +32,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.ranferi.ssrsi.api.APIUrl.latitud;
+import static com.ranferi.ssrsi.api.APIUrl.longitud;
+
 
 public class SearchFragment extends Fragment {
 
@@ -103,8 +106,8 @@ public class SearchFragment extends Fragment {
             String b = priceAutoComplete.getText().toString();
             String c = distanceAutoComplete.getText().toString();
             boolean d = mCheckedTextView.isChecked();
-            showToastMsg(a + " " + b + " " + c + " " + d);
-            // sendSearch(getActivity(), user, a, b, c, d);
+            showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
+            // sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
         });
 
     }
@@ -113,7 +116,7 @@ public class SearchFragment extends Fragment {
         Toast.makeText(getContext(), Msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void sendSearch(Context context, int id, String typePlace, String price, String distance, boolean music) {
+    private void sendSearch(Context context, int id, String typePlace, String price, String distance, boolean music, int latitud, int longitud) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
