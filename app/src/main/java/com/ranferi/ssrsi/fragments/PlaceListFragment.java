@@ -95,11 +95,6 @@ public class PlaceListFragment extends Fragment {
                 if (response.isSuccessful()) {
                     RealmList<Place> places = response.body().getPlaces();
 
-                    /*Place p = realm.where(Place.class).findFirst();
-                    if (p == null) {
-                        realm.executeTransaction(bgRealm -> realm.copyToRealmOrUpdate(places));
-                    }*/
-
                     for (Place userPlace : places) {
                         Place place = realm.where(Place.class).equalTo("id", userPlace.getId()).findFirst();
                         if (place == null) {
@@ -111,11 +106,8 @@ public class PlaceListFragment extends Fragment {
                             for (Comentario comentario : comentarios) {
                                 if (comentario.getUser() != null && comentario.getUser().getId() == user) {
                                     Comentario comment = realm.where(Comentario.class).equalTo("id", comentario.getId()).findFirst();
-                                    if (comment != null) {
-                                        realm.executeTransaction(realm1 -> {
-                                            realm.copyToRealm(comment);
-                                        });
-                                    }
+                                    if (comment != null)
+                                        realm.executeTransaction(realm1 -> realm.copyToRealm(comment));
                                 }
                             }
                         }

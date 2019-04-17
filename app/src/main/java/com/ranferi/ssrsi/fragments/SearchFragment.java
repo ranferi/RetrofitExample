@@ -104,7 +104,7 @@ public class SearchFragment extends Fragment {
             String c = distanceAutoComplete.getText().toString();
             boolean d = mCheckedTextView.isChecked();
             showToastMsg(a + " " + b + " " + c + " " + d);
-            sendSearch(getActivity(), user, a, b, c, d);
+            // sendSearch(getActivity(), user, a, b, c, d);
         });
 
     }
@@ -131,7 +131,7 @@ public class SearchFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<PlacesResponse> call = service.searchPlaces(id, typePlace, price, distance, music);
+        /*Call<PlacesResponse> call = service.searchPlaces(id, typePlace, price, distance, music);
 
         call.enqueue(new Callback<PlacesResponse>() {
             @Override
@@ -150,7 +150,7 @@ public class SearchFragment extends Fragment {
                 progressDialog.dismiss();
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
     @Override
