@@ -120,7 +120,7 @@ public class VisitedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        realm.close();
+        // realm.close();
     }
 
 }

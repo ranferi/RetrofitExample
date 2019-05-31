@@ -70,11 +70,11 @@
     <string name="opinion_button">Enviar opinión</string>
 
     <string-array name="nav_item_activity_titles">
-        <item>Home</item>
+        <item>Inicio</item>
         <item>Perfil</item>
+        <item>Visitados</item>
         <item>Sitios</item>
         <item>Búsqueda</item>
-        <item>Configuración</item>
     </string-array>
 
     <string-array name="places_type">
@@ -86,7 +86,7 @@
         <item>Precios accesibles</item>
         <item>Un muy buen precio</item>
         <item>Un buen precio</item>
-        <item>Una uena relación precio-costo</item>
+        <item>Una buena relación precio-costo</item>
         <item>Precios no tan caros</item>
         <item>Precios muy buenos</item>
         <item>Con los precios justos para la calidad</item>
@@ -101,6 +101,7 @@
 
     <string-array name="distance">
         <item>Cerca</item>
+        <item>Media</item>
         <item>Lejos</item>
     </string-array>
 
