@@ -2,6 +2,7 @@ package com.ranferi.ssrsi.fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +10,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
@@ -64,30 +68,53 @@ public class SearchFragment extends Fragment {
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
-        String[] places = getResources().getStringArray(R.array.places_type);
-        AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_dropdown_item_1line, places);
+        //String[] places = getResources().getStringArray(R.array.places_type);
+        //AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
+        // ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_dropdown_item_1line, places);
         /*editText1.setThreshold(1);
         editText1.setAdapter(adapter1);*/
-        editText1.setEnabled(false);
+        //editText1.setEnabled(false);
 
-        AutoCompleteTextView typePlaceAutoComplete = view.findViewById(R.id.typePlaceAutoComplete);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, places);
+        // AutoCompleteTextView typePlaceAutoComplete = view.findViewById(R.id.typePlaceAutoComplete);
+        Spinner spinner1 = view.findViewById(R.id.typePlaceAutoComplete);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(),
+                R.array.places_type, android.R.layout.simple_spinner_item);
+
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapter1);
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(), android.R.layout.simple_list_item_1, R.array.places_type);
+
+
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, places);
         typePlaceAutoComplete.setThreshold(1);
-        typePlaceAutoComplete.setAdapter(adapter);
+        typePlaceAutoComplete.setAdapter(adapter);*/
 
-        String[] price = getResources().getStringArray(R.array.price);
-        AutoCompleteTextView priceAutoComplete = view.findViewById(R.id.priceAutoComplete);
+        //String[] price = getResources().getStringArray(R.array.price);
+        /*AutoCompleteTextView priceAutoComplete = view.findViewById(R.id.priceAutoComplete);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, price);
         priceAutoComplete.setThreshold(1);
-        priceAutoComplete.setAdapter(adapter2);
+        priceAutoComplete.setAdapter(adapter2);*/
+        Spinner spinner2 = view.findViewById(R.id.priceAutoComplete);
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(),
+                R.array.price, android.R.layout.simple_spinner_item);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(adapter2);
 
-        String[] distance = getResources().getStringArray(R.array.distance);
+        /*String[] distance = getResources().getStringArray(R.array.distance);
         AutoCompleteTextView distanceAutoComplete = view.findViewById(R.id.distanceAutoComplete);
         ArrayAdapter<String> adapter3 =
                 new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, distance);
         distanceAutoComplete.setThreshold(1);
-        distanceAutoComplete.setAdapter(adapter3);
+        distanceAutoComplete.setAdapter(adapter3);*/
+
+        Spinner spinner3 = view.findViewById(R.id.distanceAutoComplete);
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(),
+                R.array.distance, android.R.layout.simple_spinner_item);
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner3.setAdapter(adapter3);
 
         mCheckedTextView = view.findViewById(R.id.checkedTextView);
         mCheckedTextView.setOnClickListener(view1 -> {
@@ -102,11 +129,11 @@ public class SearchFragment extends Fragment {
 
         Button searchButton = view.findViewById(R.id.button2);
         searchButton.setOnClickListener(v -> {
-            String a = typePlaceAutoComplete.getText().toString();
-            String b = priceAutoComplete.getText().toString();
-            String c = distanceAutoComplete.getText().toString();
+            //String a = typePlaceAutoComplete.getText().toString();
+            // String b = priceAutoComplete.getText().toString();
+            //String c = distanceAutoComplete.getText().toString();
             boolean d = mCheckedTextView.isChecked();
-            showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
+            //showToastMsg( " "  + " " + c + " " + d + " " + latitud + " " + longitud);
             // sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
         });
 
