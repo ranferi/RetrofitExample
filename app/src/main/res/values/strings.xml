@@ -45,13 +45,13 @@
 
     <!-- campos de busqueda -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="search_question">¿Qué buscas?</string>
+    <string name="search_question">&#160;&#160;&#160;¿Qué buscas?</string>
     <string name="place_question">¿Sitio?</string>
     <string name="price_question">¿Qué precio?</string>
     <string name="distance_question">¿A qué distancia?</string>
-    <string name="music_check">¿Música?</string>
-    <string name="with_music">Sin música</string>
-    <string name="without_music">Con música</string>
+    <string name="music_check">&#160;&#160;¿Música?</string>
+    <string name="with_music">&#160;&#160;Sin música</string>
+    <string name="without_music">&#160;&#160;Con música</string>
     <string name="expand">Expand</string>
     <string name="collapse">Collapse</string>
     <string name="flecha">Flecha</string>
@@ -78,11 +78,13 @@
     </string-array>
 
     <string-array name="places_type">
+        <item>¿Qué tipo de lugar?</item>
         <item>Bar</item>
         <item>Restaurante</item>
     </string-array>
 
     <string-array name="price">
+        <item>¿Qué precio?</item>
         <item>Precios accesibles</item>
         <item>Un muy buen precio</item>
         <item>Un buen precio</item>
@@ -100,8 +102,9 @@
     </string-array>
 
     <string-array name="distance">
+        <item>¿A qué distancia?</item>
         <item>Cerca</item>
-        <item>Media</item>
+        <item>Mediana</item>
         <item>Lejos</item>
     </string-array>
 

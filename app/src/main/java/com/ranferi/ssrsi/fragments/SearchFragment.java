@@ -26,6 +26,9 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.PlacesResponse;
 import com.ranferi.ssrsi.model.UserResponse;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import okhttp3.OkHttpClient;
@@ -68,53 +71,77 @@ public class SearchFragment extends Fragment {
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
-        //String[] places = getResources().getStringArray(R.array.places_type);
-        //AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
+        AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
         // ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_dropdown_item_1line, places);
         /*editText1.setThreshold(1);
         editText1.setAdapter(adapter1);*/
-        //editText1.setEnabled(false);
+        editText1.setEnabled(false);
 
-        // AutoCompleteTextView typePlaceAutoComplete = view.findViewById(R.id.typePlaceAutoComplete);
+        String[] places = getResources().getStringArray(R.array.places_type);
+        List<String> placesList = new ArrayList<>(Arrays.asList(places));
         Spinner spinner1 = view.findViewById(R.id.typePlaceAutoComplete);
-        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(getActivity(),
-                R.array.places_type, android.R.layout.simple_spinner_item);
+        final ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_item, placesList) {
+            @Override
+            public boolean isEnabled (int position) {
+                return position != 0;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) tv.setTextColor(getResources().getColor(R.color.base));
+                else tv.setTextColor(Color.BLACK);
 
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner1.setAdapter(adapter1);
+                return view;
+            }
+        };
+        spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_item);
+        spinner1.setAdapter(spinnerArrayAdapter1);
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                getActivity(), android.R.layout.simple_list_item_1, R.array.places_type);
-
-
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, places);
-        typePlaceAutoComplete.setThreshold(1);
-        typePlaceAutoComplete.setAdapter(adapter);*/
-
-        //String[] price = getResources().getStringArray(R.array.price);
-        /*AutoCompleteTextView priceAutoComplete = view.findViewById(R.id.priceAutoComplete);
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, price);
-        priceAutoComplete.setThreshold(1);
-        priceAutoComplete.setAdapter(adapter2);*/
+        String[] price = getResources().getStringArray(R.array.price);
+        List<String> priceList = new ArrayList<>(Arrays.asList(price));
         Spinner spinner2 = view.findViewById(R.id.priceAutoComplete);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getActivity(),
-                R.array.price, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner2.setAdapter(adapter2);
+        final ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_item, priceList) {
+            @Override
+            public boolean isEnabled (int position) {
+                return position != 0;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) tv.setTextColor(getResources().getColor(R.color.base));
+                else tv.setTextColor(Color.BLACK);
 
-        /*String[] distance = getResources().getStringArray(R.array.distance);
-        AutoCompleteTextView distanceAutoComplete = view.findViewById(R.id.distanceAutoComplete);
-        ArrayAdapter<String> adapter3 =
-                new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, distance);
-        distanceAutoComplete.setThreshold(1);
-        distanceAutoComplete.setAdapter(adapter3);*/
+                return view;
+            }
+        };
+        spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_item);
+        spinner2.setAdapter(spinnerArrayAdapter2);
 
+        String[] distance = getResources().getStringArray(R.array.distance);
+        List<String> distanceList = new ArrayList<>(Arrays.asList(distance));
         Spinner spinner3 = view.findViewById(R.id.distanceAutoComplete);
-        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getActivity(),
-                R.array.distance, android.R.layout.simple_spinner_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner3.setAdapter(adapter3);
+        final ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<String>(getActivity(),
+                R.layout.spinner_item, distanceList) {
+            @Override
+            public boolean isEnabled (int position) {
+                return position != 0;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if (position == 0) tv.setTextColor(getResources().getColor(R.color.base));
+                else tv.setTextColor(Color.BLACK);
+
+                return view;
+            }
+        };
+        spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_item);
+        spinner3.setAdapter(spinnerArrayAdapter3);
 
         mCheckedTextView = view.findViewById(R.id.checkedTextView);
         mCheckedTextView.setOnClickListener(view1 -> {
@@ -129,11 +156,11 @@ public class SearchFragment extends Fragment {
 
         Button searchButton = view.findViewById(R.id.button2);
         searchButton.setOnClickListener(v -> {
-            //String a = typePlaceAutoComplete.getText().toString();
-            // String b = priceAutoComplete.getText().toString();
-            //String c = distanceAutoComplete.getText().toString();
+            String a = spinner1.getSelectedItem().toString();
+            String b = spinner2.getSelectedItem().toString();
+            String c = spinner3.getSelectedItem().toString();
             boolean d = mCheckedTextView.isChecked();
-            //showToastMsg( " "  + " " + c + " " + d + " " + latitud + " " + longitud);
+            showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
             // sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
         });
 
@@ -161,7 +188,7 @@ public class SearchFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        /*Call<PlacesResponse> call = service.searchPlaces(id, typePlace, price, distance, music);
+        Call<PlacesResponse> call = service.searchPlaces(id, typePlace, price, distance, music);
 
         call.enqueue(new Callback<PlacesResponse>() {
             @Override
@@ -180,7 +207,7 @@ public class SearchFragment extends Fragment {
                 progressDialog.dismiss();
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
     }
 
     @Override

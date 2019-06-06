@@ -228,7 +228,7 @@ public class PlaceFragment extends Fragment {
         });
 
         final ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getActivity(),R.layout.spinner_item,priceList){
+                getActivity(), R.layout.spinner_item, priceList){
             @Override
             public boolean isEnabled(int position){
                 // Se inutiliza el primer item
