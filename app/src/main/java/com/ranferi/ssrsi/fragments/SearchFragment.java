@@ -161,7 +161,7 @@ public class SearchFragment extends Fragment {
             String c = spinner3.getSelectedItem().toString();
             boolean d = mCheckedTextView.isChecked();
             showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
-            // sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
+            sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
         });
 
     }
@@ -170,7 +170,7 @@ public class SearchFragment extends Fragment {
         Toast.makeText(getContext(), Msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void sendSearch(Context context, int id, String typePlace, String price, String distance, boolean music, int latitud, int longitud) {
+    private void sendSearch(Context context, int id, String typePlace, String price, String distance, boolean music, double latitud, double longitud) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
@@ -194,11 +194,12 @@ public class SearchFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<PlacesResponse> call, @NonNull Response<PlacesResponse> response) {
                 progressDialog.dismiss();
-
-                if (!response.body().getError()) {
-                    Toast.makeText(context, "Gracias por tu opinión", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
+                if (response.body() != null) {
+                    if (!response.body().getError()) {
+                        Toast.makeText(context, "Espera un momento", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 

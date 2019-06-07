@@ -60,7 +60,7 @@ public interface APIService {
     );
 
     @FormUrlEncoded
-    @GET("search")
+    @POST("search")
     Call<PlacesResponse> searchPlaces(
             @Field("id") int id,
             @Field("tipo") String typePlace,
