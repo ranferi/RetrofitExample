@@ -14,12 +14,13 @@ public class PlacesResponse {
     @Expose
     private String message;
 
-    @SerializedName("sitio")
+    @SerializedName("places")
     @Expose
-    private RealmList<Place> sitio = new RealmList<>();
+    private RealmList<Place> mPlaces = new RealmList<>();
 
-    public PlacesResponse() {
-
+    public PlacesResponse(RealmList<Place> places) {
+        super();
+        this.mPlaces = places;
     }
 
     public boolean getError() {
@@ -38,11 +39,11 @@ public class PlacesResponse {
         this.message = message;
     }
 
-    public RealmList<Place> getSitio() {
-        return sitio;
+    public RealmList<Place> getPlaces() {
+        return mPlaces;
     }
 
     public void setSitio(RealmList<Place> sitio) {
-        this.sitio = sitio;
+        this.mPlaces = sitio;
     }
 }

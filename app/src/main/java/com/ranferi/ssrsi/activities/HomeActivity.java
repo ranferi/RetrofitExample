@@ -170,11 +170,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Fragment getFragment() {
         switch (navItemIndex) {
             case 0:
-                return new VisitedFragment();
+                return new PlaceListFragment();
             case 1:
                 return new ProfileFragment();
             case 2:
-                return new PlaceListFragment();
+                return new VisitedFragment();
             case 3:
                 return new VisitedFragment();
             case 4:

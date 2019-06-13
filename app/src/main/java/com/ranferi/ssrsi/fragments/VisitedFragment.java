@@ -79,7 +79,7 @@ public class VisitedFragment extends Fragment {
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
 
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
@@ -106,7 +106,7 @@ public class VisitedFragment extends Fragment {
                     mPlaceRecyclerView.setAdapter(mAdapter);
                 } else {
                     int statusCode = response.code();
-                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + statusCode);
+                    Log.d("ActividadPT", "VisitedFragment onResponse(): Error code = " + statusCode);
                 }
             }
 

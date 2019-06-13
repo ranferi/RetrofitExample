@@ -22,6 +22,7 @@ import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
+import com.ranferi.ssrsi.model.Users;
 
 
 import java.util.Iterator;
@@ -87,27 +88,52 @@ public class PlaceListFragment extends Fragment {
                 .build();
 
         APIService service = retrofit.create(APIService.class);
-        Call<Places> call = service.getPlaces();
 
-        call.enqueue(new Callback<Places>() {
+        Call<Users> call1 = service.getVisited(user);
+        call1.enqueue(new Callback<Users>() {
+            @Override
+            public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RealmList<User> users = response.body().getUsers();
+                    RealmList<UserPlace> visitados = users.first().getVisito();
+                    if (!visitados.isEmpty())
+                        realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
+                } else {
+                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
+                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+            }
+        });
+
+
+        Call<Places> call2 = service.getPlaces();
+        call2.enqueue(new Callback<Places>() {
             @Override
             public void onResponse(@NonNull Call<Places> call, @NonNull Response<Places> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     RealmList<Place> places = response.body().getPlaces();
 
-                    for (Place userPlace : places) {
-                        Place place = realm.where(Place.class).equalTo("id", userPlace.getId()).findFirst();
+                    for (Place visitedPlace : places) {
+                        Place place = realm.where(Place.class).equalTo("id", visitedPlace.getId()).findFirst();
                         if (place == null) {
                             realm.executeTransaction(realm1 -> {
-                                realm.copyToRealmOrUpdate(userPlace);
+                                realm.copyToRealmOrUpdate(visitedPlace);
                             });
-                        } else if (userPlace.getComentarios() != null) {
-                            RealmList<Comentario> comentarios = userPlace.getComentarios();
+                        }
+                        if (visitedPlace.getComentarios() != null) {
+                            RealmList<Comentario> comentarios = visitedPlace.getComentarios();
                             for (Comentario comentario : comentarios) {
-                                if (comentario.getUser() != null && comentario.getUser().getId() == user) {
-                                    Comentario comment = realm.where(Comentario.class).equalTo("id", comentario.getId()).findFirst();
-                                    if (comment != null)
+                                User userVisited = comentario.getUser();
+                                if (userVisited != null && userVisited.getId() == user) {
+                                    Comentario comment = realm
+                                            .where(Comentario.class)
+                                            .equalTo("id", comentario.getId()).findFirst();
+                                    if (comment != null) {
                                         realm.executeTransaction(realm1 -> realm.copyToRealm(comment));
+                                    }
                                 }
                             }
                         }

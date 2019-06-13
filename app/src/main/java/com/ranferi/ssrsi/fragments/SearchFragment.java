@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +25,23 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
+import com.ranferi.ssrsi.model.Comentario;
+import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.PlacesResponse;
+import com.ranferi.ssrsi.model.User;
+import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
+import com.ranferi.ssrsi.model.Users;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -47,6 +58,8 @@ public class SearchFragment extends Fragment {
 
     private CheckedTextView mCheckedTextView;
     private AutoCompleteTextView editText;
+    private Realm realm;
+    private int user;
 
 
     public SearchFragment() {
@@ -68,8 +81,11 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
+        realm = Realm.getDefaultInstance();
 
-        final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+        user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
+        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
 
         AutoCompleteTextView editText1 = view.findViewById(R.id.autoCompleteTextView);
         // ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Objects.requireNonNull(getActivity()), android.R.layout.simple_dropdown_item_1line, places);
@@ -161,7 +177,7 @@ public class SearchFragment extends Fragment {
             String c = spinner3.getSelectedItem().toString();
             boolean d = mCheckedTextView.isChecked();
             showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
-            sendSearch(getActivity(), user, a, b, c, d, latitud, longitud);
+            sendSearch(getActivity(),  a, b, c, d, latitud, longitud);
         });
 
     }
@@ -170,7 +186,7 @@ public class SearchFragment extends Fragment {
         Toast.makeText(getContext(), Msg, Toast.LENGTH_SHORT).show();
     }
 
-    private void sendSearch(Context context, int id, String typePlace, String price, String distance, boolean music, double latitud, double longitud) {
+    private void sendSearch(Context context, String typePlace, String price, String distance, boolean music, double latitud, double longitud) {
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
@@ -178,7 +194,6 @@ public class SearchFragment extends Fragment {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
@@ -188,19 +203,66 @@ public class SearchFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<PlacesResponse> call = service.searchPlaces(id, typePlace, price, distance, music);
+        Call<Users> call1 = service.getVisited(user);
+        call1.enqueue(new Callback<Users>() {
+            @Override
+            public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    RealmList<User> users = response.body().getUsers();
+                    RealmList<UserPlace> visitados = users.first().getVisito();
+                    if (!visitados.isEmpty())
+                        realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
+                } else {
+                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
+                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+            }
+        });
 
-        call.enqueue(new Callback<PlacesResponse>() {
+        Call<PlacesResponse> call2 = service.searchPlaces(user, typePlace, price, distance, music);
+
+        call2.enqueue(new Callback<PlacesResponse>() {
             @Override
             public void onResponse(@NonNull Call<PlacesResponse> call, @NonNull Response<PlacesResponse> response) {
                 progressDialog.dismiss();
-                if (response.body() != null) {
-                    if (!response.body().getError()) {
-                        Toast.makeText(context, "Espera un momento", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
+                if (response.isSuccessful() && response.body() != null) {
+                    RealmList<Place> places = response.body().getPlaces();
+
+                    for (Place visitedPlace : places) {
+                        Place place = realm.where(Place.class).equalTo("id", visitedPlace.getId()).findFirst();
+                        if (place == null)
+                            realm.executeTransaction(realm1 -> realm.copyToRealmOrUpdate(visitedPlace));
+
+                        if (visitedPlace.getComentarios() != null) {
+                            RealmList<Comentario> comentarios = visitedPlace.getComentarios();
+                            for (Comentario comentario : comentarios) {
+                                User userVisited = comentario.getUser();
+                                if (userVisited != null && userVisited.getId() == user) {
+                                    Comentario c = realm.where(Comentario.class)
+                                            .equalTo("id", comentario.getId()).findFirst();
+                                    if (c != null) realm.executeTransaction(realm1 -> realm.copyToRealm(c));
+                                }
+                            }
+                        }
                     }
+
+                    SearchListFragment fragment = new SearchListFragment();
+                    Bundle args = new Bundle();
+                    args.putParcelable("places", Parcels.wrap(places));
+                    fragment.setArguments(args);
+
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+                    fragmentTransaction.add(R.id.content_frame, fragment).commit();
+
+                    Toast.makeText(context, "Espera un momento", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
                 }
+
             }
 
             @Override

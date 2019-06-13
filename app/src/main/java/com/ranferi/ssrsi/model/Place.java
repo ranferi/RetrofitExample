@@ -4,6 +4,9 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelPropertyConverter;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
@@ -11,6 +14,9 @@ import io.realm.annotations.Index;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 
+@Parcel(implementations = { com_ranferi_ssrsi_model_PlaceRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { Place.class })
 public class Place extends RealmObject {
 
     @SerializedName("id")
@@ -35,21 +41,26 @@ public class Place extends RealmObject {
     @Expose
     private boolean musica;
     @SerializedName("nombres")
+    @ParcelPropertyConverter(NombreListParcelConverter.class)
     @Expose
     private RealmList<Nombre> mNombres = new RealmList<>();
     @SerializedName("calificaciones")
+    @ParcelPropertyConverter(CalificacioneListParcelConverter.class)
     @Expose
     private RealmList<Calificacione> mCalificaciones = new RealmList<>();
     @SerializedName("total")
     @Expose
     private double total;
     @SerializedName("categorias")
+    @ParcelPropertyConverter(CategoriaListParcelConverter.class)
     @Expose
     private RealmList<Categoria> categorias = new RealmList<>();
     @SerializedName("imagenes")
+    @ParcelPropertyConverter(ImageneListParcelConverter.class)
     @Expose
     private RealmList<Imagene> mImagenes = new RealmList<>();
     @SerializedName("comentarios")
+    @ParcelPropertyConverter(ComentarioListParcelConverter.class)
     @Expose
     private RealmList<Comentario> comentarios = new RealmList<>();
     @LinkingObjects("sitio")
