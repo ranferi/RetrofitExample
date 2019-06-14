@@ -67,7 +67,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         private Realm realm;
         UserPlace userPlaces;
 
-        public PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
+        PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_place_visited, parent, false));
             itemView.setOnClickListener(this);
             mNameTextView = itemView.findViewById(R.id.place_name);
@@ -78,7 +78,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
             realm = Realm.getDefaultInstance();
         }
 
-        public void bind(Place place) {
+        void bind(Place place) {
             Log.d("ActividadPT", "------------ PlaceVisitedAdapter, PlaceHolder, bind --- ");
             mPlace = place;
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()

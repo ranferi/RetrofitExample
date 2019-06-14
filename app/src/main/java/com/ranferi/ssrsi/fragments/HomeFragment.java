@@ -73,10 +73,6 @@ public class HomeFragment extends Fragment {
     private void fetchUsers() {
         mProgressBar.setVisibility(View.VISIBLE);
 
-        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -84,17 +80,13 @@ public class HomeFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getUsers();
-
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
                 if (response.isSuccessful()) {
-                    // Log.d("ActividadPT", "asd " + response.body().getUsers());
                     Users body = response.body();
                     List<User> users = null;
-                    if (body != null) {
-                        users = body.getUsers();
-                    }
+                    if (body != null) users = body.getUsers();
                     if (users != null) {
                         mUsers.clear();
                         mUsers.addAll(users);

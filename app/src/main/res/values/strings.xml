@@ -19,11 +19,9 @@
 
     <string name="update">Actualizar</string>
 
-
     <string name="login_button">Iniciar Sesión</string>
     <string name="link_register_text_view">¿No tienes cuenta? Regístrate</string>
     <string name="link_login_text_view">¿Ya te registraste? Inicia Sesión</string>
-
 
     <string name="details_label">Detalles</string>
 
@@ -35,6 +33,7 @@
     <string name="place_name_id">El gallo</string>
     <string name="place_address_id">Centro</string>
     <string name="imagen_perfil_de_usuario">Imagen perfil de usuario</string>
+    <string name="default_perfil_usuario">Usuario</string>
 
     <!-- mensajes -->
     <string name="image_message_description">Mensaje</string>
@@ -68,6 +67,11 @@
     <string name="comment_user">Tu comentario acerca del precio</string>
     <string name="user_opinion">Tu opinión</string>
     <string name="opinion_button">Enviar opinión</string>
+    <string name="home_drawer">Inicio</string>
+    <string name="profile_drawer">Perfil</string>
+    <string name="visted_drawer">Visitados</string>
+    <string name="places_drawer">Sitios</string>
+    <string name="logout">Cerrar Sesión</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Inicio</item>

@@ -74,7 +74,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                                         String message = editTextMessage.getText().toString().trim();
 
                                         // enviar el mensaje
-                                        sendMessage(user.getId(), title, message);
+                                        // sendMessage(user.getId(), title, message);
                                     }
                                 })
                         .setNegativeButton("Cancelar",
@@ -107,7 +107,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
 
-    private void sendMessage(int id, String title, String message) {
+    /* private void sendMessage(int id, String title, String message) {
         final ProgressDialog progressDialog = new ProgressDialog(sContext);
         progressDialog.setMessage("Envando mensaje...");
         progressDialog.show();
@@ -119,7 +119,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
         APIService service = retrofit.create(APIService.class);
 
-/*        Call<MessageResponse> call = service.sendMessage(
+       Call<MessageResponse> call = service.sendMessage(
                 SharedPrefManager.getInstance(sContext).getUser().getId(),
                 id, title, message
         );
@@ -136,7 +136,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                 progressDialog.dismiss();
                 Toast.makeText(sContext, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });*/
-    }
+        });
+    }*/
 
 }

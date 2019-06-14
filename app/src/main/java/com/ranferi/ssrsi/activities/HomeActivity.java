@@ -60,7 +60,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
-                //.deleteRealmIfMigrationNeeded()
                 .name("ssrsi.realm")
                 .build();
         Realm.setDefaultConfiguration(config);
@@ -81,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         else if (user.getUser() != null && !user.getUser().isEmpty())
             textViewName.setText(user.getUser());
         else
-            textViewName.setText("usuario");
+            textViewName.setText(R.string.default_perfil_usuario);
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
         setUpNavigationView();
@@ -103,22 +102,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void setUpNavigationView() {
-/*        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-                loadFragment();
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
-            }
-        };*/
 
         final SmoothActionBarDrawerToggle actionBarDrawerToggle = new SmoothActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(actionBarDrawerToggle);
@@ -142,10 +125,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     navItemIndex = 3;
                     CURRENT_TAG = TAG_PLACES;
                     break;
-                case R.id.nav_search:
+                /*case R.id.nav_search:
                     navItemIndex = 4;
                     CURRENT_TAG = TAG_SEARCH;
-                    break;
+                    break;*/
                 case R.id.nav_logout:
                     logout();
                     break;
@@ -164,23 +147,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
             return true;
         });
-
     }
 
     private Fragment getFragment() {
         switch (navItemIndex) {
             case 0:
-                return new PlaceListFragment();
+                return new SearchFragment();
             case 1:
                 return new ProfileFragment();
             case 2:
                 return new VisitedFragment();
             case 3:
-                return new VisitedFragment();
-            case 4:
-                return new SearchFragment();
+                return new PlaceListFragment();
+
             default:
-                return new HomeFragment();
+                return new SearchFragment();
         }
     }
 
@@ -193,11 +174,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private Runnable loadFragment() {
         setToolbarTitle();
 
- /*       if (getSupportFragmentManager().findFragmentByTag(CURRENT_TAG) != null) {
-            drawer.closeDrawer(GravityCompat.START);
-            return;
-        }*/
-
         Runnable mPendingRunnable = () -> {
             // Se actualiza el contenido principal
             Fragment fragment = getFragment();
@@ -209,12 +185,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             fragmentTransaction.commitAllowingStateLoss();
 
         };
-/*        if (mPendingRunnable != null) {
-            mHandler.post(mPendingRunnable);
-        }*/
-
-
-        // drawer.closeDrawer(GravityCompat.START);
 
         invalidateOptionsMenu();
 

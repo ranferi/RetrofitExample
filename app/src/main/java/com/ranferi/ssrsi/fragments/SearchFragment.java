@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -191,9 +192,14 @@ public class SearchFragment extends Fragment {
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .client(client)
@@ -251,9 +257,8 @@ public class SearchFragment extends Fragment {
 
                     SearchListFragment fragment = new SearchListFragment();
                     Bundle args = new Bundle();
-                    args.putParcelable("places", Parcels.wrap(places));
+                    args.putParcelable("places", Parcels.wrap(response.body()));
                     fragment.setArguments(args);
-
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
                     fragmentTransaction.add(R.id.content_frame, fragment).commit();
@@ -262,13 +267,13 @@ public class SearchFragment extends Fragment {
                 } else {
                     Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
                 }
-
             }
 
             @Override
             public void onFailure(@NonNull Call<PlacesResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
-                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.d("ActividadPT", t.getMessage());
+                Toast.makeText(context, "1" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

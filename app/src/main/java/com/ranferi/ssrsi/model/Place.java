@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 import org.parceler.ParcelPropertyConverter;
 
 import io.realm.RealmList;
@@ -13,12 +14,14 @@ import io.realm.RealmResults;
 import io.realm.annotations.Index;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.com_ranferi_ssrsi_model_PlaceRealmProxy;
 
+@RealmClass
 @Parcel(implementations = { com_ranferi_ssrsi_model_PlaceRealmProxy.class },
         value = Parcel.Serialization.BEAN,
         analyze = { Place.class })
 public class Place extends RealmObject {
-
     @SerializedName("id")
     @Expose
     @PrimaryKey
@@ -41,26 +44,21 @@ public class Place extends RealmObject {
     @Expose
     private boolean musica;
     @SerializedName("nombres")
-    @ParcelPropertyConverter(NombreListParcelConverter.class)
     @Expose
     private RealmList<Nombre> mNombres = new RealmList<>();
     @SerializedName("calificaciones")
-    @ParcelPropertyConverter(CalificacioneListParcelConverter.class)
     @Expose
     private RealmList<Calificacione> mCalificaciones = new RealmList<>();
     @SerializedName("total")
     @Expose
     private double total;
     @SerializedName("categorias")
-    @ParcelPropertyConverter(CategoriaListParcelConverter.class)
     @Expose
     private RealmList<Categoria> categorias = new RealmList<>();
     @SerializedName("imagenes")
-    @ParcelPropertyConverter(ImageneListParcelConverter.class)
     @Expose
     private RealmList<Imagene> mImagenes = new RealmList<>();
     @SerializedName("comentarios")
-    @ParcelPropertyConverter(ComentarioListParcelConverter.class)
     @Expose
     private RealmList<Comentario> comentarios = new RealmList<>();
     @LinkingObjects("sitio")
@@ -69,10 +67,13 @@ public class Place extends RealmObject {
     public Place() {
     }
 
-    public Place(int id, String medi, String latitud, String longitud, String direccion,
-                 boolean musica, RealmList<Nombre> nombres, RealmList<Calificacione> calificaciones,
-                 double total, RealmList<Categoria> categorias, RealmList<Imagene> imagenes,
-                 RealmList<Comentario> comentarios) {
+    @ParcelConstructor
+    public Place(int id, String medi, String latitud, String longitud, String direccion, boolean musica, double total,
+                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Nombre> nombres,
+                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Calificacione> calificaciones,
+                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Categoria> categorias,
+                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Imagene> imagenes,
+                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Comentario> comentarios) {
         super();
         this.id = id;
         this.medi = medi;

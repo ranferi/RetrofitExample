@@ -1,18 +1,41 @@
 package com.ranferi.ssrsi.model;
 
-import org.parceler.converter.CollectionParcelConverter;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import org.parceler.Parcels;
+import org.parceler.TypeRangeParcelConverter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
-/**
- * Clase abstracta para trabajar con RealmList
- * https://gist.github.com/cmelchior/72c35fcb55cec33a71e1
- * @param <T>
- */
-public abstract class RealmListParcelConverter<T extends RealmObject> extends CollectionParcelConverter<T, RealmList<T>> {
+public class RealmListParcelConverter
+        implements TypeRangeParcelConverter<RealmList<?
+        extends RealmObject>, RealmList<? extends RealmObject>> {
+    private static final int NULL = -1;
+
     @Override
-    public RealmList<T> createCollection() {
-        return new RealmList<T>();
+    public void toParcel(RealmList<? extends RealmObject> input, Parcel parcel) {
+        if (input == null) {
+            parcel.writeInt(NULL);
+        } else {
+            parcel.writeInt(input.size());
+            for (RealmObject item : input) {
+                parcel.writeParcelable(Parcels.wrap(item), 0);
+            }
+        }
+    }
+
+    @Override
+    public RealmList fromParcel(Parcel parcel) {
+        int size = parcel.readInt();
+        RealmList list = new RealmList();
+
+        for (int i=0; i<size; i++) {
+            Parcelable parcelable = parcel.readParcelable(getClass().getClassLoader());
+            list.add((RealmObject) Parcels.unwrap(parcelable));
+        }
+
+        return list;
     }
 }

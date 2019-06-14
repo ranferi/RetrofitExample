@@ -19,6 +19,7 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
+import com.ranferi.ssrsi.model.PlacesResponse;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.Users;
@@ -35,9 +36,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SearchListFragment extends Fragment {
-    private RecyclerView mPlaceRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RealmList<Place> places;
+    private PlacesResponse mPlacesResponse;
 
     public SearchListFragment() {
     }
@@ -45,7 +44,7 @@ public class SearchListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        places = (RealmList<Place>) Parcels.unwrap(getArguments().getParcelable("places"));
+        mPlacesResponse = (PlacesResponse) Parcels.unwrap(getArguments().getParcelable("places"));
         return inflater.inflate(R.layout.fragment_place_list, container, false);
     }
 
@@ -59,12 +58,12 @@ public class SearchListFragment extends Fragment {
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
-        mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
-        mPlaceRecyclerView.setHasFixedSize(true);
-        mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        RecyclerView placeRecyclerView = view.findViewById(R.id.place_recycler_view);
+        placeRecyclerView.setHasFixedSize(true);
+        placeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mAdapter = new PlaceVisitedAdapter(places, getActivity(), user);
-        mPlaceRecyclerView.setAdapter(mAdapter);
+        RecyclerView.Adapter adapter = new PlaceVisitedAdapter(mPlacesResponse.getPlaces(), getActivity(), user);
+        placeRecyclerView.setAdapter(adapter);
 
     }
 
