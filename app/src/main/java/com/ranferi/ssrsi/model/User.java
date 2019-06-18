@@ -7,11 +7,22 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+import org.parceler.ParcelPropertyConverter;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.com_ranferi_ssrsi_model_UserRealmProxy;
 
+@RealmClass
+@Parcel(implementations = { com_ranferi_ssrsi_model_UserRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { User.class })
 public class User extends RealmObject {
     @SerializedName("id")
     @Expose
@@ -60,7 +71,9 @@ public class User extends RealmObject {
      * @param email
      * @param user
      */
-    public User(int id, String name, String user, String email, RealmList<UserPlace> visito) {
+    @ParcelConstructor
+    public User(int id, String name, String user, String email, 
+        @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<UserPlace> visito) {
         super();
         this.id = id;
         this.name = name;
