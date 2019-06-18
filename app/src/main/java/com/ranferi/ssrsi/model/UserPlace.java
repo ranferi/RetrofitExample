@@ -3,13 +3,23 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
+import org.parceler.ParcelPropertyConverter;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.Index;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.com_ranferi_ssrsi_model_UserPlaceRealmProxy;
 
+@RealmClass
+@Parcel(implementations = { com_ranferi_ssrsi_model_UserPlaceRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { UserPlace.class })
 public class UserPlace extends RealmObject {
     @SerializedName("id")
     @Expose
@@ -42,7 +52,8 @@ public class UserPlace extends RealmObject {
      * @param gusto si le gusto o no el sitio
      * @param sitio el sitio
      */
-    public UserPlace(int id, String sitioSrc, String precio, boolean gusto, RealmList<Place> sitio) {
+    public UserPlace(int id, String sitioSrc, String precio, boolean gusto,
+    @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Place> sitio) {
         super();
         this.id = id;
         this.sitioSrc = sitioSrc;
@@ -80,6 +91,7 @@ public class UserPlace extends RealmObject {
         return sitio;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setSitio(RealmList<Place> sitio) {
         this.sitio = sitio;
     }

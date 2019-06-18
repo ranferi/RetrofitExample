@@ -4,11 +4,19 @@ package com.ranferi.ssrsi.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
+import io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy;
 
+@RealmClass
+@Parcel(implementations = { com_ranferi_ssrsi_model_ImageneRealmProxy.class },
+        value = Parcel.Serialization.BEAN,
+        analyze = { Imagene.class })
 public class Imagene extends RealmObject {
 
     @SerializedName("imagen")
