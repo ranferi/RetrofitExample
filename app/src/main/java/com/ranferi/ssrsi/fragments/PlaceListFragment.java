@@ -82,7 +82,7 @@ public class PlaceListFragment extends Fragment {
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .client(client)
+                // .client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -139,6 +139,10 @@ public class PlaceListFragment extends Fragment {
                         }
                     }
                     RealmResults<Place> places1 = realm.where(Place.class).findAll().sort("id");
+                    /*for (Place v: places1) {
+                        Log.d("ActividadPT", String.valueOf(v.getId()));
+
+                    }*/
                     mAdapter = new PlaceVisitedAdapter(places1, getActivity(), user);
                     mPlaceRecyclerView.setAdapter(mAdapter);
 

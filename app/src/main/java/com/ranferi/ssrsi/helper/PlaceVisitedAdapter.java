@@ -49,6 +49,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
     @Override
     public void onBindViewHolder(@NonNull PlaceHolder placeHolder, int i) {
         Place place = mPlaces.get(i);
+        Log.d("ActividadPT", String.valueOf(place.getId()));
         placeHolder.bind(place);
     }
 
@@ -79,12 +80,12 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         }
 
         void bind(Place place) {
-            Log.d("ActividadPT", "------------ PlaceVisitedAdapter, PlaceHolder, bind --- ");
+            // Log.d("ActividadPT", "------------ PlaceVisitedAdapter, PlaceHolder, bind --- ");
             mPlace = place;
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
                     .where().equalTo("sitio.id", mPlace.getId()).findFirst();
-            Log.d("ActividadPT", String.valueOf(id));
-            Log.d("ActividadPT", String.valueOf(userPlaces));
+            //Log.d("ActividadPT", String.valueOf(id));
+            // Log.d("ActividadPT", String.valueOf(userPlaces));
 
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);

@@ -20,14 +20,13 @@ import io.realm.RealmResults;
 
 public class PlacePagerActivity extends AppCompatActivity {
 
-    private static final String EXTRA_CRIME_ID =
-            "com.ranferi.ssrsi.place_id";
+    private static final String EXTRA_PLACE_ID = "com.ranferi.ssrsi.place_id";
 
     private Realm realm;
 
     public static Intent newIntent(Context packageContext, int placeId) {
         Intent intent = new Intent(packageContext, PlacePagerActivity.class);
-        intent.putExtra(EXTRA_CRIME_ID, placeId);
+        intent.putExtra(EXTRA_PLACE_ID, placeId);
         return intent;
     }
 
@@ -37,13 +36,13 @@ public class PlacePagerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_place_pager);
 
         int placeId = (int) getIntent()
-                .getSerializableExtra(EXTRA_CRIME_ID);
+                .getSerializableExtra(EXTRA_PLACE_ID);
 
         realm = Realm.getDefaultInstance();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         RealmQuery<Place> placesList = realm.where(Place.class);
-        RealmResults<Place> places = placesList.findAll();
+        RealmResults<Place> places = placesList.sort("id").findAll();
 
         ViewPager viewPager = findViewById(R.id.place_view_pager);
         viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
