@@ -65,6 +65,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         private ImageView mSolvedImageView;
         private CheckBox visited;
         private CheckBox liked;
+        private TextView similarity;
         private Realm realm;
         UserPlace userPlaces;
 
@@ -76,6 +77,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
             mSolvedImageView = itemView.findViewById(R.id.place_solved);
             visited = itemView.findViewById(R.id.visited);
             liked = itemView.findViewById(R.id.liked);
+            similarity = itemView.findViewById(R.id.similarity);
             realm = Realm.getDefaultInstance();
         }
 
@@ -85,7 +87,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
                     .where().equalTo("sitio.id", mPlace.getId()).findFirst();
             //Log.d("ActividadPT", String.valueOf(id));
-            // Log.d("ActividadPT", String.valueOf(userPlaces));
+            Log.d("ActividadPT", String.valueOf(mPlace));
 
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
@@ -110,6 +112,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
                 visited.setChecked(userPlaces.isGusto());
                 liked.setChecked(userPlaces.isGusto());
             }
+            similarity.setText("Similitud : " + String.valueOf(mPlace.getSimilitud()));
             visited.setClickable(false);
             liked.setClickable(false);
         }

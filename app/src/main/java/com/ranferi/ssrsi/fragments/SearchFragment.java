@@ -84,6 +84,12 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
         realm = Realm.getDefaultInstance();
+        /*realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(@NonNull Realm bgRealm) {
+                bgRealm.deleteAll();
+            }
+        });*/
 
         user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
         UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
@@ -192,11 +198,12 @@ public class SearchFragment extends Fragment {
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
 
-        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         OkHttpClient client = new OkHttpClient.Builder()
+        .addInterceptor(interceptor)
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
                 .build();

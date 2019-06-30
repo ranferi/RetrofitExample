@@ -53,9 +53,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:tint="@color/primaryColor"
-                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/ic_bar" />
@@ -74,11 +74,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/liked" />
+               />
 
-            <CheckBox
-                style="?android:attr/starStyle"
-                android:id="@+id/visited"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -86,29 +85,58 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="Visitado"
-                android:textColor="@color/jumbo"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toStartOf="@+id/liked"
-                app:layout_constraintStart_toEndOf="@+id/place_solved"
-                app:layout_constraintTop_toBottomOf="@+id/place_address" />
-
-            <CheckBox
-
-                android:id="@+id/liked"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:text="Te gusto"
-                android:textColor="@color/jumbo"
-                android:textSize="14sp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/visited"
-                app:layout_constraintTop_toBottomOf="@+id/place_address" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/place_address">
+
+                <CheckBox
+                    android:id="@+id/liked"
+                    style="?android:attr/starStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Te gusto"
+                    android:textColor="@color/jumbo"
+                    android:textSize="14sp" />
+
+                <CheckBox
+                    android:id="@+id/visited"
+
+                    android:layout_width="84dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Visitado"
+                    android:textColor="@color/jumbo"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/similarity"
+                    android:layout_width="59dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="TextView"
+                    android:textColor="@color/jumbo" />
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

@@ -43,6 +43,9 @@ public class Place extends RealmObject {
     @SerializedName("musica")
     @Expose
     private boolean musica;
+    @SerializedName("similitud")
+    @Expose
+    private int similitud;
     @SerializedName("nombres")
     @Expose
     private RealmList<Nombre> mNombres = new RealmList<>();
@@ -67,13 +70,11 @@ public class Place extends RealmObject {
     public Place() {
     }
 
-    @ParcelConstructor
-    public Place(int id, String medi, String latitud, String longitud, String direccion, boolean musica, double total,
-                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Nombre> nombres,
-                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Calificacione> calificaciones,
-                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Categoria> categorias,
-                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Imagene> imagenes,
-                 @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Comentario> comentarios) {
+
+
+    public Place(int id, String medi, String latitud, String longitud, String direccion, boolean musica, int similitud, double total,
+                 RealmList<Nombre> nombres, RealmList<Calificacione> calificaciones, RealmList<Categoria> categorias,
+                 RealmList<Imagene> imagenes, RealmList<Comentario> comentarios) {
         super();
         this.id = id;
         this.medi = medi;
@@ -141,6 +142,7 @@ public class Place extends RealmObject {
         return mNombres;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setNombres(RealmList<Nombre> mNombres) {
         this.mNombres = mNombres;
     }
@@ -149,8 +151,17 @@ public class Place extends RealmObject {
         return mCalificaciones;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setCalificaciones(RealmList<Calificacione> mCalificaciones) {
         this.mCalificaciones = mCalificaciones;
+    }
+
+    public int getSimilitud() {
+        return similitud;
+    }
+
+    public void setSimilitud(int similitud) {
+        this.similitud = similitud;
     }
 
     public double getTotal() {
@@ -165,6 +176,7 @@ public class Place extends RealmObject {
         return categorias;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setCategorias(RealmList<Categoria> categorias) {
         this.categorias = categorias;
     }
@@ -173,6 +185,7 @@ public class Place extends RealmObject {
         return mImagenes;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setImagenes(RealmList<Imagene> mImagenes) {
         this.mImagenes = mImagenes;
     }
@@ -181,6 +194,7 @@ public class Place extends RealmObject {
         return comentarios;
     }
 
+    @ParcelPropertyConverter(RealmListParcelConverter.class)
     public void setComentarios(RealmList<Comentario> comentarios) {
         this.comentarios = comentarios;
     }

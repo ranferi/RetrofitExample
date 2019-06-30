@@ -74,7 +74,7 @@ public class VisitedFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        APIService service = retrofit.create(APIService.class);
+/*        APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getVisited(user);
         call.enqueue(new Callback<Users>() {
             @Override
@@ -89,11 +89,11 @@ public class VisitedFragment extends Fragment {
                     }
 
                     Log.d("ActividadPT", String.valueOf(users));
-                    /*Iterator<UserPlace> visited = visitados.iterator();
+                    *//*Iterator<UserPlace> visited = visitados.iterator();
                     while (visited.hasNext()) {
                         UserPlace userPlace = visited.next();
                         if (userPlace.getSitioSrc().equals(userPlaces.getSitioSrc())) visited.remove();
-                    }*/
+                    }*//*
                     if (!visitados.isEmpty()) {
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                     } else {
@@ -114,7 +114,7 @@ public class VisitedFragment extends Fragment {
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });
+        });*/
     }
 
     @Override

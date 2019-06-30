@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
 import org.parceler.ParcelPropertyConverter;
 
 import io.realm.RealmList;
@@ -27,7 +26,6 @@ public class PlacesResponse extends RealmObject {
 
     @SerializedName("places")
     @Expose
-
     private RealmList<Place> mPlaces;
 
     public PlacesResponse() {
