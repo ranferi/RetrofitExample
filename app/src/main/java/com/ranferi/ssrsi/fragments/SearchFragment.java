@@ -42,6 +42,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -83,6 +84,14 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
+        /*RealmConfiguration config2 = new RealmConfiguration.Builder()
+                .name("ssrsi.realm")
+                .deleteRealmIfMigrationNeeded()
+                .build();*/
+
+
+        /*realm = Realm.getInstance(config2);*/
+
         realm = Realm.getDefaultInstance();
         /*realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -216,7 +225,7 @@ public class SearchFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        Call<Users> call1 = service.getVisited(user);
+        /*Call<Users> call1 = service.getVisited(user);
         call1.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
@@ -282,7 +291,7 @@ public class SearchFragment extends Fragment {
                 Log.d("ActividadPT", t.getMessage());
                 Toast.makeText(context, "1" + t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
     @Override

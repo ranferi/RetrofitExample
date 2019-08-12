@@ -1,10 +1,7 @@
 package com.ranferi.ssrsi.api;
 
-import com.ranferi.ssrsi.model.MessageResponse;
-import com.ranferi.ssrsi.model.Messages;
 import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.PlacesResponse;
-import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
 
@@ -69,10 +66,7 @@ public interface APIService {
             @Field("musica") boolean music
     );
 
-    @GET("messages/{id}")
-    Call<Messages> getMessages(@Path("id") int id);
-
-    @GET("prueba")
+    @GET("list")
     Call<Places> getPlaces();
 
     @GET("visited/{id}")

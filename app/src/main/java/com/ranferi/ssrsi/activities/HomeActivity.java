@@ -125,10 +125,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     navItemIndex = 3;
                     CURRENT_TAG = TAG_PLACES;
                     break;
-                /*case R.id.nav_search:
-                    navItemIndex = 4;
-                    CURRENT_TAG = TAG_SEARCH;
-                    break;*/
                 case R.id.nav_logout:
                     logout();
                     break;

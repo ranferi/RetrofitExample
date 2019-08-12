@@ -69,20 +69,16 @@ public class PlaceListFragment extends Fragment {
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
-        UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
-        Log.d("ActividadPT", String.valueOf(user));
-        Log.d("ActividadPT", String.valueOf(userPlaces));
-
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         Retrofit retrofit = new Retrofit.Builder()
-                // .client(client)
+                //.client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -99,7 +95,7 @@ public class PlaceListFragment extends Fragment {
                     if (!visitados.isEmpty())
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                 } else {
-                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + response.code());
+                    Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + response.code());
                 }
             }
             @Override

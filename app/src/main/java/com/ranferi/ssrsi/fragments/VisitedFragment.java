@@ -23,6 +23,7 @@ import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.Users;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 import io.realm.Realm;
@@ -63,6 +64,10 @@ public class VisitedFragment extends Fragment {
             }
         });*/
 
+        /*UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
+        Log.d("ActividadPT", String.valueOf(user));
+        Log.d("ActividadPT", String.valueOf(userPlaces));*/
+
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
@@ -74,7 +79,7 @@ public class VisitedFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-/*        APIService service = retrofit.create(APIService.class);
+       APIService service = retrofit.create(APIService.class);
         Call<Users> call = service.getVisited(user);
         call.enqueue(new Callback<Users>() {
             @Override
@@ -89,11 +94,11 @@ public class VisitedFragment extends Fragment {
                     }
 
                     Log.d("ActividadPT", String.valueOf(users));
-                    *//*Iterator<UserPlace> visited = visitados.iterator();
+                    /*Iterator<UserPlace> visited = visitados.iterator();
                     while (visited.hasNext()) {
                         UserPlace userPlace = visited.next();
                         if (userPlace.getSitioSrc().equals(userPlaces.getSitioSrc())) visited.remove();
-                    }*//*
+                    }*/
                     if (!visitados.isEmpty()) {
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                     } else {
@@ -114,7 +119,7 @@ public class VisitedFragment extends Fragment {
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
                 Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
-        });*/
+        });
     }
 
     @Override

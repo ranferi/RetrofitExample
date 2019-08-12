@@ -1,7 +1,6 @@
 package com.ranferi.ssrsi.helper;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
@@ -12,21 +11,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.api.APIService;
-import com.ranferi.ssrsi.api.APIUrl;
-import com.ranferi.ssrsi.model.MessageResponse;
 import com.ranferi.ssrsi.model.User;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
@@ -106,37 +95,5 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             imageButtonMessage = (ImageButton)  itemView.findViewById(R.id.imageButtonMessage);
         }
     }
-
-    /* private void sendMessage(int id, String title, String message) {
-        final ProgressDialog progressDialog = new ProgressDialog(sContext);
-        progressDialog.setMessage("Envando mensaje...");
-        progressDialog.show();
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(APIUrl.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        APIService service = retrofit.create(APIService.class);
-
-       Call<MessageResponse> call = service.sendMessage(
-                SharedPrefManager.getInstance(sContext).getUser().getId(),
-                id, title, message
-        );
-
-        call.enqueue(new Callback<MessageResponse>() {
-            @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
-                progressDialog.dismiss();
-                Toast.makeText(sContext, response.body().getMessage(), Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
-                progressDialog.dismiss();
-                Toast.makeText(sContext, t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }*/
 
 }
