@@ -26,12 +26,12 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmList;
 
-public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapter.PlaceHolder> {
+public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.PlaceHolder> {
     private List<Place> mPlaces;
     private Context sContext;
     private int id;
 
-    public PlaceVisitedAdapter(List<Place> places, Context context, int id) {
+    public PlacesListAdapter(List<Place> places, Context context, int id) {
         this.mPlaces = places;
         this.sContext = context;
         this.id = id;
@@ -47,7 +47,6 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
     @Override
     public void onBindViewHolder(@NonNull PlaceHolder placeHolder, int i) {
         Place place = mPlaces.get(i);
-        // Log.d("ActividadPT", String.valueOf(place.getId()));
         placeHolder.bind(place);
     }
 
@@ -63,20 +62,18 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         private ImageView mSolvedImageView;
         private CheckBox visited;
         private CheckBox liked;
-        private TextView similarity;
         private Realm realm;
         UserPlace userPlaces;
 
 
         PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_place_visited, parent, false));
+            super(inflater.inflate(R.layout.list_item_place_listed, parent, false));
             itemView.setOnClickListener(this);
             mNameTextView = itemView.findViewById(R.id.place_name);
             mAddressTextView = itemView.findViewById(R.id.place_address);
             mSolvedImageView = itemView.findViewById(R.id.place_solved);
             visited = itemView.findViewById(R.id.visited);
             liked = itemView.findViewById(R.id.liked);
-            similarity = itemView.findViewById(R.id.similarity);
             realm = Realm.getDefaultInstance();
         }
 
@@ -84,6 +81,8 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
             mPlace = place;
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
                     .where().equalTo("sitio.id", mPlace.getId()).findFirst();
+            //Log.d("ActividadPT", String.valueOf(id));
+            // Log.d("ActividadPT", String.valueOf(mPlace));
 
             if (mPlace.getNombres().size() != 0) {
                 Nombre nombre1 = mPlace.getNombres().get(0);
@@ -96,7 +95,6 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
                 visited.setChecked(userPlaces.isGusto());
                 liked.setChecked(userPlaces.isGusto());
             }
-            similarity.setText("Similitud : " + mPlace.getSimilitud());
             visited.setClickable(false);
             liked.setClickable(false);
         }

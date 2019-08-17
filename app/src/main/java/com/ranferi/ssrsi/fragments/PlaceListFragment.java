@@ -15,7 +15,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
-import com.ranferi.ssrsi.helper.PlacesAdapter;
+import com.ranferi.ssrsi.helper.PlacesListAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Place;
@@ -24,16 +24,9 @@ import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.Users;
 
-
-import java.util.Iterator;
-import java.util.List;
-
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmQuery;
 import io.realm.RealmResults;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -135,11 +128,7 @@ public class PlaceListFragment extends Fragment {
                         }
                     }
                     RealmResults<Place> places1 = realm.where(Place.class).findAll().sort("id");
-                    /*for (Place v: places1) {
-                        Log.d("ActividadPT", String.valueOf(v.getId()));
-
-                    }*/
-                    mAdapter = new PlaceVisitedAdapter(places1, getActivity(), user);
+                    mAdapter = new PlacesListAdapter(places1, getActivity(), user);
                     mPlaceRecyclerView.setAdapter(mAdapter);
 
                 } else {

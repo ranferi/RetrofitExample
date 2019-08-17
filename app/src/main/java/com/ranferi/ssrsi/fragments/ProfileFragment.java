@@ -20,6 +20,10 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.User;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
-        Log.d("ActividadPT", "Estás en onViewCreated " + " id: " + user.toString() + ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
+        Log.d("ActividadPT", "Estás en onViewCreated " + " user: " + user.getUser()+ ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
         buttonUpdate = view.findViewById(R.id.buttonUpdate);
         mEditTextName = view.findViewById(R.id.editTextNameProfile);
@@ -84,7 +88,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         String email = toStringACharSequence(mEditTextEmail.getText()).trim();
         final String password = toStringACharSequence(mEditTextPassword.getText()).trim();
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();

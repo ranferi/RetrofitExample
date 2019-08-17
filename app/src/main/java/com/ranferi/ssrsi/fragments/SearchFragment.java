@@ -28,6 +28,7 @@ import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.Comentario;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.PlacesResponse;
+import com.ranferi.ssrsi.model.Types;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
@@ -111,9 +112,9 @@ public class SearchFragment extends Fragment {
 
         String[] places = getResources().getStringArray(R.array.places_type);
         List<String> placesList = new ArrayList<>(Arrays.asList(places));
-        Spinner spinner1 = view.findViewById(R.id.typePlaceAutoComplete);
+        Spinner spinnerCats = view.findViewById(R.id.typePlaceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(getActivity(),
-                R.layout.spinner_item, placesList) {
+                R.layout.spinner_item, Types.strCatsNames) {
             @Override
             public boolean isEnabled (int position) {
                 return position != 0;
@@ -129,11 +130,11 @@ public class SearchFragment extends Fragment {
             }
         };
         spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_item);
-        spinner1.setAdapter(spinnerArrayAdapter1);
+        spinnerCats.setAdapter(spinnerArrayAdapter1);
 
         String[] price = getResources().getStringArray(R.array.price);
         List<String> priceList = new ArrayList<>(Arrays.asList(price));
-        Spinner spinner2 = view.findViewById(R.id.priceAutoComplete);
+        Spinner spinnerPrice = view.findViewById(R.id.priceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, priceList) {
             @Override
@@ -151,11 +152,11 @@ public class SearchFragment extends Fragment {
             }
         };
         spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_item);
-        spinner2.setAdapter(spinnerArrayAdapter2);
+        spinnerPrice.setAdapter(spinnerArrayAdapter2);
 
         String[] distance = getResources().getStringArray(R.array.distance);
         List<String> distanceList = new ArrayList<>(Arrays.asList(distance));
-        Spinner spinner3 = view.findViewById(R.id.distanceAutoComplete);
+        Spinner spinnerDistance = view.findViewById(R.id.distanceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, distanceList) {
             @Override
@@ -173,7 +174,7 @@ public class SearchFragment extends Fragment {
             }
         };
         spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_item);
-        spinner3.setAdapter(spinnerArrayAdapter3);
+        spinnerDistance.setAdapter(spinnerArrayAdapter3);
 
         mCheckedTextView = view.findViewById(R.id.checkedTextView);
         mCheckedTextView.setOnClickListener(view1 -> {
@@ -188,12 +189,12 @@ public class SearchFragment extends Fragment {
 
         Button searchButton = view.findViewById(R.id.button2);
         searchButton.setOnClickListener(v -> {
-            String a = spinner1.getSelectedItem().toString();
-            String b = spinner2.getSelectedItem().toString();
-            String c = spinner3.getSelectedItem().toString();
-            boolean d = mCheckedTextView.isChecked();
-            showToastMsg(a + " " + b + " " + c + " " + d + " " + latitud + " " + longitud);
-            sendSearch(getActivity(),  a, b, c, d, latitud, longitud);
+            String cat = Types.strCatsCodes[spinnerCats.getSelectedItemPosition()];
+            String prices = spinnerPrice.getSelectedItem().toString();
+            String dist = spinnerDistance.getSelectedItem().toString();
+            boolean music = mCheckedTextView.isChecked();
+            showToastMsg("Categoría: " + cat + " precio: " + prices + " distancia: " + dist + " música: " + music + " latitud: " + latitud + " longitud: " + longitud);
+            sendSearch(getActivity(), cat, prices, dist, music, latitud, longitud);
         });
 
     }
@@ -208,8 +209,8 @@ public class SearchFragment extends Fragment {
         progressDialog.show();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        /*interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        /*OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
 
         OkHttpClient client = new OkHttpClient.Builder()
         .addInterceptor(interceptor)
@@ -225,7 +226,7 @@ public class SearchFragment extends Fragment {
 
         APIService service = retrofit.create(APIService.class);
 
-        /*Call<Users> call1 = service.getVisited(user);
+        Call<Users> call1 = service.getVisited(user);
         call1.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(@NonNull Call<Users> call, @NonNull Response<Users> response) {
@@ -235,7 +236,7 @@ public class SearchFragment extends Fragment {
                     if (!visitados.isEmpty())
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                 } else {
-                    Log.d("ActividadPT", "VisitedFragmentFragment onResponse(): Error code = " + response.code());
+                    Log.d("ActividadPT", "SearchFragment onResponse(): Error code = " + response.code());
                 }
             }
             @Override
@@ -244,8 +245,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        Call<PlacesResponse> call2 = service.searchPlaces(user, typePlace, price, distance, music);
-
+/*        Call<PlacesResponse> call2 = service.searchPlaces(user, typePlace, price, distance, music);
         call2.enqueue(new Callback<PlacesResponse>() {
             @Override
             public void onResponse(@NonNull Call<PlacesResponse> call, @NonNull Response<PlacesResponse> response) {
@@ -263,8 +263,7 @@ public class SearchFragment extends Fragment {
                             for (Comentario comentario : comentarios) {
                                 User userVisited = comentario.getUser();
                                 if (userVisited != null && userVisited.getId() == user) {
-                                    Comentario c = realm.where(Comentario.class)
-                                            .equalTo("id", comentario.getId()).findFirst();
+                                    Comentario c = realm.where(Comentario.class).equalTo("id", comentario.getId()).findFirst();
                                     if (c != null) realm.executeTransaction(realm1 -> realm.copyToRealm(c));
                                 }
                             }

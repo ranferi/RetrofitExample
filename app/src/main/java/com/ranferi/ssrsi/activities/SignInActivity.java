@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.UserResponse;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,11 +76,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         // Log.d("ActividadPT", "Estás en userSignIn, antes de service.userLogin" );
 
 
-        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
 
         Retrofit retrofit = new Retrofit.Builder()
+                .client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -94,8 +100,12 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 // cuando no hay usuario
 
                 if (!response.body().getError()) {
+                    UserResponse userResponse = response.body();
+                    Log.d("ActividadPT", "en call.enqueue, onResponse: " + new GsonBuilder().setPrettyPrinting().create().toJson(response));
                     finish();
                     // Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
+                    Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("ActividadPT", "en call.enqueue, onResponse: " + userResponse.getUser().getEmail() + " " + userResponse.getUser().getUser());
 
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);

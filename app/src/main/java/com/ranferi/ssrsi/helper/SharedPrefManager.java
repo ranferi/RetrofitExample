@@ -35,6 +35,7 @@ public class SharedPrefManager {
 
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        Log.d("ActividadPT", "Estás en userLogin, SharedPrefManager " + " user: " + user.getUser() + " " + user.getName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_NAME, user.getName());
@@ -52,15 +53,15 @@ public class SharedPrefManager {
 
     public User getUser() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        // Log.d("ActividadPT", "Estás en getUser,SharedPrefManager " + " last name: " + sharedPreferences.getString(KEY_USER_LAST_NAME, null));
+//        Log.d("ActividadPT", "Estás en getUser, SharedPrefManager " + " last name: " + sharedPreferences.getString(KEY_USER_USER, null));
         return new User(
                 sharedPreferences.getInt(KEY_USER_ID, 0),
                 sharedPreferences.getString(KEY_USER_NAME, null),
                 sharedPreferences.getString(KEY_USER_LAST_NAME, null),
                 sharedPreferences.getString(KEY_USER_MAIDEN_NAME, null),
-                sharedPreferences.getString(KEY_USER_USER, null),
-                sharedPreferences.getString(KEY_USER_EMAIL, null)
-        );
+                sharedPreferences.getString(KEY_USER_EMAIL, null),
+                sharedPreferences.getString(KEY_USER_USER, null)
+                );
 
         /* sharedPreferences.getInt(KEY_USER_ID, 0),
                 sharedPreferences.getString(KEY_USER_NAME, null),

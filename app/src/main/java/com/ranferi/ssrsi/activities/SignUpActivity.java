@@ -101,7 +101,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         // -----> User user = new User(name, email, password, gender);
         User user = new User(name, lastName, maidenName, userName, email, password);
 
-        // defining the call
+        // se define la llamada
         Call<UserResponse> call = service.createUser(
                 user.getName(),
                 user.getLastName(),

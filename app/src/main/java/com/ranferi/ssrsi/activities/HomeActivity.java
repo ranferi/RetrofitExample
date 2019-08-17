@@ -17,7 +17,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.fragments.HomeFragment;
 import com.ranferi.ssrsi.fragments.PlaceListFragment;
 import com.ranferi.ssrsi.fragments.ProfileFragment;
 import com.ranferi.ssrsi.fragments.SearchFragment;
@@ -179,7 +178,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
             fragmentTransaction.replace(R.id.content_frame, fragment, CURRENT_TAG);
             fragmentTransaction.commitAllowingStateLoss();
-
         };
 
         invalidateOptionsMenu();

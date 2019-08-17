@@ -28,24 +28,31 @@ public class User extends RealmObject {
     @Expose
     @PrimaryKey
     private int id;
+
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("lastName")
     @Expose
     private String lastName;
+
     @SerializedName("mothersMaidenName")
     @Expose
     private String mothersMaidenName;
-    @SerializedName("usuario")
+
+    @SerializedName("user")
     @Expose
     @Index
     private String user;
+
     @SerializedName("email")
     @Expose
     @Index
     private String email;
+
     private String password;
+
     @SerializedName("visito")
     @Expose
     private RealmList<UserPlace> visito = new RealmList<>();
@@ -64,12 +71,11 @@ public class User extends RealmObject {
     }
 
     /**
-     *
-     * @param name
-     * @param id
-     * @param visito
-     * @param email
-     * @param user
+     * @param name nombre
+     * @param id identificador
+     * @param visito visito sitio
+     * @param email email
+     * @param user nombre de usuario
      */
     @ParcelConstructor
     public User(int id, String name, String user, String email, 
@@ -81,6 +87,7 @@ public class User extends RealmObject {
         this.email = email;
         this.visito = visito;
     }
+
 
     // NUEVA En ProfileFragment.java, para ver y actualizar información
     public User(int id, String name, String lastName, String mothersMaidenName, String user, String email, String password) {
@@ -95,7 +102,7 @@ public class User extends RealmObject {
     }
 
     // NUEVA En SharedPrefManager.java, para obtener información del usuario (sin password)
-    public User(int id, String name, String lastName, String mothersMaidenName, String user, String email) {
+    public User(int id, String name, String lastName, String mothersMaidenName, String email, String user) {
         super();
         this.id = id;
         this.name = name;

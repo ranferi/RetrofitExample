@@ -19,7 +19,7 @@ public class UserResponse {
         this.error = error;
         this.message = message;
         this.user = user;
-        Log.d("TT", "En constructor UserResponse, usuario: " + this.user);
+        Log.d("ActividadPT", "En constructor UserResponse, usuario: " + this.user);
     }
 
     public Boolean getError() {
