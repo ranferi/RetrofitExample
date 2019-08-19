@@ -175,9 +175,12 @@ public class PlaceFragment extends Fragment {
                 csvBuilder.append(SEPARATOR);
             }
         }
+
+        Log.d("ActividadPT", csvBuilder.toString());
+
         String csv = csvBuilder.toString();
         csv = csv.substring(0, csv.length() - SEPARATOR.length());
-        String categoryString = "Categorías :    " +  "<b>" + csv + "</b> ";
+        String categoryString = "Categorías : " +  "<b>" + csv + "</b>";
         categoriesField.setText(Html.fromHtml(categoryString));
 
         CheckBox musicCheckBox = v.findViewById(R.id.place_music);
@@ -196,7 +199,7 @@ public class PlaceFragment extends Fragment {
         mMapView.getMapAsync(mMap -> {
             googleMap = mMap;
             LatLng origin = new LatLng(APIUrl.latitud, APIUrl.longitud);
-            LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud ()));
+            LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud()));
             googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
             googleMap.addMarker(new MarkerOptions().position(destination).title("Sitio De Interés").snippet(""));
             /*GoogleDirection.withServerKey(APIUrl.serverKey)

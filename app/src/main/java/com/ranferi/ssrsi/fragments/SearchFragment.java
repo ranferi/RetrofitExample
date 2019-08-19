@@ -110,8 +110,8 @@ public class SearchFragment extends Fragment {
         editText1.setAdapter(adapter1);*/
         editText1.setEnabled(false);
 
-        String[] places = getResources().getStringArray(R.array.places_type);
-        List<String> placesList = new ArrayList<>(Arrays.asList(places));
+        // String[] places = getResources().getStringArray(R.array.places_type);
+        // List<String> placesList = new ArrayList<>(Arrays.asList(places));
         Spinner spinnerCats = view.findViewById(R.id.typePlaceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, Types.strCatsNames) {
@@ -245,7 +245,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-/*        Call<PlacesResponse> call2 = service.searchPlaces(user, typePlace, price, distance, music);
+       Call<PlacesResponse> call2 = service.searchPlaces(user, typePlace, price, distance, music);
         call2.enqueue(new Callback<PlacesResponse>() {
             @Override
             public void onResponse(@NonNull Call<PlacesResponse> call, @NonNull Response<PlacesResponse> response) {
@@ -276,7 +276,7 @@ public class SearchFragment extends Fragment {
                     fragment.setArguments(args);
                     FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
 
-                    fragmentTransaction.add(R.id.content_frame, fragment).commit();
+                    fragmentTransaction.replace(R.id.content_frame, fragment).commit();
 
                     Toast.makeText(context, "Espera un momento", Toast.LENGTH_LONG).show();
                 } else {
@@ -288,9 +288,9 @@ public class SearchFragment extends Fragment {
             public void onFailure(@NonNull Call<PlacesResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Log.d("ActividadPT", t.getMessage());
-                Toast.makeText(context, "1" + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
-        });*/
+        });
     }
 
     @Override

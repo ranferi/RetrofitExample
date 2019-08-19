@@ -93,7 +93,7 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
             mAddressTextView.setText(mPlace.getDireccion());
             mSolvedImageView.setVisibility(View.VISIBLE);
             if (userPlaces != null) {
-                visited.setChecked(userPlaces.isGusto());
+                visited.setChecked(true);
                 liked.setChecked(userPlaces.isGusto());
             }
             similarity.setText("Similitud : " + mPlace.getSimilitud());

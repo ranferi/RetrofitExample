@@ -92,7 +92,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
             mAddressTextView.setText(mPlace.getDireccion());
             mSolvedImageView.setVisibility(View.VISIBLE);
             if (userPlaces != null) {
-                visited.setChecked(userPlaces.isGusto());
+                visited.setChecked(true);
                 liked.setChecked(userPlaces.isGusto());
             }
             visited.setClickable(false);
