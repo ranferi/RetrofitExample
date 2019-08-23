@@ -98,21 +98,25 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 //TODO: me muestra java.lang.NullPointerException: Attempt to invoke virtual method
                 // 'java.lang.Boolean com.ranferi.ssrsi.model.UserResponse.getError()' on a null object reference
                 // cuando no hay usuario
+                if (response.body() != null) {
+                    if (!response.body().getError()) {
+                        UserResponse userResponse = response.body();
+                        // Log.d("ActividadPT", "en call.enqueue, onResponse: " + new GsonBuilder().setPrettyPrinting().create().toJson(response.body().toString()));
+                        finish();
+                        // Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
+                        Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.d("ActividadPT", "en call.enqueue, onResponse: " + userResponse.getUser().getEmail() + " " + userResponse.getUser().getUser());
 
-                if (!response.body().getError()) {
-                    UserResponse userResponse = response.body();
-                    Log.d("ActividadPT", "en call.enqueue, onResponse: " + new GsonBuilder().setPrettyPrinting().create().toJson(response));
-                    finish();
-                    // Log.d("ActividadPT", "Estás signinactivity onResponse, response: " + password );
-                    Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.d("ActividadPT", "en call.enqueue, onResponse: " + userResponse.getUser().getEmail() + " " + userResponse.getUser().getUser());
-
-                    SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
-                    SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);
-                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
+                        SharedPrefManager.getInstance(getApplicationContext()).setPassword(password);
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Email o password inválidos", Toast.LENGTH_LONG).show();
+                    }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Email o password inválidos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Problema con la conexión", Toast.LENGTH_LONG).show();
                 }
+
             }
 
             @Override
