@@ -1,0 +1,304 @@
+@startuml
+
+title __MODEL's Class Diagram__\n
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Calificacione {
+          - calificacion : String
+          - calificacionesSitio : RealmResults<Place>
+          - id : int
+          - proviene : String
+          + Calificacione()
+          + Calificacione()
+          + getCalificacion()
+          + getProviene()
+          + setCalificacion()
+          + setProviene()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Categoria {
+          - categoria : String
+          - categoriasSitio : RealmResults<Place>
+          - proviene : String
+          + Categoria()
+          + Categoria()
+          + getCategoria()
+          + getProviene()
+          + setCategoria()
+          + setProviene()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Comentario {
+          - comentario : String
+          - comentariosSitio : RealmResults<Place>
+          - comentariosUsuario : RealmResults<UserPlace>
+          - id : int
+          - proviene : String
+          + Comentario()
+          + Comentario()
+          + Comentario()
+          + getComentario()
+          + getId()
+          + getProviene()
+          + getUser()
+          + setComentario()
+          + setId()
+          + setProviene()
+          + setUser()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Imagene {
+          - imagen : String
+          - imagenesSitio : RealmResults<Place>
+          + Imagene()
+          + Imagene()
+          + getImagen()
+          + setImagen()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Nombre {
+          - nombreSitio : String
+          - nombresSitio : RealmResults<Place>
+          - proviene : String
+          + Nombre()
+          + Nombre()
+          + getNombreSitio()
+          + getProviene()
+          + setNombreSitio()
+          + setProviene()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Place {
+          - categorias : RealmList<Categoria>
+          - comentarios : RealmList<Comentario>
+          - direccion : String
+          - id : int
+          - latitud : String
+          - longitud : String
+          - mCalificaciones : RealmList<Calificacione>
+          - mImagenes : RealmList<Imagene>
+          - mNombres : RealmList<Nombre>
+          - medi : String
+          - musica : boolean
+          - similitud : int
+          - total : double
+          - visitaron : RealmResults<UserPlace>
+          + Place()
+          + Place()
+          + getCalificaciones()
+          + getCategorias()
+          + getComentarios()
+          + getDireccion()
+          + getId()
+          + getImagenes()
+          + getLatitud()
+          + getLongitud()
+          + getMedi()
+          + getNombres()
+          + getSimilitud()
+          + getTotal()
+          + isMusica()
+          + setCalificaciones()
+          + setCategorias()
+          + setComentarios()
+          + setDireccion()
+          + setId()
+          + setImagenes()
+          + setLatitud()
+          + setLongitud()
+          + setMedi()
+          + setMusica()
+          + setNombres()
+          + setSimilitud()
+          + setTotal()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Places {
+          - mPlaces : RealmList<Place>
+          + Places()
+          + Places()
+          + getPlaces()
+          + setPlaces()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.PlacesResponse {
+          - error : Boolean
+          - mPlaces : RealmList<Place>
+          - message : String
+          + PlacesResponse()
+          + PlacesResponse()
+          + getError()
+          + getMessage()
+          + getPlaces()
+          + setError()
+          + setMessage()
+          + setPlaces()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.RealmListParcelConverter {
+          {static} - NULL : int
+          + fromParcel()
+          + toParcel()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.User {
+          - email : String
+          - id : int
+          - lastName : String
+          - mothersMaidenName : String
+          - name : String
+          - password : String
+          - user : String
+          - visito : RealmList<UserPlace>
+          + User()
+          + User()
+          + User()
+          + User()
+          + User()
+          + User()
+          + User()
+          + User()
+          + getEmail()
+          + getId()
+          + getLastName()
+          + getMothersMaidenName()
+          + getName()
+          + getPassword()
+          + getUser()
+          + getVisito()
+          + setEmail()
+          + setId()
+          + setLastName()
+          + setMothersMaidenName()
+          + setName()
+          + setPassword()
+          + setUser()
+          + setVisito()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.UserPlace {
+          - gusto : boolean
+          - id : int
+          - precio : String
+          - sitio : RealmList<Place>
+          - sitioSrc : String
+          - visitantes : RealmResults<User>
+          + UserPlace()
+          + UserPlace()
+          + getComentarioUsuario()
+          + getId()
+          + getPrecio()
+          + getSitio()
+          + getSitioSrc()
+          + isGusto()
+          + setComentarioUsuario()
+          + setGusto()
+          + setId()
+          + setPrecio()
+          + setSitio()
+          + setSitioSrc()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.UserResponse {
+          - error : Boolean
+          - message : String
+          + UserResponse()
+          + getError()
+          + getMessage()
+          + getUser()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Users {
+          - users : RealmList<User>
+          + Users()
+          + getUsers()
+          + setUsers()
+      }
+    }
+  }
+  
+
+  com.ranferi.ssrsi.model.Calificacione -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Categoria -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Comentario -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Comentario o-- com.ranferi.ssrsi.model.User : user
+  com.ranferi.ssrsi.model.Imagene -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Nombre -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Place -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.PlacesResponse -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.RealmListParcelConverter .up.|> org.parceler.TypeRangeParcelConverter
+  com.ranferi.ssrsi.model.User -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.UserPlace -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.UserPlace o-- com.ranferi.ssrsi.model.Comentario : comentarioUsuario
+  com.ranferi.ssrsi.model.UserResponse o-- com.ranferi.ssrsi.model.User : user
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -1,0 +1,105 @@
+@startuml
+
+
+  namespace com.ranferi.ssrsi {
+    namespace activities {
+      class com.ranferi.ssrsi.activities.HomeActivity {
+/'          {static} + CURRENT_TAG : String
+          {static} + navItemIndex : int
+          ~ navigationView : NavigationView
+          {static} - TAG_HOME : String
+          {static} - TAG_PLACES : String
+          {static} - TAG_PROFILE : String
+          {static} - TAG_SEARCH : String
+          {static} - TAG_VISITED : String
+          - activityTitles : String[]
+          - drawer : DrawerLayout
+          - toolbar : Toolbar
+          + onBackPressed()
+          + onNavigationItemSelected()
+          # onCreate()
+          - getFragment()
+          - loadFragment()
+          - logout()
+          - setToolbarTitle()
+          - setUpNavigationView()'/
+      }
+    }
+  }
+  
+
+/'  namespace com.ranferi.ssrsi {
+    namespace activities {
+      class com.ranferi.ssrsi.activities.HomeActivity.SmoothActionBarDrawerToggle {
+          - runnable : Runnable
+          + onDrawerClosed()
+          + onDrawerOpened()
+          + onDrawerStateChanged()
+          ~ SmoothActionBarDrawerToggle()
+          ~ runWhenIdle()
+      }
+    }
+  }'/
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace activities {
+      class com.ranferi.ssrsi.activities.PlacePagerActivity {
+          {static} - EXTRA_PLACE_ID : String
+          - realm : Realm
+          {static} + newIntent()
+          # onCreate()
+          # onDestroy()
+      }
+    }
+  }
+  
+
+/'  namespace com.ranferi.ssrsi {
+    namespace activities {
+      class com.ranferi.ssrsi.activities.SignInActivity {
+          - mButtonSignIn : Button
+          - mEditTextEmail : EditText
+          - mEditTextPassword : EditText
+          + onClick()
+          # onCreate()
+          - userSignIn()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace activities {
+      class com.ranferi.ssrsi.activities.SignUpActivity {
+          - mButtonSignUp : Button
+          - mEditTextEmail : EditText
+          - mEditTextLastName : EditText
+          - mEditTextMaidenName : EditText
+          - mEditTextName : EditText
+          - mEditTextPassword : EditText
+          - mEditTextUser : EditText
+          - mReEnterPasswordText : EditText
+          + onClick()
+          + onSignupFailed()
+          + validate()
+          # onCreate()
+          - userSignUp()
+      }
+    }
+  }'/
+  
+
+  com.ranferi.ssrsi.activities.HomeActivity .up.|> android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
+  com.ranferi.ssrsi.activities.HomeActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.ranferi.ssrsi.activities.HomeActivity +-down- com.ranferi.ssrsi.activities.HomeActivity.SmoothActionBarDrawerToggle
+  /'com.ranferi.ssrsi.activities.HomeActivity.SmoothActionBarDrawerToggle -up-|> android.support.v7.app.ActionBarDrawerToggle'/
+  com.ranferi.ssrsi.activities.PlacePagerActivity -up-|> android.support.v7.app.AppCompatActivity
+/'  com.ranferi.ssrsi.activities.SignInActivity .up.|> android.view.View.OnClickListener
+  com.ranferi.ssrsi.activities.SignInActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.ranferi.ssrsi.activities.SignUpActivity .up.|> android.view.View.OnClickListener
+  com.ranferi.ssrsi.activities.SignUpActivity -up-|> android.support.v7.app.AppCompatActivity'/
+
+
+
+@enduml

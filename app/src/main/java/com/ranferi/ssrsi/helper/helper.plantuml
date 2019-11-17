@@ -1,0 +1,151 @@
+@startuml
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.PlaceVisitedAdapter {
+          - id : int
+          - mPlaces : List<Place>
+          - sContext : Context
+          + PlaceVisitedAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder {
+          - liked : CheckBox
+          - mAddressTextView : TextView
+          - mNameTextView : TextView
+          - mSolvedImageView : ImageView
+          - realm : Realm
+          - similarity : TextView
+          - visited : CheckBox
+          + onClick()
+          ~ PlaceHolder()
+          ~ bind()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.PlacesAdapter {
+          - mPlaces : List<Place>
+          - sContext : Context
+          + PlacesAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.PlacesAdapter.PlacesHolder {
+          - mAddressTextView : TextView
+          - mNameTextView : TextView
+          - mSolvedImageView : ImageView
+          + PlacesHolder()
+          + bind()
+          + onClick()
+      }
+    }
+  }
+  
+
+ /' namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.SharedPrefManager {
+          {static} - KEY_USER_EMAIL : String
+          {static} - KEY_USER_ID : String
+          {static} - KEY_USER_LAST_NAME : String
+          {static} - KEY_USER_MAIDEN_NAME : String
+          {static} - KEY_USER_NAME : String
+          {static} - KEY_USER_USER : String
+          {static} - PASS_TAG : String
+          {static} - PREF_NAME : String
+          {static} - SHARED_PREF_NAME : String
+          {static} - instance : SharedPrefManager
+          {static} - sContext : Context
+          {static} + getInstance()
+          + getUser()
+          + getpassword()
+          + isLoggedIn()
+          + logout()
+          + setPassword()
+          + userLogin()
+          - SharedPrefManager()
+      }
+    }
+  }
+  '/
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.UserAdapter {
+          - sContext : Context
+          - users : List<User>
+          + UserAdapter()
+          + getItemCount()
+          + onBindViewHolder()
+          + onCreateViewHolder()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.UserAdapter.ViewHolder {
+          + imageButtonMessage : ImageButton
+          + textViewName : TextView
+          + ViewHolder()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
+      class com.ranferi.ssrsi.helper.ViewPagerAdapter {
+          - context : Context
+          - images : Integer[]
+          - mImagenes : List<Imagene>
+          - mLayoutInflater : LayoutInflater
+          + ViewPagerAdapter()
+          + destroyItem()
+          + getCount()
+          + instantiateItem()
+          + isViewFromObject()
+      }
+    }
+  }
+  
+
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter +-down- com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder .up.|> android.view.View.OnClickListener
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder -up-|> android.support.v7.widget.RecyclerView.ViewHolder
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder o-- com.ranferi.ssrsi.model.UserPlace : userPlaces
+  com.ranferi.ssrsi.helper.PlaceVisitedAdapter.PlaceHolder o-- com.ranferi.ssrsi.model.Place : mPlace
+  com.ranferi.ssrsi.helper.PlacesAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
+  com.ranferi.ssrsi.helper.PlacesAdapter +-down- com.ranferi.ssrsi.helper.PlacesAdapter.PlacesHolder
+  com.ranferi.ssrsi.helper.PlacesAdapter.PlacesHolder .up.|> android.view.View.OnClickListener
+  com.ranferi.ssrsi.helper.PlacesAdapter.PlacesHolder -up-|> android.support.v7.widget.RecyclerView.ViewHolder
+  com.ranferi.ssrsi.helper.PlacesAdapter.PlacesHolder o-- com.ranferi.ssrsi.model.Place : mPlace
+  com.ranferi.ssrsi.helper.UserAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
+  com.ranferi.ssrsi.helper.UserAdapter +-down- com.ranferi.ssrsi.helper.UserAdapter.ViewHolder
+  com.ranferi.ssrsi.helper.UserAdapter.ViewHolder -up-|> android.support.v7.widget.RecyclerView.ViewHolder
+  com.ranferi.ssrsi.helper.ViewPagerAdapter -up-|> android.support.v4.view.PagerAdapter
+
+
+
+@enduml

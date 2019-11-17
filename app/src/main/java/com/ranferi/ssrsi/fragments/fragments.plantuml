@@ -1,0 +1,159 @@
+@startuml
+
+/'  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.HomeFragment {
+          {static} - LOG_TAG : String
+          - adapter : Adapter
+          - mProgressBar : ProgressBar
+          - mUsers : List<User>
+          + HomeFragment()
+          + onAttach()
+          + onCreateView()
+          + onViewCreated()
+          - fetchUsers()
+          - setupRecyclerView()
+      }
+    }
+  }
+  '/
+
+  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.PlaceFragment {
+          ~ mMapView : MapView
+          {static} - ARG_PLACE_ID : String
+          - bottomMargin : int
+          - googleMap : GoogleMap
+          - idUser : int
+          - layout : ConstraintLayout
+          - realm : Realm
+          - set : ConstraintSet
+          - sideMargin : int
+          - topMargin : int
+          + PlaceFragment()
+          + addTextViewsToCollection()
+          + buildStringWithIcon()
+          + buildStringWithUser()
+          + cleanCategoriesCollection()
+          + generateId()
+          + getIconResource()
+          + getUser()
+          {static} + newInstance()
+          + onCreateView()
+          + onDestroy()
+          + onDestroyView()
+          + onLowMemory()
+          + onPause()
+          + onResume()
+          + removeDuplicates()
+          + setConstraintsViews()
+          + showToastMsg()
+          + sizeOfText()
+          - getDBForIcon()
+          - sendOpinion()
+          - setTextForView()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.PlaceListFragment {
+          - mAdapter : Adapter
+          - mPlaceRecyclerView : RecyclerView
+          - realm : Realm
+          + PlaceListFragment()
+          + onCreateView()
+          + onDestroyView()
+          + onViewCreated()
+      }
+    }
+  }
+  
+
+  /'namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.ProfileFragment {
+          - buttonUpdate : Button
+          - mEditTextEmail : TextInputEditText
+          - mEditTextLastName : TextInputEditText
+          - mEditTextMaidenName : TextInputEditText
+          - mEditTextName : TextInputEditText
+          - mEditTextPassword : TextInputEditText
+          - mEditTextRePassword : TextInputEditText
+          - mEditTextUser : TextInputEditText
+          + ProfileFragment()
+          + editFailed()
+          + onClick()
+          + onCreateView()
+          + onViewCreated()
+          + validate()
+          ~ toStringACharSequence()
+          - updateUser()
+      }
+    }
+  }'/
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.SearchFragment {
+          - editText : AutoCompleteTextView
+          - mCheckedTextView : CheckedTextView
+          - realm : Realm
+          - user : int
+          + SearchFragment()
+          + onAttach()
+          + onCreate()
+          + onCreateView()
+          + onDetach()
+          + onViewCreated()
+          + showToastMsg()
+          - sendSearch()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.SearchListFragment {
+          + SearchListFragment()
+          + onCreateView()
+          + onViewCreated()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace fragments {
+      class com.ranferi.ssrsi.fragments.VisitedFragment {
+          - mAdapter : Adapter
+          - mPlaceRecyclerView : RecyclerView
+          - realm : Realm
+          + VisitedFragment()
+          + onCreateView()
+          + onDestroyView()
+          + onViewCreated()
+      }
+    }
+  }
+  
+
+  /'com.ranferi.ssrsi.fragments.HomeFragment -up-|> android.support.v4.app.Fragment
+  com.ranferi.ssrsi.fragments.HomeFragment o-- com.ranferi.ssrsi.activities.HomeActivity : mActivity'/
+  com.ranferi.ssrsi.fragments.PlaceFragment -up-|> android.support.v4.app.Fragment
+  com.ranferi.ssrsi.fragments.PlaceListFragment -up-|> android.support.v4.app.Fragment
+  /'com.ranferi.ssrsi.fragments.ProfileFragment .up.|> android.view.View.OnClickListener
+  com.ranferi.ssrsi.fragments.ProfileFragment -up-|> android.support.v4.app.Fragment
+  '/com.ranferi.ssrsi.fragments.SearchFragment -up-|> android.support.v4.app.Fragment
+
+  com.ranferi.ssrsi.fragments.SearchListFragment -up-|> android.support.v4.app.Fragment
+  com.ranferi.ssrsi.fragments.SearchListFragment o-- com.ranferi.ssrsi.model.PlacesResponse : mPlacesResponse
+  com.ranferi.ssrsi.fragments.VisitedFragment -up-|> android.support.v4.app.Fragment
+
+
+@enduml

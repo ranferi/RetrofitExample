@@ -1,0 +1,29 @@
+@startuml
+
+  namespace com.ranferi.ssrsi {
+    namespace api {
+      interface com.ranferi.ssrsi.api.APIService {
+          {abstract} + createUser()
+          {abstract} + getPlaces()
+          {abstract} + getUsers()
+          {abstract} + getVisited()
+          {abstract} + searchPlaces()
+          {abstract} + updateUser()
+          {abstract} + updateUserPlace()
+          {abstract} + userLogin()
+      }
+    }
+  }
+
+  namespace com.ranferi.ssrsi {
+    namespace api {
+      class com.ranferi.ssrsi.api.APIUrl {
+          {static} + BASE_URL : String
+          {static} + latitud : double
+          {static} + longitud : double
+          {static} + serverKey : String
+      }
+    }
+  }
+
+@enduml

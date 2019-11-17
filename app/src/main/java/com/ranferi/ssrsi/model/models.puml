@@ -1,0 +1,39 @@
+@startuml
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.User {
+          - email : String
+          - id : int
+          - lastName : String
+          - mothersMaidenName : String
+          - name : String
+          - password : String
+          - user : String
+          - visito : RealmList<UserPlace>
+          + User()
+          + getEmail()
+          + getId()
+          + getLastName()
+          + getMothersMaidenName()
+          + getName()
+          + getPassword()
+          + getUser()
+          + getVisito()
+          + setEmail()
+          + setId()
+          + setLastName()
+          + setMothersMaidenName()
+          + setName()
+          + setPassword()
+          + setUser()
+          + setVisito()
+      }
+    }
+  }
+
+  com.ranferi.ssrsi.model.User -left-|> io.realm.RealmObject
+
+
+
+@enduml
