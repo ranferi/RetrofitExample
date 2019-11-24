@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -31,7 +30,6 @@ import com.ranferi.ssrsi.model.PlacesResponse;
 import com.ranferi.ssrsi.model.Types;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
-import com.ranferi.ssrsi.model.UserResponse;
 import com.ranferi.ssrsi.model.Users;
 
 import org.parceler.Parcels;
@@ -39,11 +37,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -60,9 +56,13 @@ import static com.ranferi.ssrsi.api.APIUrl.longitud;
 public class SearchFragment extends Fragment {
 
     private CheckedTextView mCheckedTextView;
-    private AutoCompleteTextView editText;
     private Realm realm;
     private int user;
+
+    private Spinner mSpinnerPrice;
+    private Spinner mSpinnerCats;
+    private Spinner mSpinnerDistance;
+    private Button mSearchButton;
 
 
     public SearchFragment() {
@@ -112,8 +112,10 @@ public class SearchFragment extends Fragment {
 
         // String[] places = getResources().getStringArray(R.array.places_type);
         // List<String> placesList = new ArrayList<>(Arrays.asList(places));
-        Spinner spinnerCats = view.findViewById(R.id.typePlaceAutoComplete);
-        final ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(getActivity(),
+
+        mSpinnerCats = view.findViewById(R.id.typePlaceAutoComplete);
+
+        final ArrayAdapter<String> stringArrayCatsAdapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, Types.strCatsNames) {
             @Override
             public boolean isEnabled (int position) {
@@ -129,12 +131,13 @@ public class SearchFragment extends Fragment {
                 return view;
             }
         };
-        spinnerArrayAdapter1.setDropDownViewResource(R.layout.spinner_item);
-        spinnerCats.setAdapter(spinnerArrayAdapter1);
+        stringArrayCatsAdapter.setDropDownViewResource(R.layout.spinner_item);
+        mSpinnerCats.setAdapter(stringArrayCatsAdapter);
 
         String[] price = getResources().getStringArray(R.array.price);
         List<String> priceList = new ArrayList<>(Arrays.asList(price));
-        Spinner spinnerPrice = view.findViewById(R.id.priceAutoComplete);
+
+        mSpinnerPrice = view.findViewById(R.id.priceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter2 = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, priceList) {
             @Override
@@ -152,11 +155,12 @@ public class SearchFragment extends Fragment {
             }
         };
         spinnerArrayAdapter2.setDropDownViewResource(R.layout.spinner_item);
-        spinnerPrice.setAdapter(spinnerArrayAdapter2);
+        mSpinnerPrice.setAdapter(spinnerArrayAdapter2);
 
         String[] distance = getResources().getStringArray(R.array.distance);
         List<String> distanceList = new ArrayList<>(Arrays.asList(distance));
-        Spinner spinnerDistance = view.findViewById(R.id.distanceAutoComplete);
+
+        mSpinnerDistance = view.findViewById(R.id.distanceAutoComplete);
         final ArrayAdapter<String> spinnerArrayAdapter3 = new ArrayAdapter<String>(getActivity(),
                 R.layout.spinner_item, distanceList) {
             @Override
@@ -174,7 +178,7 @@ public class SearchFragment extends Fragment {
             }
         };
         spinnerArrayAdapter3.setDropDownViewResource(R.layout.spinner_item);
-        spinnerDistance.setAdapter(spinnerArrayAdapter3);
+        mSpinnerDistance.setAdapter(spinnerArrayAdapter3);
 
         mCheckedTextView = view.findViewById(R.id.checkedTextView);
         mCheckedTextView.setOnClickListener(view1 -> {
@@ -187,11 +191,11 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        Button searchButton = view.findViewById(R.id.button2);
-        searchButton.setOnClickListener(v -> {
-            String cat = Types.strCatsCodes[spinnerCats.getSelectedItemPosition()];
-            String prices = spinnerPrice.getSelectedItem().toString();
-            String dist = spinnerDistance.getSelectedItem().toString();
+        mSearchButton = view.findViewById(R.id.button2);
+        mSearchButton.setOnClickListener(v -> {
+            String cat = Types.strCatsCodes[mSpinnerCats.getSelectedItemPosition()];
+            String prices = mSpinnerPrice.getSelectedItem().toString();
+            String dist = mSpinnerDistance.getSelectedItem().toString();
             boolean music = mCheckedTextView.isChecked();
             showToastMsg("Categoría: " + cat + " precio: " + prices + " distancia: " + dist + " música: " + music + " latitud: " + latitud + " longitud: " + longitud);
             sendSearch(getActivity(), cat, prices, dist, music, latitud, longitud);
@@ -204,6 +208,12 @@ public class SearchFragment extends Fragment {
     }
 
     private void sendSearch(Context context, String typePlace, String price, String distance, boolean music, double latitud, double longitud) {
+
+        if (!validate()) {
+            onValidationFailed();
+            return;
+        }
+
         final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Buscando...");
         progressDialog.show();
@@ -301,6 +311,27 @@ public class SearchFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+
+    }
+
+    public boolean validate() {
+        boolean valid = true;
+
+        if(mSpinnerCats == null && mSpinnerCats.getSelectedItem() == null ) {
+            valid = false;
+            Log.d("ActividadPT", "s:" + mSpinnerCats.getSelectedItem());
+        } else if (mSpinnerDistance == null && mSpinnerDistance.getSelectedItem() == null) {
+            valid = false;
+            Log.d("ActividadPT", "s:" + mSpinnerDistance.getSelectedItem());
+        } else if (mSpinnerPrice == null && mSpinnerPrice.getSelectedItem() == null) {
+            valid = false;
+            Log.d("ActividadPT", "s:" + mSpinnerPrice.getSelectedItem());
+        }
+        return valid;
+    }
+
+    public void onValidationFailed() {
+        showToastMsg("Faltan campos");
 
     }
 }
