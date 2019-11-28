@@ -260,7 +260,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onResponse(@NonNull Call<PlacesResponse> call, @NonNull Response<PlacesResponse> response) {
                 progressDialog.dismiss();
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().getError()) {
                     RealmList<Place> places = response.body().getPlaces();
 
                     for (Place visitedPlace : places) {
@@ -278,7 +278,7 @@ public class SearchFragment extends Fragment {
                                 }
                             }
                         }
-                    }
+                    } 
 
                     SearchListFragment fragment = new SearchListFragment();
                     Bundle args = new Bundle();
