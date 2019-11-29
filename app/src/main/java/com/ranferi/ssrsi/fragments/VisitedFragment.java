@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+// import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,20 +50,21 @@ public class VisitedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("ActividadPT", "------------ VisitedFragment --- ");
+        // Log.d("ActividadPT", "------------ VisitedFragment --- ");
 
         if (getActivity() != null) getActivity().setTitle("Visitados");
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
         realm = Realm.getDefaultInstance();
+
+
         /*realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm bgRealm) {
                 bgRealm.deleteAll();
             }
         });*/
-
         /*UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
         Log.d("ActividadPT", String.valueOf(user));
         Log.d("ActividadPT", String.valueOf(userPlaces));*/
@@ -89,11 +90,11 @@ public class VisitedFragment extends Fragment {
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
 
-                    for (UserPlace vis : visitados) {
+                   /* for (UserPlace vis : visitados) {
                         Log.d("ActividadPT", String.valueOf(vis.getId()));
-                    }
+                    }*/
 
-                    Log.d("ActividadPT", String.valueOf(users));
+                    //Log.d("ActividadPT", String.valueOf(users));
                     /*Iterator<UserPlace> visited = visitados.iterator();
                     while (visited.hasNext()) {
                         UserPlace userPlace = visited.next();
@@ -102,7 +103,7 @@ public class VisitedFragment extends Fragment {
                     if (!visitados.isEmpty()) {
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                     } else {
-                        Log.d("ActividadPT", "VisitedFragmentFragment: List<> empty ");
+                        // Log.d("ActividadPT", "VisitedFragmentFragment: List<> empty ");
                     }
                     RealmQuery<Place> query = realm.where(Place.class).equalTo("visitaron.visitantes.id", user);
                     List<Place> places = query.findAll();
@@ -111,13 +112,13 @@ public class VisitedFragment extends Fragment {
                     mPlaceRecyclerView.setAdapter(mAdapter);
                 } else {
                     int statusCode = response.code();
-                    Log.d("ActividadPT", "VisitedFragment onResponse(): Error code = " + statusCode);
+                    // Log.d("ActividadPT", "VisitedFragment onResponse(): Error code = " + statusCode);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
-                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+                // Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
         });
     }

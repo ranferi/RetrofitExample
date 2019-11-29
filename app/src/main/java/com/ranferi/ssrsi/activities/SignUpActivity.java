@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+// import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -122,7 +122,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     // se envia un mensaje de respuesta en un toast
                     if (userResponse != null) {
                         Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.d("ActividadTT", "en call.enqueue, onResponse: " + userResponse.getMessage());
+                        //Log.d("ActividadTT", "en call.enqueue, onResponse: " + userResponse.getMessage());
                         // si no hay error
                         if (!userResponse.getError()) {
                             // inicia la actividad 'Home'
@@ -133,9 +133,9 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 } else {
-                    ResponseBody errorBody = response.errorBody();
-                    if (errorBody != null)
-                        Log.d("ActividadTT", "en SignUpActivity, call.enqueue, onResponse not successful, error: " + errorBody.toString());
+                    // ResponseBody errorBody = response.errorBody();
+                    //if (errorBody != null)
+                        //Log.d("ActividadTT", "en SignUpActivity, call.enqueue, onResponse not successful, error: " + errorBody.toString());
                 }
                 mButtonSignUp.setEnabled(true);
             }
@@ -144,7 +144,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("ActividadTT", "en SignUpActivity call.enqueue, onFailure message: " + t.getMessage());
+                //Log.d("ActividadTT", "en SignUpActivity call.enqueue, onFailure message: " + t.getMessage());
             }
         });
 

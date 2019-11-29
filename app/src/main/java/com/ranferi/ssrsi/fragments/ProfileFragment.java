@@ -6,7 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+// import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
-        Log.d("ActividadPT", "Estás en onViewCreated " + " user: " + user.getUser()+ ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
+        // Log.d("ActividadPT", "Estás en onViewCreated " + " user: " + user.getUser()+ ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
         buttonUpdate = view.findViewById(R.id.buttonUpdate);
         mEditTextName = view.findViewById(R.id.editTextNameProfile);

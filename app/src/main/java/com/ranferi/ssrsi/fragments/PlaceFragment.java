@@ -17,7 +17,7 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-import android.util.Log;
+// import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,7 +176,7 @@ public class PlaceFragment extends Fragment {
             }
         }
 
-        Log.d("ActividadPT", csvBuilder.toString());
+        // Log.d("ActividadPT", csvBuilder.toString());
 
         String csv = csvBuilder.toString();
         csv = csv.substring(0, csv.length() - SEPARATOR.length());
@@ -258,7 +258,7 @@ public class PlaceFragment extends Fragment {
         EditText editTextComment = v.findViewById(R.id.editTextComment);
 
         if (userPlaces != null) {
-            Log.d("ActividadPT", String.valueOf(spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3))) + " " + userPlaces.getPrecio().substring(3));
+            // Log.d("ActividadPT", String.valueOf(spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3))) + " " + userPlaces.getPrecio().substring(3));
             int i = spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3));
             spinner.post(() -> spinner.setSelection(i, true));
             editTextComment.setText(userPlaces.getComentarioUsuario().getComentario());

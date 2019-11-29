@@ -2,7 +2,7 @@ package com.ranferi.ssrsi.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+// import android.util.Log;
 
 import com.ranferi.ssrsi.model.User;
 
@@ -35,7 +35,7 @@ public class SharedPrefManager {
 
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        Log.d("ActividadPT", "Estás en userLogin, SharedPrefManager " + " user: " + user.getUser() + " " + user.getName());
+        // Log.d("ActividadPT", "Estás en userLogin, SharedPrefManager " + " user: " + user.getUser() + " " + user.getName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_NAME, user.getName());

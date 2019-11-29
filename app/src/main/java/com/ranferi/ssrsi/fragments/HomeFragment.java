@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+// import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,12 +91,12 @@ public class HomeFragment extends Fragment {
                         mUsers.clear();
                         mUsers.addAll(users);
                     } else {
-                        Log.d("ActividadPT","Users null");
+                        // Log.d("ActividadPT","Users null");
                     }
                     adapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
-                    Log.d(LOG_TAG, "onResponse(): Error code = " + statusCode);
+                    //Log.d(LOG_TAG, "onResponse(): Error code = " + statusCode);
                 }
                 mProgressBar.setVisibility(View.GONE);
             }

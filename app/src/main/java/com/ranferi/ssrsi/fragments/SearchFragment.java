@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +84,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
+        // Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
         /*RealmConfiguration config2 = new RealmConfiguration.Builder()
                 .name("ssrsi.realm")
                 .deleteRealmIfMigrationNeeded()
@@ -246,12 +246,12 @@ public class SearchFragment extends Fragment {
                     if (!visitados.isEmpty())
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                 } else {
-                    Log.d("ActividadPT", "SearchFragment onResponse(): Error code = " + response.code());
+                    //Log.d("ActividadPT", "SearchFragment onResponse(): Error code = " + response.code());
                 }
             }
             @Override
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
-                Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+                //Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
             }
         });
 
@@ -290,14 +290,15 @@ public class SearchFragment extends Fragment {
 
                     Toast.makeText(context, "Espera un momento", Toast.LENGTH_LONG).show();
                 } else {
-                    Toast.makeText(context, "Hubo un problema intenta de nuevo", Toast.LENGTH_LONG).show();
+                    if (response.body() != null) Toast.makeText(context, response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    else Toast.makeText(context, "Hubo un problema, intenta de nuevo", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PlacesResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
-                Log.d("ActividadPT", t.getMessage());
+                // Log.d("ActividadPT", t.getMessage());
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
@@ -319,13 +320,13 @@ public class SearchFragment extends Fragment {
 
         if(mSpinnerCats == null && mSpinnerCats.getSelectedItem() == null ) {
             valid = false;
-            Log.d("ActividadPT", "s:" + mSpinnerCats.getSelectedItem());
+            //Log.d("ActividadPT", "s:" + mSpinnerCats.getSelectedItem());
         } else if (mSpinnerDistance == null && mSpinnerDistance.getSelectedItem() == null) {
             valid = false;
-            Log.d("ActividadPT", "s:" + mSpinnerDistance.getSelectedItem());
+            //Log.d("ActividadPT", "s:" + mSpinnerDistance.getSelectedItem());
         } else if (mSpinnerPrice == null && mSpinnerPrice.getSelectedItem() == null) {
             valid = false;
-            Log.d("ActividadPT", "s:" + mSpinnerPrice.getSelectedItem());
+            // Log.d("ActividadPT", "s:" + mSpinnerPrice.getSelectedItem());
         }
         return valid;
     }
