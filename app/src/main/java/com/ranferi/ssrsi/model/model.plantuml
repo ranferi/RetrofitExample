@@ -4,30 +4,12 @@ title __MODEL's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Calificacione {
-          - calificacion : String
-          - calificacionesSitio : RealmResults<Place>
-          - id : int
-          - proviene : String
-          + Calificacione()
-          + Calificacione()
-          + getCalificacion()
-          + getProviene()
-          + setCalificacion()
-          + setProviene()
-      }
-    }
-  }
-  
-
-  namespace com.ranferi.ssrsi {
-    namespace model {
-      class com.ranferi.ssrsi.model.Categoria {
+      class com.ranferi.ssrsi.model.Category {
           - categoria : String
           - categoriasSitio : RealmResults<Place>
           - proviene : String
-          + Categoria()
-          + Categoria()
+          + Category()
+          + Category()
           + getCategoria()
           + getProviene()
           + setCategoria()
@@ -39,15 +21,15 @@ title __MODEL's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Comentario {
+      class com.ranferi.ssrsi.model.Comment {
           - comentario : String
           - comentariosSitio : RealmResults<Place>
           - comentariosUsuario : RealmResults<UserPlace>
           - id : int
           - proviene : String
-          + Comentario()
-          + Comentario()
-          + Comentario()
+          + Comment()
+          + Comment()
+          + Comment()
           + getComentario()
           + getId()
           + getProviene()
@@ -63,11 +45,11 @@ title __MODEL's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Imagene {
+      class com.ranferi.ssrsi.model.Image {
           - imagen : String
           - imagenesSitio : RealmResults<Place>
-          + Imagene()
-          + Imagene()
+          + Image()
+          + Image()
           + getImagen()
           + setImagen()
       }
@@ -77,12 +59,12 @@ title __MODEL's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Nombre {
+      class com.ranferi.ssrsi.model.Name {
           - nombreSitio : String
           - nombresSitio : RealmResults<Place>
           - proviene : String
-          + Nombre()
-          + Nombre()
+          + Name()
+          + Name()
           + getNombreSitio()
           + getProviene()
           + setNombreSitio()
@@ -95,15 +77,15 @@ title __MODEL's Class Diagram__\n
   namespace com.ranferi.ssrsi {
     namespace model {
       class com.ranferi.ssrsi.model.Place {
-          - categorias : RealmList<Categoria>
-          - comentarios : RealmList<Comentario>
+          - categorias : RealmList<Category>
+          - comentarios : RealmList<Comment>
           - direccion : String
           - id : int
           - latitud : String
           - longitud : String
-          - mCalificaciones : RealmList<Calificacione>
-          - mImagenes : RealmList<Imagene>
-          - mNombres : RealmList<Nombre>
+          - mCalificaciones : RealmList<Rating>
+          - mImagenes : RealmList<Image>
+          - mNombres : RealmList<Name>
           - medi : String
           - musica : boolean
           - similitud : int
@@ -176,10 +158,38 @@ title __MODEL's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
+      class com.ranferi.ssrsi.model.Rating {
+          - calificacion : String
+          - calificacionesSitio : RealmResults<Place>
+          - id : int
+          - proviene : String
+          + Rating()
+          + Rating()
+          + getCalificacion()
+          + getProviene()
+          + setCalificacion()
+          + setProviene()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
       class com.ranferi.ssrsi.model.RealmListParcelConverter {
           {static} - NULL : int
           + fromParcel()
           + toParcel()
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Types {
+          {static} + strCatsCodes : String[]
+          {static} + strCatsNames : String[]
       }
     }
   }
@@ -279,18 +289,18 @@ title __MODEL's Class Diagram__\n
   }
   
 
-  com.ranferi.ssrsi.model.Calificacione -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Categoria -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Comentario -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Comentario o-- com.ranferi.ssrsi.model.User : user
-  com.ranferi.ssrsi.model.Imagene -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Nombre -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Category -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Comment -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Comment o-- com.ranferi.ssrsi.model.User : user
+  com.ranferi.ssrsi.model.Image -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Name -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.Place -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.PlacesResponse -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Rating -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.RealmListParcelConverter .up.|> org.parceler.TypeRangeParcelConverter
   com.ranferi.ssrsi.model.User -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.UserPlace -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.UserPlace o-- com.ranferi.ssrsi.model.Comentario : comentarioUsuario
+  com.ranferi.ssrsi.model.UserPlace o-- com.ranferi.ssrsi.model.Comment : comentarioUsuario
   com.ranferi.ssrsi.model.UserResponse o-- com.ranferi.ssrsi.model.User : user
 
 

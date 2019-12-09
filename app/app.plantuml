@@ -130,6 +130,14 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace helper {
+      class com.ranferi.ssrsi.helper.PlacesListAdapter {
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace helper {
       class com.ranferi.ssrsi.helper.SharedPrefManager {
       }
     }
@@ -154,7 +162,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Calificacione {
+      class com.ranferi.ssrsi.model.Category {
       }
     }
   }
@@ -162,7 +170,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Calificacione$$Parcelable {
+      class com.ranferi.ssrsi.model.Category$$Parcelable {
       }
     }
   }
@@ -170,7 +178,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Categoria {
+      class com.ranferi.ssrsi.model.Comment {
       }
     }
   }
@@ -178,7 +186,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Categoria$$Parcelable {
+      class com.ranferi.ssrsi.model.Comment$$Parcelable {
       }
     }
   }
@@ -186,7 +194,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Comentario {
+      class com.ranferi.ssrsi.model.Image {
       }
     }
   }
@@ -194,7 +202,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Comentario$$Parcelable {
+      class com.ranferi.ssrsi.model.Image$$Parcelable {
       }
     }
   }
@@ -202,7 +210,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Imagene {
+      class com.ranferi.ssrsi.model.Name {
       }
     }
   }
@@ -210,23 +218,7 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
-      class com.ranferi.ssrsi.model.Imagene$$Parcelable {
-      }
-    }
-  }
-  
-
-  namespace com.ranferi.ssrsi {
-    namespace model {
-      class com.ranferi.ssrsi.model.Nombre {
-      }
-    }
-  }
-  
-
-  namespace com.ranferi.ssrsi {
-    namespace model {
-      class com.ranferi.ssrsi.model.Nombre$$Parcelable {
+      class com.ranferi.ssrsi.model.Name$$Parcelable {
       }
     }
   }
@@ -274,7 +266,31 @@ title __APP's Class Diagram__\n
 
   namespace com.ranferi.ssrsi {
     namespace model {
+      class com.ranferi.ssrsi.model.Rating {
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Rating$$Parcelable {
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
       class com.ranferi.ssrsi.model.RealmListParcelConverter {
+      }
+    }
+  }
+  
+
+  namespace com.ranferi.ssrsi {
+    namespace model {
+      class com.ranferi.ssrsi.model.Types {
       }
     }
   }
@@ -341,91 +357,73 @@ title __APP's Class Diagram__\n
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy {
+    class io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy$$Parcelable {
+    class io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy$$Parcelable {
     }
   }
   
 
   namespace io.realm {
-    interface io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxyInterface {
+    interface io.realm.com_ranferi_ssrsi_model_CategoryRealmProxyInterface {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy {
+    class io.realm.com_ranferi_ssrsi_model_CommentRealmProxy {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy$$Parcelable {
+    class io.realm.com_ranferi_ssrsi_model_CommentRealmProxy$$Parcelable {
     }
   }
   
 
   namespace io.realm {
-    interface io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxyInterface {
+    interface io.realm.com_ranferi_ssrsi_model_CommentRealmProxyInterface {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy {
+    class io.realm.com_ranferi_ssrsi_model_ImageRealmProxy {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy$$Parcelable {
+    class io.realm.com_ranferi_ssrsi_model_ImageRealmProxy$$Parcelable {
     }
   }
   
 
   namespace io.realm {
-    interface io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxyInterface {
+    interface io.realm.com_ranferi_ssrsi_model_ImageRealmProxyInterface {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy {
+    class io.realm.com_ranferi_ssrsi_model_NameRealmProxy {
     }
   }
   
 
   namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy$$Parcelable {
+    class io.realm.com_ranferi_ssrsi_model_NameRealmProxy$$Parcelable {
     }
   }
   
 
   namespace io.realm {
-    interface io.realm.com_ranferi_ssrsi_model_ImageneRealmProxyInterface {
-    }
-  }
-  
-
-  namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_NombreRealmProxy {
-    }
-  }
-  
-
-  namespace io.realm {
-    class io.realm.com_ranferi_ssrsi_model_NombreRealmProxy$$Parcelable {
-    }
-  }
-  
-
-  namespace io.realm {
-    interface io.realm.com_ranferi_ssrsi_model_NombreRealmProxyInterface {
+    interface io.realm.com_ranferi_ssrsi_model_NameRealmProxyInterface {
     }
   }
   
@@ -462,6 +460,24 @@ title __APP's Class Diagram__\n
 
   namespace io.realm {
     interface io.realm.com_ranferi_ssrsi_model_PlacesResponseRealmProxyInterface {
+    }
+  }
+  
+
+  namespace io.realm {
+    class io.realm.com_ranferi_ssrsi_model_RatingRealmProxy {
+    }
+  }
+  
+
+  namespace io.realm {
+    class io.realm.com_ranferi_ssrsi_model_RatingRealmProxy$$Parcelable {
+    }
+  }
+  
+
+  namespace io.realm {
+    interface io.realm.com_ranferi_ssrsi_model_RatingRealmProxyInterface {
     }
   }
   
@@ -521,29 +537,26 @@ title __APP's Class Diagram__\n
   com.ranferi.ssrsi.fragments.VisitedFragment -up-|> android.support.v4.app.Fragment
   com.ranferi.ssrsi.helper.PlaceVisitedAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
   com.ranferi.ssrsi.helper.PlacesAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
+  com.ranferi.ssrsi.helper.PlacesListAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
   com.ranferi.ssrsi.helper.UserAdapter -up-|> android.support.v7.widget.RecyclerView.Adapter
   com.ranferi.ssrsi.helper.ViewPagerAdapter -up-|> android.support.v4.view.PagerAdapter
-  com.ranferi.ssrsi.model.Calificacione -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Calificacione$$Parcelable .up.|> android.os.Parcelable
-  com.ranferi.ssrsi.model.Calificacione$$Parcelable .up.|> org.parceler.ParcelWrapper
-  com.ranferi.ssrsi.model.Calificacione$$Parcelable o-- com.ranferi.ssrsi.model.Calificacione : calificacione$$1
-  com.ranferi.ssrsi.model.Categoria -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Categoria$$Parcelable .up.|> android.os.Parcelable
-  com.ranferi.ssrsi.model.Categoria$$Parcelable .up.|> org.parceler.ParcelWrapper
-  com.ranferi.ssrsi.model.Categoria$$Parcelable o-- com.ranferi.ssrsi.model.Categoria : categoria$$1
-  com.ranferi.ssrsi.model.Comentario -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Comentario o-- com.ranferi.ssrsi.model.User : user
-  com.ranferi.ssrsi.model.Comentario$$Parcelable .up.|> android.os.Parcelable
-  com.ranferi.ssrsi.model.Comentario$$Parcelable .up.|> org.parceler.ParcelWrapper
-  com.ranferi.ssrsi.model.Comentario$$Parcelable o-- com.ranferi.ssrsi.model.Comentario : comentario$$1
-  com.ranferi.ssrsi.model.Imagene -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Imagene$$Parcelable .up.|> android.os.Parcelable
-  com.ranferi.ssrsi.model.Imagene$$Parcelable .up.|> org.parceler.ParcelWrapper
-  com.ranferi.ssrsi.model.Imagene$$Parcelable o-- com.ranferi.ssrsi.model.Imagene : imagene$$1
-  com.ranferi.ssrsi.model.Nombre -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.Nombre$$Parcelable .up.|> android.os.Parcelable
-  com.ranferi.ssrsi.model.Nombre$$Parcelable .up.|> org.parceler.ParcelWrapper
-  com.ranferi.ssrsi.model.Nombre$$Parcelable o-- com.ranferi.ssrsi.model.Nombre : nombre$$1
+  com.ranferi.ssrsi.model.Category -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Category$$Parcelable .up.|> android.os.Parcelable
+  com.ranferi.ssrsi.model.Category$$Parcelable .up.|> org.parceler.ParcelWrapper
+  com.ranferi.ssrsi.model.Category$$Parcelable o-- com.ranferi.ssrsi.model.Category : category$$1
+  com.ranferi.ssrsi.model.Comment -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Comment o-- com.ranferi.ssrsi.model.User : user
+  com.ranferi.ssrsi.model.Comment$$Parcelable .up.|> android.os.Parcelable
+  com.ranferi.ssrsi.model.Comment$$Parcelable .up.|> org.parceler.ParcelWrapper
+  com.ranferi.ssrsi.model.Comment$$Parcelable o-- com.ranferi.ssrsi.model.Comment : comment$$1
+  com.ranferi.ssrsi.model.Image -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Image$$Parcelable .up.|> android.os.Parcelable
+  com.ranferi.ssrsi.model.Image$$Parcelable .up.|> org.parceler.ParcelWrapper
+  com.ranferi.ssrsi.model.Image$$Parcelable o-- com.ranferi.ssrsi.model.Image : image$$1
+  com.ranferi.ssrsi.model.Name -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Name$$Parcelable .up.|> android.os.Parcelable
+  com.ranferi.ssrsi.model.Name$$Parcelable .up.|> org.parceler.ParcelWrapper
+  com.ranferi.ssrsi.model.Name$$Parcelable o-- com.ranferi.ssrsi.model.Name : name$$1
   com.ranferi.ssrsi.model.Place -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.Place$$Parcelable .up.|> android.os.Parcelable
   com.ranferi.ssrsi.model.Place$$Parcelable .up.|> org.parceler.ParcelWrapper
@@ -552,43 +565,42 @@ title __APP's Class Diagram__\n
   com.ranferi.ssrsi.model.PlacesResponse$$Parcelable .up.|> android.os.Parcelable
   com.ranferi.ssrsi.model.PlacesResponse$$Parcelable .up.|> org.parceler.ParcelWrapper
   com.ranferi.ssrsi.model.PlacesResponse$$Parcelable o-- com.ranferi.ssrsi.model.PlacesResponse : placesResponse$$1
+  com.ranferi.ssrsi.model.Rating -up-|> io.realm.RealmObject
+  com.ranferi.ssrsi.model.Rating$$Parcelable .up.|> android.os.Parcelable
+  com.ranferi.ssrsi.model.Rating$$Parcelable .up.|> org.parceler.ParcelWrapper
+  com.ranferi.ssrsi.model.Rating$$Parcelable o-- com.ranferi.ssrsi.model.Rating : rating$$1
   com.ranferi.ssrsi.model.RealmListParcelConverter .up.|> org.parceler.TypeRangeParcelConverter
   com.ranferi.ssrsi.model.User -up-|> io.realm.RealmObject
   com.ranferi.ssrsi.model.User$$Parcelable .up.|> android.os.Parcelable
   com.ranferi.ssrsi.model.User$$Parcelable .up.|> org.parceler.ParcelWrapper
   com.ranferi.ssrsi.model.User$$Parcelable o-- com.ranferi.ssrsi.model.User : user$$1
   com.ranferi.ssrsi.model.UserPlace -up-|> io.realm.RealmObject
-  com.ranferi.ssrsi.model.UserPlace o-- com.ranferi.ssrsi.model.Comentario : comentarioUsuario
+  com.ranferi.ssrsi.model.UserPlace o-- com.ranferi.ssrsi.model.Comment : comentarioUsuario
   com.ranferi.ssrsi.model.UserPlace$$Parcelable .up.|> android.os.Parcelable
   com.ranferi.ssrsi.model.UserPlace$$Parcelable .up.|> org.parceler.ParcelWrapper
   com.ranferi.ssrsi.model.UserPlace$$Parcelable o-- com.ranferi.ssrsi.model.UserPlace : userPlace$$1
   com.ranferi.ssrsi.model.UserResponse o-- com.ranferi.ssrsi.model.User : user
   io.realm.DefaultRealmModuleMediator -up-|> io.realm.internal.RealmProxyMediator
-  io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxyInterface
-  io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy .up.|> io.realm.internal.RealmObjectProxy
-  io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy -up-|> com.ranferi.ssrsi.model.Calificacione
-  io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy o-- io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy.CalificacioneColumnInfo : columnInfo
-  io.realm.com_ranferi_ssrsi_model_CalificacioneRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Calificacione$$Parcelable
-  io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxyInterface
-  io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy .up.|> io.realm.internal.RealmObjectProxy
-  io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy -up-|> com.ranferi.ssrsi.model.Categoria
-  io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy o-- io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy.CategoriaColumnInfo : columnInfo
-  io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Categoria$$Parcelable
-  io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxyInterface
-  io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy .up.|> io.realm.internal.RealmObjectProxy
-  io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy -up-|> com.ranferi.ssrsi.model.Comentario
-  io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy o-- io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy.ComentarioColumnInfo : columnInfo
-  io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Comentario$$Parcelable
-  io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_ImageneRealmProxyInterface
-  io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy .up.|> io.realm.internal.RealmObjectProxy
-  io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy -up-|> com.ranferi.ssrsi.model.Imagene
-  io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy o-- io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy.ImageneColumnInfo : columnInfo
-  io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Imagene$$Parcelable
-  io.realm.com_ranferi_ssrsi_model_NombreRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_NombreRealmProxyInterface
-  io.realm.com_ranferi_ssrsi_model_NombreRealmProxy .up.|> io.realm.internal.RealmObjectProxy
-  io.realm.com_ranferi_ssrsi_model_NombreRealmProxy -up-|> com.ranferi.ssrsi.model.Nombre
-  io.realm.com_ranferi_ssrsi_model_NombreRealmProxy o-- io.realm.com_ranferi_ssrsi_model_NombreRealmProxy.NombreColumnInfo : columnInfo
-  io.realm.com_ranferi_ssrsi_model_NombreRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Nombre$$Parcelable
+  io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_CategoryRealmProxyInterface
+  io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy .up.|> io.realm.internal.RealmObjectProxy
+  io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy -up-|> com.ranferi.ssrsi.model.Category
+  io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy o-- io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy.CategoryColumnInfo : columnInfo
+  io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Category$$Parcelable
+  io.realm.com_ranferi_ssrsi_model_CommentRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_CommentRealmProxyInterface
+  io.realm.com_ranferi_ssrsi_model_CommentRealmProxy .up.|> io.realm.internal.RealmObjectProxy
+  io.realm.com_ranferi_ssrsi_model_CommentRealmProxy -up-|> com.ranferi.ssrsi.model.Comment
+  io.realm.com_ranferi_ssrsi_model_CommentRealmProxy o-- io.realm.com_ranferi_ssrsi_model_CommentRealmProxy.CommentColumnInfo : columnInfo
+  io.realm.com_ranferi_ssrsi_model_CommentRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Comment$$Parcelable
+  io.realm.com_ranferi_ssrsi_model_ImageRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_ImageRealmProxyInterface
+  io.realm.com_ranferi_ssrsi_model_ImageRealmProxy .up.|> io.realm.internal.RealmObjectProxy
+  io.realm.com_ranferi_ssrsi_model_ImageRealmProxy -up-|> com.ranferi.ssrsi.model.Image
+  io.realm.com_ranferi_ssrsi_model_ImageRealmProxy o-- io.realm.com_ranferi_ssrsi_model_ImageRealmProxy.ImageColumnInfo : columnInfo
+  io.realm.com_ranferi_ssrsi_model_ImageRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Image$$Parcelable
+  io.realm.com_ranferi_ssrsi_model_NameRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_NameRealmProxyInterface
+  io.realm.com_ranferi_ssrsi_model_NameRealmProxy .up.|> io.realm.internal.RealmObjectProxy
+  io.realm.com_ranferi_ssrsi_model_NameRealmProxy -up-|> com.ranferi.ssrsi.model.Name
+  io.realm.com_ranferi_ssrsi_model_NameRealmProxy o-- io.realm.com_ranferi_ssrsi_model_NameRealmProxy.NameColumnInfo : columnInfo
+  io.realm.com_ranferi_ssrsi_model_NameRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Name$$Parcelable
   io.realm.com_ranferi_ssrsi_model_PlaceRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_PlaceRealmProxyInterface
   io.realm.com_ranferi_ssrsi_model_PlaceRealmProxy .up.|> io.realm.internal.RealmObjectProxy
   io.realm.com_ranferi_ssrsi_model_PlaceRealmProxy -up-|> com.ranferi.ssrsi.model.Place
@@ -599,6 +611,11 @@ title __APP's Class Diagram__\n
   io.realm.com_ranferi_ssrsi_model_PlacesResponseRealmProxy -up-|> com.ranferi.ssrsi.model.PlacesResponse
   io.realm.com_ranferi_ssrsi_model_PlacesResponseRealmProxy o-- io.realm.com_ranferi_ssrsi_model_PlacesResponseRealmProxy.PlacesResponseColumnInfo : columnInfo
   io.realm.com_ranferi_ssrsi_model_PlacesResponseRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.PlacesResponse$$Parcelable
+  io.realm.com_ranferi_ssrsi_model_RatingRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_RatingRealmProxyInterface
+  io.realm.com_ranferi_ssrsi_model_RatingRealmProxy .up.|> io.realm.internal.RealmObjectProxy
+  io.realm.com_ranferi_ssrsi_model_RatingRealmProxy -up-|> com.ranferi.ssrsi.model.Rating
+  io.realm.com_ranferi_ssrsi_model_RatingRealmProxy o-- io.realm.com_ranferi_ssrsi_model_RatingRealmProxy.RatingColumnInfo : columnInfo
+  io.realm.com_ranferi_ssrsi_model_RatingRealmProxy$$Parcelable -up-|> com.ranferi.ssrsi.model.Rating$$Parcelable
   io.realm.com_ranferi_ssrsi_model_UserPlaceRealmProxy .up.|> io.realm.com_ranferi_ssrsi_model_UserPlaceRealmProxyInterface
   io.realm.com_ranferi_ssrsi_model_UserPlaceRealmProxy .up.|> io.realm.internal.RealmObjectProxy
   io.realm.com_ranferi_ssrsi_model_UserPlaceRealmProxy -up-|> com.ranferi.ssrsi.model.UserPlace
