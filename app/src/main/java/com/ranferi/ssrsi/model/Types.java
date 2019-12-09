@@ -10,7 +10,9 @@ public class Types {
             "Club de rock",
             "Local de sándwiches",
             "Restaurante kurdo",
-            "Restaurante yucateco"
+            "Restaurante yucateco",
+            "Hamburgueseria",
+            "Pizzeria"
     };
 
     public static final String[] strCatsCodes = {
@@ -23,6 +25,8 @@ public class Types {
             "Club_de_rock",
             "Local_de_sandwiches",
             "Restaurante_kurdo",
-            "Restaurante_yucateco"
+            "Restaurante_yucateco",
+            "Hamburgueseria",
+            "Pizzeria"
     };
 }

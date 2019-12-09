@@ -6,15 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-// import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
-import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
 import com.ranferi.ssrsi.helper.PlacesListAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.model.Comentario;
@@ -88,12 +87,13 @@ public class PlaceListFragment extends Fragment {
                     if (!visitados.isEmpty())
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                 } else {
-                    // Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + response.code());
+                    Toast.makeText(getActivity(), "Ocurrio un error con Realm. Código: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
-                //Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+                Toast.makeText(getActivity(), "Ocurrio un error. Mensaje: " + t.getMessage(), Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -133,14 +133,12 @@ public class PlaceListFragment extends Fragment {
 
                 } else {
                     int statusCode = response.code();
-                    // Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + statusCode);
+                    Toast.makeText(getActivity(), "Ocurrio un error. Codigo: " + statusCode, Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
-                // Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
-            }
+            public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) { }
         });
     }
 
