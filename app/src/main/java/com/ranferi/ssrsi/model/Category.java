@@ -11,13 +11,13 @@ import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
-import io.realm.com_ranferi_ssrsi_model_CategoriaRealmProxy;
+import io.realm.com_ranferi_ssrsi_model_CategoryRealmProxy;
 
 @RealmClass
-@Parcel(implementations = { com_ranferi_ssrsi_model_CategoriaRealmProxy.class },
+@Parcel(implementations = { com_ranferi_ssrsi_model_CategoryRealmProxy.class },
         value = Parcel.Serialization.BEAN,
-        analyze = { Categoria.class })
-public class Categoria extends RealmObject {
+        analyze = { Category.class })
+public class Category extends RealmObject {
     @SerializedName("categoria")
     @Expose
     @PrimaryKey
@@ -32,7 +32,7 @@ public class Categoria extends RealmObject {
      * No args constructor for use in serialization
      * 
      */
-    public Categoria() {
+    public Category() {
     }
 
     /**
@@ -40,7 +40,7 @@ public class Categoria extends RealmObject {
      * @param categoria
      * @param proviene
      */
-    public Categoria(String categoria, String proviene) {
+    public Category(String categoria, String proviene) {
         super();
         this.categoria = categoria;
         this.proviene = proviene;

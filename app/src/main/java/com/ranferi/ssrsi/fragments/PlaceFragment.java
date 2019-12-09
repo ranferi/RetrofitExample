@@ -17,7 +17,7 @@ import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.style.DynamicDrawableSpan;
 import android.text.style.ImageSpan;
-// import android.util.Log;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +31,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.akexorcist.googledirection.DirectionCallback;
+import com.akexorcist.googledirection.GoogleDirection;
+import com.akexorcist.googledirection.model.Direction;
+import com.akexorcist.googledirection.model.Leg;
+import com.akexorcist.googledirection.model.Route;
+import com.akexorcist.googledirection.util.DirectionConverter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -38,17 +44,18 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
 import com.ranferi.ssrsi.helper.ViewPagerAdapter;
-import com.ranferi.ssrsi.model.Calificacione;
-import com.ranferi.ssrsi.model.Categoria;
-import com.ranferi.ssrsi.model.Comentario;
-import com.ranferi.ssrsi.model.Imagene;
-import com.ranferi.ssrsi.model.Nombre;
+import com.ranferi.ssrsi.model.Category;
+import com.ranferi.ssrsi.model.Comment;
+import com.ranferi.ssrsi.model.Image;
+import com.ranferi.ssrsi.model.Name;
 import com.ranferi.ssrsi.model.Place;
+import com.ranferi.ssrsi.model.Rating;
 import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 import com.ranferi.ssrsi.model.UserResponse;
@@ -73,6 +80,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+// import android.util.Log;
 
 
 public class PlaceFragment extends Fragment {
@@ -120,11 +129,11 @@ public class PlaceFragment extends Fragment {
         realm = Realm.getDefaultInstance();
         RealmQuery<Place> query = realm.where(Place.class);
         Place place = query.equalTo("id", placeId).findFirst();
-        List<Nombre> nombresSitio = place.getNombres();
-        List<Categoria> categoriasSitio = place.getCategorias();
-        List<Calificacione> calificacionesSitio = place.getCalificaciones();
-        List<Comentario> comentariosSitio = place.getComentarios();
-        List<Imagene> imagenesSitio = place.getImagenes();
+        List<Name> nombresSitio = place.getNombres();
+        List<Category> categoriasSitio = place.getCategorias();
+        List<Rating> calificacionesSitio = place.getCalificaciones();
+        List<Comment> comentariosSitio = place.getComentarios();
+        List<Image> imagenesSitio = place.getImagenes();
 
         idUser = SharedPrefManager.getInstance(getActivity()).getUser().getId();
         UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", idUser).findAll()
@@ -202,7 +211,7 @@ public class PlaceFragment extends Fragment {
             LatLng destination = new LatLng(Double.valueOf(place.getLatitud()),  Double.valueOf(place.getLongitud()));
             googleMap.addMarker(new MarkerOptions().position(origin).title("Tu posición").snippet(""));
             googleMap.addMarker(new MarkerOptions().position(destination).title("Sitio De Interés").snippet(""));
-            /*GoogleDirection.withServerKey(APIUrl.serverKey)
+            GoogleDirection.withServerKey(APIUrl.serverKey)
                     .from(origin)
                     .to(destination)
                     .execute(new DirectionCallback() {
@@ -224,7 +233,7 @@ public class PlaceFragment extends Fragment {
                         public void onDirectionFailure(Throwable t) {
 
                         }
-                    });*/
+                    });
 
             CameraPosition cameraPosition = new CameraPosition.Builder().target(origin).zoom(15).build();
             googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -366,8 +375,8 @@ public class PlaceFragment extends Fragment {
     public <T> List<String> cleanCategoriesCollection(Collection<T> c) {
         List<String> normalize = new ArrayList<>();
         for (T t : c) {
-            if(t instanceof Categoria)
-                normalize.add(((Categoria) t).getCategoria());
+            if(t instanceof Category)
+                normalize.add(((Category) t).getCategoria());
         }
         ListIterator<String> iterator = normalize.listIterator();
         while (iterator.hasNext()){
@@ -487,11 +496,11 @@ public class PlaceFragment extends Fragment {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, sizeOfText(R.dimen.desired_sp));
             User user = null;
             boolean existUser = false;
-            if(t instanceof Comentario) {
+            if(t instanceof Comment) {
                 try {
                     Field field = t.getClass().getField("user");
                     if (field.getType().equals(User.class)) {
-                        user = getUser((Comentario) t);
+                        user = getUser((Comment) t);
                         if (user != null) existUser = true;
                     }
                 } catch (NoSuchFieldException ignored) { }
@@ -515,7 +524,7 @@ public class PlaceFragment extends Fragment {
         }
     }
 
-    public User getUser(Comentario comentario) {
+    public User getUser(Comment comentario) {
         return comentario.getUser();
     }
 
@@ -543,27 +552,27 @@ public class PlaceFragment extends Fragment {
     }
 
     private <T> String setTextForView(T o) {
-        if(o instanceof Nombre)
-            return ((Nombre) o).getNombreSitio();
-        else if(o instanceof Categoria)
-            return ((Categoria) o).getCategoria();
-        else if(o instanceof Calificacione)
-            return ((Calificacione) o).getCalificacion();
-        else if(o instanceof Comentario)
-            return ((Comentario) o).getComentario();
+        if(o instanceof Name)
+            return ((Name) o).getNombreSitio();
+        else if(o instanceof Category)
+            return ((Category) o).getCategoria();
+        else if(o instanceof Rating)
+            return ((Rating) o).getCalificacion();
+        else if(o instanceof Comment)
+            return ((Comment) o).getComentario();
         else
             return null;
     }
 
     private <T> String getDBForIcon(T o) {
-        if(o instanceof Nombre)
-            return ((Nombre) o).getProviene();
-        else if(o instanceof Categoria)
-            return ((Categoria) o).getProviene();
-        else if(o instanceof Calificacione)
-            return ((Calificacione) o).getProviene();
-        else if(o instanceof Comentario)
-            return ((Comentario) o).getProviene();
+        if(o instanceof Name)
+            return ((Name) o).getProviene();
+        else if(o instanceof Category)
+            return ((Category) o).getProviene();
+        else if(o instanceof Rating)
+            return ((Rating) o).getProviene();
+        else if(o instanceof Comment)
+            return ((Comment) o).getProviene();
         else
             return null;
     }

@@ -11,13 +11,13 @@ import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
-import io.realm.com_ranferi_ssrsi_model_NombreRealmProxy;
+import io.realm.com_ranferi_ssrsi_model_NameRealmProxy;
 
 @RealmClass
-@Parcel(implementations = { com_ranferi_ssrsi_model_NombreRealmProxy.class },
+@Parcel(implementations = { com_ranferi_ssrsi_model_NameRealmProxy.class },
         value = Parcel.Serialization.BEAN,
-        analyze = { Nombre.class })
-public class Nombre extends RealmObject {
+        analyze = { Name.class })
+public class Name extends RealmObject {
 
     @SerializedName("nombre_sitio")
     @Expose
@@ -33,7 +33,7 @@ public class Nombre extends RealmObject {
      * No args constructor for use in serialization
      * 
      */
-    public Nombre() {
+    public Name() {
     }
 
     /**
@@ -41,7 +41,7 @@ public class Nombre extends RealmObject {
      * @param nombreSitio
      * @param proviene
      */
-    public Nombre(String nombreSitio, String proviene) {
+    public Name(String nombreSitio, String proviene) {
         super();
         this.nombreSitio = nombreSitio;
         this.proviene = proviene;

@@ -11,13 +11,13 @@ import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
-import io.realm.com_ranferi_ssrsi_model_ImageneRealmProxy;
+import io.realm.com_ranferi_ssrsi_model_ImageRealmProxy;
 
 @RealmClass
-@Parcel(implementations = { com_ranferi_ssrsi_model_ImageneRealmProxy.class },
+@Parcel(implementations = { com_ranferi_ssrsi_model_ImageRealmProxy.class },
         value = Parcel.Serialization.BEAN,
-        analyze = { Imagene.class })
-public class Imagene extends RealmObject {
+        analyze = { Image.class })
+public class Image extends RealmObject {
 
     @SerializedName("imagen")
     @Expose
@@ -30,14 +30,14 @@ public class Imagene extends RealmObject {
      * No args constructor for use in serialization
      * 
      */
-    public Imagene() {
+    public Image() {
     }
 
     /**
      * 
      * @param imagen
      */
-    public Imagene(String imagen) {
+    public Image(String imagen) {
         super();
         this.imagen = imagen;
     }

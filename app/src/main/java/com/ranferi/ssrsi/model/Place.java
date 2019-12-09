@@ -48,22 +48,22 @@ public class Place extends RealmObject {
     private int similitud;
     @SerializedName("nombres")
     @Expose
-    private RealmList<Nombre> mNombres = new RealmList<>();
+    private RealmList<Name> mNombres = new RealmList<>();
     @SerializedName("calificaciones")
     @Expose
-    private RealmList<Calificacione> mCalificaciones = new RealmList<>();
+    private RealmList<Rating> mCalificaciones = new RealmList<>();
     @SerializedName("total")
     @Expose
     private double total;
     @SerializedName("categorias")
     @Expose
-    private RealmList<Categoria> categorias = new RealmList<>();
+    private RealmList<Category> categorias = new RealmList<>();
     @SerializedName("imagenes")
     @Expose
-    private RealmList<Imagene> mImagenes = new RealmList<>();
+    private RealmList<Image> mImagenes = new RealmList<>();
     @SerializedName("comentarios")
     @Expose
-    private RealmList<Comentario> comentarios = new RealmList<>();
+    private RealmList<Comment> comentarios = new RealmList<>();
     @LinkingObjects("sitio")
     private final RealmResults<UserPlace> visitaron = null;
 
@@ -73,8 +73,8 @@ public class Place extends RealmObject {
 
 
     public Place(int id, String medi, String latitud, String longitud, String direccion, boolean musica, int similitud, double total,
-                 RealmList<Nombre> nombres, RealmList<Calificacione> calificaciones, RealmList<Categoria> categorias,
-                 RealmList<Imagene> imagenes, RealmList<Comentario> comentarios) {
+                 RealmList<Name> nombres, RealmList<Rating> calificaciones, RealmList<Category> categorias,
+                 RealmList<Image> imagenes, RealmList<Comment> comentarios) {
         super();
         this.id = id;
         this.medi = medi;
@@ -138,21 +138,21 @@ public class Place extends RealmObject {
         this.musica = musica;
     }
 
-    public RealmList<Nombre> getNombres() {
+    public RealmList<Name> getNombres() {
         return mNombres;
     }
 
     @ParcelPropertyConverter(RealmListParcelConverter.class)
-    public void setNombres(RealmList<Nombre> mNombres) {
+    public void setNombres(RealmList<Name> mNombres) {
         this.mNombres = mNombres;
     }
 
-    public RealmList<Calificacione> getCalificaciones() {
+    public RealmList<Rating> getCalificaciones() {
         return mCalificaciones;
     }
 
     @ParcelPropertyConverter(RealmListParcelConverter.class)
-    public void setCalificaciones(RealmList<Calificacione> mCalificaciones) {
+    public void setCalificaciones(RealmList<Rating> mCalificaciones) {
         this.mCalificaciones = mCalificaciones;
     }
 
@@ -172,30 +172,30 @@ public class Place extends RealmObject {
         this.total = total;
     }
 
-    public RealmList<Categoria> getCategorias() {
+    public RealmList<Category> getCategorias() {
         return categorias;
     }
 
     @ParcelPropertyConverter(RealmListParcelConverter.class)
-    public void setCategorias(RealmList<Categoria> categorias) {
+    public void setCategorias(RealmList<Category> categorias) {
         this.categorias = categorias;
     }
 
-    public RealmList<Imagene> getImagenes() {
+    public RealmList<Image> getImagenes() {
         return mImagenes;
     }
 
     @ParcelPropertyConverter(RealmListParcelConverter.class)
-    public void setImagenes(RealmList<Imagene> mImagenes) {
+    public void setImagenes(RealmList<Image> mImagenes) {
         this.mImagenes = mImagenes;
     }
 
-    public RealmList<Comentario> getComentarios() {
+    public RealmList<Comment> getComentarios() {
         return comentarios;
     }
 
     @ParcelPropertyConverter(RealmListParcelConverter.class)
-    public void setComentarios(RealmList<Comentario> comentarios) {
+    public void setComentarios(RealmList<Comment> comentarios) {
         this.comentarios = comentarios;
     }
 

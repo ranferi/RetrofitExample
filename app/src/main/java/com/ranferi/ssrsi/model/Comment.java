@@ -11,13 +11,13 @@ import io.realm.RealmResults;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
-import io.realm.com_ranferi_ssrsi_model_ComentarioRealmProxy;
+import io.realm.com_ranferi_ssrsi_model_CommentRealmProxy;
 
 @RealmClass
-@Parcel(implementations = { com_ranferi_ssrsi_model_ComentarioRealmProxy.class },
+@Parcel(implementations = { com_ranferi_ssrsi_model_CommentRealmProxy.class },
         value = Parcel.Serialization.BEAN,
-        analyze = { Comentario.class })
-public class Comentario extends RealmObject {
+        analyze = { Comment.class })
+public class Comment extends RealmObject {
     @SerializedName("id")
     @Expose
     @PrimaryKey
@@ -35,7 +35,7 @@ public class Comentario extends RealmObject {
     @LinkingObjects("comentarioUsuario")
     private final RealmResults<UserPlace> comentariosUsuario = null;
 
-    public Comentario() {
+    public Comment() {
     }
 
     /**
@@ -43,7 +43,7 @@ public class Comentario extends RealmObject {
      * @param comentario del usuario
      * @param proviene en cual BD se encuentra
      */
-    public Comentario(String comentario, String proviene) {
+    public Comment(String comentario, String proviene) {
         super();
         this.comentario = comentario;
         this.proviene = proviene;
@@ -55,7 +55,7 @@ public class Comentario extends RealmObject {
      * @param proviene de que BD
      * @param user de que usuario
      */
-    public Comentario(String comentario, String proviene, User user) {
+    public Comment(String comentario, String proviene, User user) {
         super();
         this.comentario = comentario;
         this.proviene = proviene;

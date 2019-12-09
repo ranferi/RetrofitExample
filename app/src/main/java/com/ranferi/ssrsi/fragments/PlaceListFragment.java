@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-// import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,9 @@ import android.view.ViewGroup;
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
-import com.ranferi.ssrsi.helper.PlaceVisitedAdapter;
 import com.ranferi.ssrsi.helper.PlacesListAdapter;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Comentario;
+import com.ranferi.ssrsi.model.Comment;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.Places;
 import com.ranferi.ssrsi.model.User;
@@ -53,12 +51,12 @@ public class PlaceListFragment extends Fragment {
         if (getActivity() != null) getActivity().setTitle("Sitios");
 
         realm = Realm.getDefaultInstance();
-        /*realm.executeTransaction(new Realm.Transaction() {
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm bgRealm) {
                 bgRealm.deleteAll();
             }
-        });*/
+        });
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
 
@@ -113,12 +111,12 @@ public class PlaceListFragment extends Fragment {
                             });
                         }
                         if (visitedPlace.getComentarios() != null) {
-                            RealmList<Comentario> comentarios = visitedPlace.getComentarios();
-                            for (Comentario comentario : comentarios) {
+                            RealmList<Comment> comentarios = visitedPlace.getComentarios();
+                            for (Comment comentario : comentarios) {
                                 User userVisited = comentario.getUser();
                                 if (userVisited != null && userVisited.getId() == user) {
-                                    Comentario comment = realm
-                                            .where(Comentario.class)
+                                    Comment comment = realm
+                                            .where(Comment.class)
                                             .equalTo("id", comentario.getId()).findFirst();
                                     if (comment != null) {
                                         realm.executeTransaction(realm1 -> realm.copyToRealm(comment));

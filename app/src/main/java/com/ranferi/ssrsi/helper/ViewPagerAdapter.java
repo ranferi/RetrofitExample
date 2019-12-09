@@ -2,21 +2,19 @@ package com.ranferi.ssrsi.helper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.media.Image;
+
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.ranferi.ssrsi.R;
-import com.ranferi.ssrsi.model.Imagene;
+import com.ranferi.ssrsi.model.Image;
 import com.squareup.picasso.Picasso;
 
-import java.util.Collection;
 import java.util.List;
 
 import static com.ranferi.ssrsi.api.APIUrl.BASE_URL;
@@ -29,9 +27,9 @@ public class ViewPagerAdapter extends PagerAdapter {
             R.drawable.bar_generic,
             R.drawable.restaurant_generic
     };
-    private List<Imagene> mImagenes;
+    private List<Image> mImagenes;
 
-    public ViewPagerAdapter(Context context, List<Imagene> c) {
+    public ViewPagerAdapter(Context context, List<Image> c) {
         this.context = context;
         mImagenes = c;
     }

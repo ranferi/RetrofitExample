@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.activities.PlacePagerActivity;
-import com.ranferi.ssrsi.model.Nombre;
+import com.ranferi.ssrsi.model.Name;
 import com.ranferi.ssrsi.model.Place;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesHold
         public void bind(Place place) {
             mPlace = place;
             if (mPlace.getNombres().size() != 0) {
-                Nombre nombre1 = mPlace.getNombres().get(0);
+                Name nombre1 = mPlace.getNombres().get(0);
                mNameTextView.setText(nombre1.getNombreSitio());
             }
             mAddressTextView.setText(mPlace.getDireccion());
@@ -74,7 +74,7 @@ public class PlacesAdapter extends RecyclerView.Adapter<PlacesAdapter.PlacesHold
             Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
             sContext.startActivity(intent);
             if (mPlace.getNombres().size() != 0) {
-                Nombre nombre1 = mPlace.getNombres().get(0);
+                Name nombre1 = mPlace.getNombres().get(0);
                 Toast.makeText(sContext, nombre1.getNombreSitio(), Toast.LENGTH_SHORT).show();
             }
         }

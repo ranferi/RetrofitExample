@@ -4,13 +4,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
-import org.parceler.ParcelConstructor;
 import org.parceler.ParcelPropertyConverter;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-import io.realm.annotations.Index;
 import io.realm.annotations.LinkingObjects;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -36,7 +34,7 @@ public class UserPlace extends RealmObject {
     private boolean gusto;
     @SerializedName("comentario")
     @Expose
-    private Comentario comentarioUsuario;
+    private Comment comentarioUsuario;
     @SerializedName("sitio")
     @Expose
     private RealmList<Place> sitio = new RealmList<>();
@@ -104,11 +102,11 @@ public class UserPlace extends RealmObject {
         this.id = id;
     }
 
-    public Comentario getComentarioUsuario() {
+    public Comment getComentarioUsuario() {
         return comentarioUsuario;
     }
 
-    public void setComentarioUsuario(Comentario comentarioUsuario) {
+    public void setComentarioUsuario(Comment comentarioUsuario) {
         this.comentarioUsuario = comentarioUsuario;
     }
 }

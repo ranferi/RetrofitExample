@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +14,13 @@ import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.activities.PlacePagerActivity;
-import com.ranferi.ssrsi.model.Comentario;
-import com.ranferi.ssrsi.model.Nombre;
+import com.ranferi.ssrsi.model.Name;
 import com.ranferi.ssrsi.model.Place;
-import com.ranferi.ssrsi.model.User;
 import com.ranferi.ssrsi.model.UserPlace;
 
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmList;
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.PlaceHolder> {
     private List<Place> mPlaces;
@@ -85,7 +81,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
             // Log.d("ActividadPT", String.valueOf(mPlace));
 
             if (mPlace.getNombres().size() != 0) {
-                Nombre nombre1 = mPlace.getNombres().get(0);
+                Name nombre1 = mPlace.getNombres().get(0);
                 mNameTextView.setText(nombre1.getNombreSitio());
             }
 
@@ -104,7 +100,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
             Intent intent = PlacePagerActivity.newIntent(sContext, mPlace.getId()); // PlacePagerActivity
             sContext.startActivity(intent);
             if (mPlace.getNombres().size() != 0) {
-                Nombre nombre1 = mPlace.getNombres().get(0);
+                Name nombre1 = mPlace.getNombres().get(0);
                 Toast.makeText(sContext, nombre1.getNombreSitio(), Toast.LENGTH_SHORT).show();
             }
         }

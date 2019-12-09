@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
 import com.ranferi.ssrsi.api.APIUrl;
 import com.ranferi.ssrsi.helper.SharedPrefManager;
-import com.ranferi.ssrsi.model.Comentario;
+import com.ranferi.ssrsi.model.Comment;
 import com.ranferi.ssrsi.model.Place;
 import com.ranferi.ssrsi.model.PlacesResponse;
 import com.ranferi.ssrsi.model.Types;
@@ -40,6 +39,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmList;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -51,6 +51,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.ranferi.ssrsi.api.APIUrl.latitud;
 import static com.ranferi.ssrsi.api.APIUrl.longitud;
+
+//import android.util.Log;
 
 
 public class SearchFragment extends Fragment {
@@ -85,16 +87,16 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         // Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
-        /*RealmConfiguration config2 = new RealmConfiguration.Builder()
+        RealmConfiguration config2 = new RealmConfiguration.Builder()
                 .name("ssrsi.realm")
                 .deleteRealmIfMigrationNeeded()
-                .build();*/
+                .build();
 
 
-        /*realm = Realm.getInstance(config2);*/
+        realm = Realm.getInstance(config2);
 
-        realm = Realm.getDefaultInstance();
-        /*realm.executeTransaction(new Realm.Transaction() {
+        /*realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(@NonNull Realm bgRealm) {
                 bgRealm.deleteAll();
@@ -269,11 +271,11 @@ public class SearchFragment extends Fragment {
                             realm.executeTransaction(realm1 -> realm.copyToRealmOrUpdate(visitedPlace));
 
                         if (visitedPlace.getComentarios() != null) {
-                            RealmList<Comentario> comentarios = visitedPlace.getComentarios();
-                            for (Comentario comentario : comentarios) {
+                            RealmList<Comment> comentarios = visitedPlace.getComentarios();
+                            for (Comment comentario : comentarios) {
                                 User userVisited = comentario.getUser();
                                 if (userVisited != null && userVisited.getId() == user) {
-                                    Comentario c = realm.where(Comentario.class).equalTo("id", comentario.getId()).findFirst();
+                                    Comment c = realm.where(Comment.class).equalTo("id", comentario.getId()).findFirst();
                                     if (c != null) realm.executeTransaction(realm1 -> realm.copyToRealm(c));
                                 }
                             }
