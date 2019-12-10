@@ -171,7 +171,7 @@ public class PlaceFragment extends Fragment {
         addressField.setText(place.getDireccion());
 
         TextView ratingField = v.findViewById(R.id.place_rating);
-        String sourceString = "Calificación (promedio):    " +  "<b>" + String.valueOf(place.getTotal()) + "</b> ";
+        String sourceString = "Calificación (promedio):    " +  "<b>" + place.getTotal() + "</b> ";
         ratingField.setText(Html.fromHtml(sourceString));
 
         TextView categoriesField = v.findViewById(R.id.place_categories);
