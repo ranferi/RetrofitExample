@@ -91,12 +91,12 @@ public class HomeFragment extends Fragment {
                         mUsers.clear();
                         mUsers.addAll(users);
                     } else {
-                        // Log.d("ActividadPT","Users null");
+                        Toast.makeText(mActivity, "'users' es nulo", Toast.LENGTH_SHORT).show();
                     }
                     adapter.notifyDataSetChanged();
                 } else {
                     int statusCode = response.code();
-                    //Log.d(LOG_TAG, "onResponse(): Error code = " + statusCode);
+                    Toast.makeText(mActivity, "Hubo un error. Código: " + statusCode, Toast.LENGTH_SHORT).show();
                 }
                 mProgressBar.setVisibility(View.GONE);
             }

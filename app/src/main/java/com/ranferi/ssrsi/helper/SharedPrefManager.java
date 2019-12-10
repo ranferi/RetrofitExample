@@ -35,7 +35,6 @@ public class SharedPrefManager {
 
     public void userLogin(User user) {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        // Log.d("ActividadPT", "Estás en userLogin, SharedPrefManager " + " user: " + user.getUser() + " " + user.getName());
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_NAME, user.getName());
@@ -53,7 +52,6 @@ public class SharedPrefManager {
 
     public User getUser() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-//        Log.d("ActividadPT", "Estás en getUser, SharedPrefManager " + " last name: " + sharedPreferences.getString(KEY_USER_USER, null));
         return new User(
                 sharedPreferences.getInt(KEY_USER_ID, 0),
                 sharedPreferences.getString(KEY_USER_NAME, null),
@@ -62,11 +60,6 @@ public class SharedPrefManager {
                 sharedPreferences.getString(KEY_USER_EMAIL, null),
                 sharedPreferences.getString(KEY_USER_USER, null)
                 );
-
-        /* sharedPreferences.getInt(KEY_USER_ID, 0),
-                sharedPreferences.getString(KEY_USER_NAME, null),
-                sharedPreferences.getString(KEY_USER_EMAIL, null),
-                sharedPreferences.getString(KEY_USER_GENDER, null)*/
     }
 
     public void logout() {
@@ -77,20 +70,14 @@ public class SharedPrefManager {
     }
 
     public void setPassword(String password) {
-        // Log.d("ActividadPT", "Estás en setPassword 1, SharedPrefManager pass : " + password);
-        // Log.d("ActividadPT", "Estás en setpassword 2, SharedPrefManager contexto: " + sContext);
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putString(PASS_TAG, password);
         editor.apply();
-        // Log.d("ActividadPT", "Estás deespués de editor, SharedPrefManager pass : " + sharedPreferences.getString(PASS_TAG, null));
     }
+
     public String getpassword() {
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        //Log.d("ActividadPT", "Estás en getpassword 3, SharedPrefManager contexto: " + sContext);
-        // Log.d("ActividadPT", "Estás en getpassword, SharedPrefManager pass: " + sharedPreferences.getString(PASS_TAG, null));
-
         return sharedPreferences.getString(PASS_TAG, null);
     }
 }

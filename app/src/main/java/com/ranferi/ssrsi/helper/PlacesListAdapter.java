@@ -77,8 +77,6 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
             mPlace = place;
             userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", id).findAll()
                     .where().equalTo("sitio.id", mPlace.getId()).findFirst();
-            //Log.d("ActividadPT", String.valueOf(id));
-            // Log.d("ActividadPT", String.valueOf(mPlace));
 
             if (mPlace.getNombres().size() != 0) {
                 Name nombre1 = mPlace.getNombres().get(0);

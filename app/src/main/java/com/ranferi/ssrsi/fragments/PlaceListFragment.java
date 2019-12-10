@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ranferi.ssrsi.R;
 import com.ranferi.ssrsi.api.APIService;
@@ -46,7 +47,6 @@ public class PlaceListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Log.d("ActividadPT", "------------ PlaceListFragment, onViewCreated --- ");
 
         if (getActivity() != null) getActivity().setTitle("Sitios");
 
@@ -86,12 +86,13 @@ public class PlaceListFragment extends Fragment {
                     if (!visitados.isEmpty())
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                 } else {
-                    // Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + response.code());
+                    if (response.body() != null) Toast.makeText(getActivity(), "Hubo un error con 'users'", Toast.LENGTH_LONG).show();
+                    else Toast.makeText(getActivity(), "Hubo un problema. Código: " + response.code(), Toast.LENGTH_LONG).show();
                 }
             }
             @Override
             public void onFailure(@NonNull Call<Users> call, @NonNull Throwable t) {
-                //Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -130,14 +131,16 @@ public class PlaceListFragment extends Fragment {
                     mPlaceRecyclerView.setAdapter(mAdapter);
 
                 } else {
-                    int statusCode = response.code();
-                    // Log.d("ActividadPT", "PlaceListFragment onResponse(): Error code = " + statusCode);
+                    if (response.body() != null) Toast.makeText(getActivity(), "Hubo un error con 'places'", Toast.LENGTH_LONG).show();
+                    else {
+                        Toast.makeText(getActivity(), "Hubo un problema. Código: " + response.code(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Places> call, @NonNull Throwable t) {
-                // Log.d("ActividadPT", "Estás en onFailure " + t.getMessage());
+                Toast.makeText(getActivity(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }

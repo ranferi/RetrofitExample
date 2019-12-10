@@ -27,15 +27,13 @@ public class SearchListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mPlacesResponse = (PlacesResponse) Parcels.unwrap(getArguments().getParcelable("places"));
+        mPlacesResponse = Parcels.unwrap(getArguments().getParcelable("places"));
         return inflater.inflate(R.layout.fragment_place_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Log.d("ActividadPT", "------------ SearchListFragment, onViewCreated --- ");
 
         if (getActivity() != null) getActivity().setTitle("Busqueda");
 

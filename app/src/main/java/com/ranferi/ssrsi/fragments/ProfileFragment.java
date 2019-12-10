@@ -50,7 +50,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         User user = SharedPrefManager.getInstance(getActivity()).getUser();
-        // Log.d("ActividadPT", "Estás en onViewCreated " + " user: " + user.getUser()+ ", pass: " + SharedPrefManager.getInstance(getActivity()).getpassword());
 
         buttonUpdate = view.findViewById(R.id.buttonUpdate);
         mEditTextName = view.findViewById(R.id.editTextNameProfile);
@@ -121,10 +120,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(@NonNull Call<UserResponse> call, @NonNull Response<UserResponse> response) {
                 progressDialog.dismiss();
-                Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
-                if (!response.body().getError()) {
+                if (response.isSuccessful() && response.body() != null && !response.body().getError()) {
                     SharedPrefManager.getInstance(getActivity()).userLogin(response.body().getUser());
                     SharedPrefManager.getInstance(getActivity()).setPassword(password);
+                } else {
+                    if (response.body() != null) Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_LONG).show();
+                    else {
+                        Toast.makeText(getActivity(), "Hubo un problema. Código: " + response.code(), Toast.LENGTH_LONG).show();
+                    }
                 }
             }
 

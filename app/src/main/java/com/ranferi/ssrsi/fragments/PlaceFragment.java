@@ -185,8 +185,6 @@ public class PlaceFragment extends Fragment {
             }
         }
 
-        // Log.d("ActividadPT", csvBuilder.toString());
-
         String csv = csvBuilder.toString();
         csv = csv.substring(0, csv.length() - SEPARATOR.length());
         String categoryString = "Categorías : " +  "<b>" + csv + "</b>";
@@ -267,31 +265,12 @@ public class PlaceFragment extends Fragment {
         EditText editTextComment = v.findViewById(R.id.editTextComment);
 
         if (userPlaces != null) {
-            // Log.d("ActividadPT", String.valueOf(spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3))) + " " + userPlaces.getPrecio().substring(3));
             int i = spinnerArrayAdapter.getPosition(userPlaces.getPrecio().substring(3));
             spinner.post(() -> spinner.setSelection(i, true));
             editTextComment.setText(userPlaces.getComentarioUsuario().getComentario());
             toggleVisited.setChecked(true);
             likedCheckBox.setChecked(userPlaces.isGusto());
         }
-
-        /*spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItemText = (String) parent.getItemAtPosition(position);
-                // Si el usuario cambia el default
-                if(position > 0){
-                    Toast.makeText
-                            (getActivity(), "Se selecciono : " + selectedItemText, Toast.LENGTH_SHORT)
-                            .show();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });*/
 
         Button opinionButton = v.findViewById(R.id.opinionBtn);
         opinionButton.setOnClickListener(new View.OnClickListener() {

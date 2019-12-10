@@ -83,10 +83,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         String email = mEditTextEmail.getText().toString().trim();
         final String password = mEditTextPassword.getText().toString().trim();
 
-        /*HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();*/
-
         // armar un objeto retrofit
         // problema cuando la url no es correcta
         Retrofit retrofit = new Retrofit.Builder()
@@ -122,7 +118,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     // se envia un mensaje de respuesta en un toast
                     if (userResponse != null) {
                         Toast.makeText(getApplicationContext(), userResponse.getMessage(), Toast.LENGTH_LONG).show();
-                        //Log.d("ActividadTT", "en call.enqueue, onResponse: " + userResponse.getMessage());
                         // si no hay error
                         if (!userResponse.getError()) {
                             // inicia la actividad 'Home'
@@ -133,9 +128,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     }
                 } else {
-                    // ResponseBody errorBody = response.errorBody();
-                    //if (errorBody != null)
-                        //Log.d("ActividadTT", "en SignUpActivity, call.enqueue, onResponse not successful, error: " + errorBody.toString());
+                    ResponseBody errorBody = response.errorBody();
+                    if (errorBody != null) Toast.makeText(getApplicationContext(), errorBody.toString(), Toast.LENGTH_LONG).show();
                 }
                 mButtonSignUp.setEnabled(true);
             }
@@ -144,7 +138,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
             public void onFailure(@NonNull Call<UserResponse> call, @NonNull Throwable t) {
                 progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-                //Log.d("ActividadTT", "en SignUpActivity call.enqueue, onFailure message: " + t.getMessage());
             }
         });
 

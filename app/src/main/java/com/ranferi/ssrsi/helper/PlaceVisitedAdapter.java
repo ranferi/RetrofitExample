@@ -43,7 +43,6 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
     @Override
     public void onBindViewHolder(@NonNull PlaceHolder placeHolder, int i) {
         Place place = mPlaces.get(i);
-        // Log.d("ActividadPT", String.valueOf(place.getId()));
         placeHolder.bind(place);
     }
 
@@ -62,7 +61,6 @@ public class PlaceVisitedAdapter extends RecyclerView.Adapter<PlaceVisitedAdapte
         private TextView similarity;
         private Realm realm;
         UserPlace userPlaces;
-
 
         PlaceHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_place_visited, parent, false));
