@@ -72,6 +72,8 @@
     <string name="visted_drawer">Visitados</string>
     <string name="places_drawer">Sitios</string>
     <string name="logout">Cerrar Sesión</string>
+    <string name="imagen_de_bar_restaurante">Imagen de bar/restaurante</string>
+    <string name="bar_icon">bar icon</string>
 
     <string-array name="nav_item_activity_titles">
         <item>Inicio</item>

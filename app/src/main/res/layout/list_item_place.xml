@@ -60,7 +60,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@mipmap/ic_bar" />
+                app:srcCompat="@mipmap/ic_bar"
+                android:contentDescription="@string/bar_icon" />
 
             <View
                 android:id="@+id/view"
