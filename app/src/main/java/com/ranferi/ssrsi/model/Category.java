@@ -28,10 +28,6 @@ public class Category extends RealmObject {
     @LinkingObjects("categorias")
     private final RealmResults<Place> categoriasSitio = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Category() {
     }
 

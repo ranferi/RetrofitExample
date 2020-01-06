@@ -88,7 +88,6 @@ public class User extends RealmObject {
         this.visito = visito;
     }
 
-
     // NUEVA En ProfileFragment.java, para ver y actualizar información
     public User(int id, String name, String lastName, String mothersMaidenName, String user, String email, String password) {
         super();
@@ -118,7 +117,6 @@ public class User extends RealmObject {
         this.name = name;
         this.email = email;
         this.password = password;
-        // this.gender = gender;
     }
 
     // En ProfileFragment.java, para ver y actualizar información
@@ -128,7 +126,6 @@ public class User extends RealmObject {
         this.name = name;
         this.email = email;
         this.password = password;
-        // this.gender = gender;
     }
 
     // En SharedPrefManager.java, para obtener información del usuario (sin password)
@@ -137,7 +134,6 @@ public class User extends RealmObject {
         this.id = id;
         this.name = name;
         this.email = email;
-        // this.gender = gender;
     }
 
     public int getId() {
@@ -205,17 +201,5 @@ public class User extends RealmObject {
         this.visito = visito;
     }
 
-    /*@NonNull
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", mothersMaidenName='" + mothersMaidenName + '\'' +
-                ", user='" + user + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }*/
 
 }

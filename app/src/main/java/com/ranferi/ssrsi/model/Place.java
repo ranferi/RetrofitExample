@@ -70,8 +70,6 @@ public class Place extends RealmObject {
     public Place() {
     }
 
-
-
     public Place(int id, String medi, String latitud, String longitud, String direccion, boolean musica, int similitud, double total,
                  RealmList<Name> nombres, RealmList<Rating> calificaciones, RealmList<Category> categorias,
                  RealmList<Image> imagenes, RealmList<Comment> comentarios) {

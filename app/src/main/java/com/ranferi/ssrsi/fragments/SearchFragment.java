@@ -83,23 +83,9 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Log.d("ActividadPT", "------------ SearchFragment, onViewCreated --- ");
-        /*RealmConfiguration config2 = new RealmConfiguration.Builder()
-                .name("ssrsi.realm")
-                .deleteRealmIfMigrationNeeded()
-                .build();
 
-
-        realm = Realm.getInstance(config2);*/
 
         realm = Realm.getDefaultInstance();
-        /*realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(@NonNull Realm bgRealm) {
-                bgRealm.deleteAll();
-            }
-        });*/
-
         user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
         UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
 

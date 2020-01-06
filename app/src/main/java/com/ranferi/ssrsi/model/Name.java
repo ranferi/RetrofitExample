@@ -29,10 +29,6 @@ public class Name extends RealmObject {
     @LinkingObjects("mNombres")
     private final RealmResults<Place> nombresSitio = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Name() {
     }
 

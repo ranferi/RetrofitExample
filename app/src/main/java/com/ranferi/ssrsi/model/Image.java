@@ -26,10 +26,6 @@ public class Image extends RealmObject {
     @LinkingObjects("mImagenes")
     private final RealmResults<Place> imagenesSitio = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
     public Image() {
     }
 

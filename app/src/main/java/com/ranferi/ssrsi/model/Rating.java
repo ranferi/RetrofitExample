@@ -32,18 +32,10 @@ public class Rating extends RealmObject {
     @LinkingObjects("mCalificaciones")
     private final RealmResults<Place> calificacionesSitio = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+
     public Rating() {
     }
 
-    /**
-     * 
-     * @param calificacion calificación del sitio
-     * @param proviene de una base de datos
-     */
     public Rating(String calificacion, String proviene) {
         super();
         this.calificacion = calificacion;

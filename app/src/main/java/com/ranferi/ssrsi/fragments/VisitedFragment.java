@@ -53,32 +53,17 @@ public class VisitedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Log.d("ActividadPT", "------------ VisitedFragment --- ");
 
         if (getActivity() != null) getActivity().setTitle("Visitados");
 
         final int user = SharedPrefManager.getInstance(getActivity()).getUser().getId();
-
         realm = Realm.getDefaultInstance();
-
-
-        /*realm.executeTransaction(new Realm.Transaction() {
-            @Override
-            public void execute(@NonNull Realm bgRealm) {
-                bgRealm.deleteAll();
-            }
-        });*/
-        /*UserPlace userPlaces = realm.where(UserPlace.class).equalTo("visitantes.id", user).findFirst();
-        Log.d("ActividadPT", String.valueOf(user));
-        Log.d("ActividadPT", String.valueOf(userPlaces));*/
-
 
         mPlaceRecyclerView = view.findViewById(R.id.place_recycler_view);
         mPlaceRecyclerView.setHasFixedSize(true);
         mPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Retrofit retrofit = new Retrofit.Builder()
-                //.client(client)
                 .baseUrl(APIUrl.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -93,16 +78,6 @@ public class VisitedFragment extends Fragment {
                     RealmList<User> users = response.body().getUsers();
                     RealmList<UserPlace> visitados = users.first().getVisito();
 
-                   /* for (UserPlace vis : visitados) {
-                        Log.d("ActividadPT", String.valueOf(vis.getId()));
-                    }*/
-
-                    //Log.d("ActividadPT", String.valueOf(users));
-                    /*Iterator<UserPlace> visited = visitados.iterator();
-                    while (visited.hasNext()) {
-                        UserPlace userPlace = visited.next();
-                        if (userPlace.getSitioSrc().equals(userPlaces.getSitioSrc())) visited.remove();
-                    }*/
                     if (!visitados.isEmpty()) {
                         realm.executeTransaction(bgRealm -> bgRealm.copyToRealmOrUpdate(users));
                     }
@@ -130,7 +105,6 @@ public class VisitedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        // realm.close();
     }
 
 }

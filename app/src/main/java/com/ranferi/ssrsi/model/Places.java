@@ -16,10 +16,6 @@ public class Places {
 
     public Places() { }
 
-    /**
-     *
-     * @param places
-     */
     public Places(RealmList<Place> places) {
         super();
         this.mPlaces = places;

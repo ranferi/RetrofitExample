@@ -44,12 +44,6 @@ public class UserPlace extends RealmObject {
     public UserPlace() {
     }
 
-    /**
-     * @param sitioSrc 'source' en ontologia
-     * @param precio el precio que el usuario dio
-     * @param gusto si le gusto o no el sitio
-     * @param sitio el sitio
-     */
     public UserPlace(int id, String sitioSrc, String precio, boolean gusto,
     @ParcelPropertyConverter(RealmListParcelConverter.class) RealmList<Place> sitio) {
         super();

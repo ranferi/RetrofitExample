@@ -81,8 +81,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-// import android.util.Log;
-
 
 public class PlaceFragment extends Fragment {
 
