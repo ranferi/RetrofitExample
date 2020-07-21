@@ -6,5 +6,5 @@ public class APIUrl {
     public static final String BASE_URL = "http://148.204.66.224:80/projects/ssrsi/public/";
     public static final double latitud = 19.43422;
     public static final double longitud = -99.14084;
-    public static final String serverKey = "AIzaSyBlLBTuoJER7fdroezd2lYWkqtKJDZefrA";
+    public static final String serverKey = "";
 }
